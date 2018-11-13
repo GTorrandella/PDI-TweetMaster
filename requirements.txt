@@ -1,0 +1,6 @@
+SQLAlchemy
+PyMySQL
+flask
+flask-SQLAlchemy
+python-twitter
+
