@@ -3,4 +3,4 @@ PyMySQL
 flask
 flask-SQLAlchemy
 python-twitter
-
+sqlalchemy-utils
