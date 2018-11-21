@@ -3,5 +3,7 @@ PyMySQL
 flask
 flask-SQLAlchemy
 flask-restful
+flask-marshmallow
+marshmallow-sqlalchemy
 python-twitter
 sqlalchemy-utils
