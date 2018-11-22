@@ -16,11 +16,12 @@ class Tweet(object):
         '''
         self.ID = tweet["id_str"];
         user = tweet["user"];
+        entities = tweet["entities"]
         self.userID = user["id_str"]
         self.userName = user["name"]
-        self.userID = tweet["userID"];
-        self.hashtags = tweet["hashtags"]
-        self.mentions = tweet["user_mentions"]
+        self.userID = tweet["id_str"];
+        self.hashtags = entities["hashtags"]
+        self.mentions = entities["user_mentions"]
 
     def get_id(self):
         return self.__ID

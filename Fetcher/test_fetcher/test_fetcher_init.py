@@ -4,8 +4,9 @@ Created on Nov 20, 2018
 @author: Gabriel Torrandella
 '''
 import simplejson as json
+import Tweet.Tweet as tweet
 
-responseHastag = json.JSONEncoder().encode({
+hastag = {
         "statuses": [
                 {
                         "created_at": "Sun Feb 25 18:11:01 +0000 2018",
@@ -34,9 +35,9 @@ responseHastag = json.JSONEncoder().encode({
                                 }
                 }
             ]
-})
+}
 
-responseMention = json.JSONEncoder().encode({
+mention = {
         "statuses": [
                 {
                         "created_at": "Sun Feb 25 18:11:01 +0000 2018",
@@ -65,5 +66,8 @@ responseMention = json.JSONEncoder().encode({
                                 }
                 }
             ]
-})
+}
 
+responseMention = [tweet.Tweet(mention["statuses"][0]), tweet.Tweet(mention["statuses"][1])]
+
+print(responseMention)
