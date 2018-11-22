@@ -3,8 +3,6 @@ Created on Nov 20, 2018
 
 @author: Gabriel Torrandella
 '''
-import simplejson
-
 
 class Tweet(object):
     '''
@@ -12,17 +10,17 @@ class Tweet(object):
     '''
     
 
-    def __init__(self, rawTweet):
+    def __init__(self, tweet):
         '''
         Constructor
         '''
-        tweet = simplejson.raw_json(rawTweet);
-        self.ID = tweet["ID"];
-        self.user = tweet["user"];
+        self.ID = tweet["id_str"];
+        user = tweet["user"];
+        self.userID = user["id_str"]
+        self.userName = user["name"]
         self.userID = tweet["userID"];
-        self.hashtags = tweet["hashtag"]
-        self.mentions = tweet["mention"]
-        self.text = tweet["text"]
+        self.hashtags = tweet["hashtags"]
+        self.mentions = tweet["user_mentions"]
 
     def get_id(self):
         return self.__ID
