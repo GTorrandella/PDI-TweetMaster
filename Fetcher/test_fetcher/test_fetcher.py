@@ -31,10 +31,14 @@ class Test(unittest.TestCase):
     
     def test_fetchByHashtag(self):
         result = self.test.fetchByHashtag("marth")
+        self.test.fetchByHashtag.assert_any_call("marth")
         self.assertAlmostEquals(result, responses.responseHastag)
 
     
     def test_fetchByMentions(self):
+        pass
+    
+    def test_fetchCampagn(self):
         pass
     
 if __name__ == "__main__":
