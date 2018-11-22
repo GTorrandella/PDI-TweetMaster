@@ -12,7 +12,6 @@ import test_fetcher.test_fetcher_init as responses
 
 class test_fetcher(unittest.TestCase):
 
-
     def setUp(self):
         self.test = fetch()
         
