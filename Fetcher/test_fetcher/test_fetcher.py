@@ -5,7 +5,8 @@ Created on Nov 20, 2018
 '''
 import unittest
 import Fetcher.fetcher.Fetcher as fetch
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, _return_values
+import test_fetcher.test_fetcher_init as responses
 
 
 
@@ -13,19 +14,25 @@ class Test(unittest.TestCase):
 
 
     def setUp(self):
-        test = fetch()
-        test.fetchByHashtag = MagicMock()
-        test.fetchByHashtag.return_value = [""]
-        pass
+        self.test = fetch()
+        
+        self.test.fetchByHashtag = MagicMock(return_value = responses.responseHastag)
+        
+        self.test.fetchByMention() = MagicMock(return_value = responses.responseMention)
 
 
     def tearDown(self):
-        pass
-
+        
+        self.test.fetchByHashtag().dispose()
+        self.test.fetchByMention().dispose()
+        
+        self.test.dispose()
+        
     
     def test_fetchByHashtag(self):
-        test.fetchByHashtag.assert_not_called()
-        pass
+        result = self.test.fetchByHashtag("marth")
+        self.assertAlmostEquals(result, responses.responseHastag)
+
     
     def test_fetchByMentions(self):
         pass
