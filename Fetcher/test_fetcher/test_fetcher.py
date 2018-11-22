@@ -10,7 +10,7 @@ import test_fetcher.test_fetcher_init as responses
 
 
 
-class Test(unittest.TestCase):
+class test_fetcher(unittest.TestCase):
 
 
     def setUp(self):

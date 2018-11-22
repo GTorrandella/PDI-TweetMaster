@@ -3,7 +3,6 @@ Created on Nov 20, 2018
 
 @author: Gabriel Torrandella
 '''
-import simplejson as json
 import Tweet.Tweet as tweet
 
 hastag = {
