@@ -44,7 +44,6 @@ mention = {
                         "id_str": "967824267948773377",
                         "entities": {
                                 "hashtags": [],
-                                "symbols": [],
                                 "user_mentions": ["marth"],
                                 },
                         "user": {
@@ -57,7 +56,6 @@ mention = {
                         "id_str": "967824267948773378",
                         "entities": {
                                 "hashtags": [],
-                                "symbols": [],
                                 "user_mentions": ["marth"],
                                 },
                         "user": {
@@ -68,6 +66,6 @@ mention = {
             ]
 }
 
+responseHastag = [tweet.Tweet(hastag["statuses"][0]), tweet.Tweet(hastag["statuses"][1])]
 responseMention = [tweet.Tweet(mention["statuses"][0]), tweet.Tweet(mention["statuses"][1])]
 
-print(responseMention)
