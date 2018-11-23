@@ -18,13 +18,13 @@ class Campaign(BD):
 	__tablename__ = 'campaign'
 
 	idC = Column(Integer, primary_key=True)
-	fechaInicio = Column(String(10))
-	fechaFin = Column(String(10))
+	startDate = Column(String(10))
+	finDate = Column(String(10))
 	email = Column(String(30))
     # hook = Column(String(10))
 
 	def __repr__(self):
-   	    return "<Campaign(fechaInicio='%s', fechaFin='%s', email='%s')>" % (self.fechaInicio, self.fechaFin, self.email)
+   	    return "<Campaign(startDate='%s', finDate='%s', email='%s')>" % (self.startDate, self.finDate, self.email)
 
 class HashTag(BD):
 	__tablename__ = 'hashTag'
@@ -36,31 +36,15 @@ class HashTag(BD):
 	def __repr__(self):
 		return "<HashTag(hashtag='%s', idCampaign='%s')>" % (self.hashtag, self.idCampaign)
 
-class User(BD):
-	__tablename__ = 'user'
+class Mencion(BD):
+	__tablename__ = 'mencion'
 	
 	idU = Column(Integer, primary_key=True)
-	usuario = Column(String(10))
+	user_mencion = Column(String(10))
 	idCampaign = Column(Integer, ForeignKey('campaign.idC'))
 	
 	def __repr__(self):
-		return "<User(usuario='%s', idCampaign='%s')>" % (self.usuario, self.idCampaign)
-
-#Creamos la BD desde la consola ejecutando:
-#configTables.BD.metadata.create_all(configTables.engine)
-
-#new_campaign = configTables.Campaign(fechaInicio='01/04/1996', fechaFin='01/04/2000', email='federicktailor@gmail.com')
-#configTables.session.add(new_campaign)
-
-#new_hashTag = configTables.HashTag(hashtag='#bocaXFox', idCampaign=1)
-#configTables.session.add(new_hashTag)
-
-#new_user = configTables.User(usuario='federicio', idCampaign=1)
-#configTables.session.add(new_user)
-
-#configTables.session.new
-#configTables.session.dirty
-#configTables.session.commit()
+		return "<Mencion(user_mencion='%s', idCampaign='%s')>" % (self.usuario, self.idCampaign)
 
 
 
