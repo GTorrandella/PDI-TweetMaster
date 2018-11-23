@@ -10,8 +10,7 @@ import test_fetcher.test_fetcher_init as responses
 
 
 
-class Test(unittest.TestCase):
-
+class test_fetcher(unittest.TestCase):
 
     def setUp(self):
         self.test = fetch()
@@ -31,10 +30,14 @@ class Test(unittest.TestCase):
     
     def test_fetchByHashtag(self):
         result = self.test.fetchByHashtag("marth")
+        self.test.fetchByHashtag.assert_any_call("marth")
         self.assertAlmostEquals(result, responses.responseHastag)
 
     
     def test_fetchByMentions(self):
+        pass
+    
+    def test_fetchCampagn(self):
         pass
     
 if __name__ == "__main__":
