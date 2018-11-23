@@ -6,7 +6,7 @@ Created on Nov 20, 2018
 import unittest
 import fetcher as fetch
 from unittest.mock import MagicMock
-import test.test_fetcher_init as responses
+import tests.test_fetcher_init as responses
 
 
 
