@@ -4,9 +4,9 @@ Created on Nov 20, 2018
 @author: Gabriel Torrandella
 '''
 import unittest
-import Fetcher.fetcher.Fetcher as fetch
+import fetcher as fetch
 from unittest.mock import MagicMock
-import test_fetcher.test_fetcher_init as responses
+import test.test_fetcher_init as responses
 
 
 
@@ -21,11 +21,7 @@ class test_fetcher(unittest.TestCase):
 
 
     def tearDown(self):
-        
-        self.test.fetchByHashtag().dispose()
-        self.test.fetchByMention().dispose()
-        
-        self.test.dispose()
+        pass
         
     
     def test_fetchByHashtag(self):
