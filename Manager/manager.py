@@ -2,15 +2,15 @@
 import sys
 sys.path.append("..")
 import json
-import Campaign
+from Campaign.Campaign import *
 
 #Fetcher a campaign le manda una lista de tweets. Y tenemos que resolverla. 
 #Tarea juan:lo del json. Tarea mia: en la BD. en COnnector. 
-userInputs= '{"email":"donaldTrump@worlddomination.com","hashtags": "#donaldTrump", "mentions": "@donaldTrump", "sDate":"28-11-2018", "eDate":"02-12-2018"}'
+userInputs= '{"email":"donaldTrump@worlddomination.com","hashtags": "#donaldTrump", "mentions": "@donaldTrump", "sDate":"28112018", "eDate":"02122018"}'
 def makeCampaign(userInputs):
 
 	fields = json.loads(userInputs) #De json a diccionario
-	#c = Campaign(idC=None, fields["email"], fields["hashtags"], fields["mentions"], fields["sDate"], fields["eDate"])
+	c = Campaign(1, fields["email"], fields["hashtags"], fields["mentions"], fields["sDate"], fields["eDate"])
 	# ^ (Usar los nombres de los campos correspondientes a los del json)
 	
 	#Llamar a un metodo en Acceso a BD para agregar 
