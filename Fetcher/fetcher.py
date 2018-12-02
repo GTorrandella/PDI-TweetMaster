@@ -17,7 +17,7 @@ class Fetcher():
         rawTweet = []
         return rawTweet
     
-    def fetchTweets(self, campaign):
+    def fetchTweets(self, campaign, lastId):
         tweets = []
         #Separate hashtags from campaign
         #Separate metions from campaign

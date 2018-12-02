@@ -3,7 +3,9 @@ Created on Nov 20, 2018
 
 @author: Gabriel Torrandella
 '''
-import Tweet.Tweet as tweet
+import Tweet as tweet
+
+lastId = "967824267948770000"
 
 hastag = {
         "statuses": [
@@ -67,4 +69,3 @@ mention = {
 
 responseHastag = [tweet.Tweet(hastag["statuses"][0]), tweet.Tweet(hastag["statuses"][1])]
 responseMention = [tweet.Tweet(mention["statuses"][0]), tweet.Tweet(mention["statuses"][1])]
-
