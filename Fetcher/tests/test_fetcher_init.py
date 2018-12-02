@@ -4,8 +4,11 @@ Created on Nov 20, 2018
 @author: Gabriel Torrandella
 '''
 import Tweet as tweet
+import Campaign
 
 lastId = "967824267948770000"
+
+campaign = Campaign.Campaign("idC", "emailDueño", ["mars"], ["mars"], date.today(), date.today())
 
 hastag = {
         "statuses": [
@@ -13,7 +16,7 @@ hastag = {
                         "created_at": "Sun Feb 25 18:11:01 +0000 2018",
                         "id_str": "967824267948773377",
                         "entities": {
-                                "hashtags": ["marth"],
+                                "hashtags": ["mars"],
                                 "symbols": [],
                                 "user_mentions": [],
                                 },
@@ -26,7 +29,7 @@ hastag = {
                         "created_at": "Sun Feb 25 18:11:01 +0000 2018",
                         "id_str": "967824267948773378",
                         "entities": {
-                                "hashtags": ["marth"],
+                                "hashtags": ["mars"],
                                 "symbols": [],
                                 "user_mentions": [],
                                 },
@@ -45,7 +48,7 @@ mention = {
                         "id_str": "967824267948773377",
                         "entities": {
                                 "hashtags": [],
-                                "user_mentions": ["marth"],
+                                "user_mentions": ["mars"],
                                 },
                         "user": {
                                 "id_str": "11348282",
@@ -57,7 +60,7 @@ mention = {
                         "id_str": "967824267948773378",
                         "entities": {
                                 "hashtags": [],
-                                "user_mentions": ["marth"],
+                                "user_mentions": ["mars"],
                                 },
                         "user": {
                                 "id_str": "11348282",

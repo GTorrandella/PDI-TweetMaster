@@ -5,6 +5,7 @@ Created on Nov 20, 2018
 '''
 
 import twitter
+import Tweet
 
 class Fetcher():
     api = twitter.Api()
@@ -13,15 +14,25 @@ class Fetcher():
         rawTweet = []
         return rawTweet
     
-    def fetchByMention(self, hashtag, lastId):
+    def fetchByMention(self, mention, lastId):
         rawTweet = []
         return rawTweet
     
+    def makeTweet(self, tweetContent):
+        return Tweet.Tweet(tweetContent)
+    
     def fetchTweets(self, campaign, lastId):
+        rawTweets = []
+        hashtags = campaign.get_hastags() #Separate hashtags from campaign
+        mentions = campaign.get_mentions()#Separate metions from campaign
+        
+        for hashtag in hashtags:
+            rawTweets.append(self.fetchByHashtag(hashtag, lastId))
+        for mention in mentions:
+            rawTweets.append(self.fetchByMention(mention, lastId))
+            
         tweets = []
-        #Separate hashtags from campaign
-        #Separate metions from campaign
-        #For each
-            #Call the fetchers
-        #Make the Tweet object list
+        for tweetContent in rawTweets:
+            tweets.add(self.makeTweet(tweetContent))
+            
         return tweets

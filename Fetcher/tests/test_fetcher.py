@@ -27,14 +27,14 @@ class test_fetcher(unittest.TestCase):
         
     
     def test_fetchByHashtag(self):
-        result = self.test.fetchByHashtag("marth", self.lastId)
-        self.test.fetchByHashtag.assert_any_call("marth", self.lastId)
+        result = self.test.fetchByHashtag("mars", self.lastId)
+        self.test.fetchByHashtag.assert_any_call("mars", self.lastId)
         self.assertEqual(result, responses.responseHastag)
 
     
     def test_fetchByMentions(self):
-        result = self.test.fetchByMention("lyn", self.lastId)
-        self.test.fetchByMention.assert_any_call("lyn", self.lastId)
+        result = self.test.fetchByMention("mars", self.lastId)
+        self.test.fetchByMention.assert_any_call("mars", self.lastId)
         self.assertEqual(result, responses.responseMention)
     
     def test_fetchCampagn(self):

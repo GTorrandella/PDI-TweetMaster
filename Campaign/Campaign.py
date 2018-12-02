@@ -5,11 +5,12 @@ Created on Nov 20, 2018
 '''
 from _datetime import date
 
+
 class Campaign(object):
 
     def __init__(self, idC, emailDueño, hashtags, mentions, startDate, finDate):
         '''  Constructor '''
-        self.idC=idC
+        self.idC = idC
         self.emailDueño = emailDueño
         self.hastags = hashtags    
         self.mentions = mentions   
