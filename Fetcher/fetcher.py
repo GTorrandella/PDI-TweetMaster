@@ -16,11 +16,11 @@ class Fetcher():
     twitter = Twython(APP_KEY, access_token=ACCESS_TOKEN)
     
     def fetchByHashtag(self, hashtag, lastId):
-        rawTweet = self.twitter.cursor(self.twitter.search, q="#"+hashtag, result_type="recent", since_id=lastId)
+        rawTweet = self.twitter.cursor(self.twitter.search, q=hashtag, result_type="recent", since_id=lastId)
         return rawTweet
     
     def fetchByMention(self, mention, lastId):
-        rawTweet = self.twitter.cursor(self.twitter.search, q="@"+mention, result_type="recent", since_id=lastId)
+        rawTweet = self.twitter.cursor(self.twitter.search, q=mention, result_type="recent", since_id=lastId)
         return rawTweet
     
     def makeTweet(self, rawTweets):
