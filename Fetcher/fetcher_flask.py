@@ -3,7 +3,7 @@ Created on Dec 04, 2018
 
 @author: Gabriel Torrandella
 '''
-from flask import Flask, json, jsonify
+from flask import Flask, json
 from fetcher import Fetcher
 from flask.globals import request
 from flask.wrappers import Response
