@@ -10,7 +10,7 @@ from flask.wrappers import Response
 
 app = Flask(__name__)
 
-@app.route('/fetcher', methods = ['GET'])
+@app.route('/fetcher', methods = ['GET', 'PUT'])
 def api_fetcher():
     
     if request.headers['Content-Type'] == 'application/json':
@@ -22,7 +22,7 @@ def api_fetcher():
         return resp
         
     else:
-        return Response(status=400)
+        return Response(status = 400)
 
 
 if __name__ == "__main__":
