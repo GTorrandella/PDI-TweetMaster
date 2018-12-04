@@ -4,11 +4,11 @@ Created on Nov 20, 2018
 @author: Gabriel Torrandella
 '''
 import Tweet as tweet
-import Campaign
+from Campaign import Campaign
 
 lastId = "967824267948770000"
 
-campaign = Campaign.Campaign("idC", "emailDueño", ["mars"], ["mars"], date.today(), date.today())
+campaign = Campaign("idC", "emailDueño", ["mars"], ["mars"], "date.today()", "date.today()")
 
 hastag = {
         "statuses": [

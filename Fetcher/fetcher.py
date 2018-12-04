@@ -16,28 +16,27 @@ class Fetcher():
     twitter = Twython(APP_KEY, access_token=ACCESS_TOKEN)
     
     def fetchByHashtag(self, hashtag, lastId):
-        rawTweet = []
+        rawTweet = self.twitter.cursor(self.twitter.search, q="#"+hashtag, result_type="recent", since_id=lastId)
         return rawTweet
     
     def fetchByMention(self, mention, lastId):
-        rawTweet = []
+        rawTweet = self.twitter.cursor(self.twitter.search, q="@"+mention, result_type="recent", since_id=lastId)
         return rawTweet
     
-    def makeTweet(self, tweetContent):
-        return Tweet.Tweet(tweetContent)
-    
-    def fetchTweets(self, campaign, lastId):
-        rawTweets = []
-        hashtags = campaign.get_hastags() #Separate hashtags from campaign
-        mentions = campaign.get_mentions()#Separate metions from campaign
-        
-        for hashtag in hashtags:
-            rawTweets.append(self.fetchByHashtag(hashtag, lastId))
-        for mention in mentions:
-            rawTweets.append(self.fetchByMention(mention, lastId))
-            
+    def makeTweet(self, rawTweets):
         tweets = []
         for tweetContent in rawTweets:
-            tweets.add(self.makeTweet(tweetContent))
-            
+            for tweet in tweetContent:
+                tweets.append(Tweet(tweet))
         return tweets
+            
+    def fetchTweets(self, campaign, lastId):
+        rawTweets = []
+        
+        for hashtag in campaign.get_hastags():
+            rawTweets.append(self.fetchByHashtag(hashtag, lastId))
+            
+        for mention in campaign.get_mentions():
+            rawTweets.append(self.fetchByMention(mention, lastId))
+               
+        return self.makeTweet(rawTweets)

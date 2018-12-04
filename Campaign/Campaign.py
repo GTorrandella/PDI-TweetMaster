@@ -3,7 +3,6 @@ Created on Nov 20, 2018
 
 @author: gabo
 '''
-from _datetime import date
 
 
 class Campaign(object):
@@ -14,8 +13,8 @@ class Campaign(object):
         self.emailDueño = emailDueño
         self.hastags = hashtags    
         self.mentions = mentions   
-        self.startDate = date(startDate)
-        self.finDate = date(finDate)
+        self.startDate = startDate
+        self.finDate = finDate
 
     def get_idC(self):
         return self.__idC
