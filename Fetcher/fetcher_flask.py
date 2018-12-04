@@ -18,8 +18,7 @@ def api_fetcher():
         campaign = requestJson['Campaing']
         lastId = requestJson['Last-ID']
         tweets =  Fetcher().fetchTweets(campaign, lastId)
-        resp = jsonify(tweets)
-        resp.status_code = 200
+        resp = Response(tweets, status = 200, mimetype = 'application/json')
         return resp
         
     else:
