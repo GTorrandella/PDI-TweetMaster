@@ -13,8 +13,9 @@ class Campaign(object):
         self.emailDueño = emailDueño
         self.hastags = hashtags    
         self.mentions = mentions   
-        self.startDate = date(startDate)
-        self.finDate = date(finDate)
+        self.startDate = date(startDate[0],startDate[1],startDate[2])
+        self.finDate = date(finDate[0],finDate[1],finDate[2])
+
 
     def get_idC(self):
         return self.__idC
