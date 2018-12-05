@@ -66,6 +66,9 @@ class Campaign(object):
         camp_json = json.dumps(dictionary) 
         return camp_json
 
+    def __repr__(self):
+        return "<idC:%s emailDueño:%s hashtags:%s mentions:%s startDate:%s finDate:%s> " % (self.idC, self.emailDueño, self.hashtags, self.mentions, self.startDate, self.finDate)
+    
     idC = property(get_idC, set_idC, "idC's docstring")
     emailDueño = property(get_emailDueño, set_emailDueño, "emailDueño's docstring")
     hastags = property(get_hastags, set_hastags, "hastags's docstring")
