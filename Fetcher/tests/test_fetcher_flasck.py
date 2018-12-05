@@ -17,9 +17,6 @@ class Test(unittest.TestCase):
         pass
 
 
-    def test_response201tPut(self):
-        pass
-
     def test_response200Get(self):
         pass
 
