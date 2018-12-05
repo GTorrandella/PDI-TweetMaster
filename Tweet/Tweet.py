@@ -93,7 +93,20 @@ class Tweet(object):
 
     def del_text(self):
         del self.__text
-    
+
+
+    def to_json(self):
+        dictionary = {
+            "id" : self.__ID,
+            "email" : self.__user,
+            "hastags" : self.__userID,
+            "mentions" : self.__hashtags,
+            "startDate" : self.__mentions,
+            "finDate" : self.__text,
+        }
+        tweet_json = json.dumps(dictionary) 
+        return tweet_json
+
     ID = property(get_id, set_id, del_id, "ID's docstring")
     user = property(get_user, set_user, del_user, "user's docstring")
     userID = property(get_user_id, set_user_id, del_user_id, "userID's docstring")
