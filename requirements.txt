@@ -5,5 +5,5 @@ flask-SQLAlchemy
 flask-restful
 flask-marshmallow
 marshmallow-sqlalchemy
-python-twitter
+twython
 sqlalchemy-utils

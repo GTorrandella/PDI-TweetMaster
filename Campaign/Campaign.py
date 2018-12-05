@@ -3,19 +3,18 @@ Created on Nov 20, 2018
 
 @author: gabo
 '''
-from _datetime import date
+
 
 class Campaign(object):
 
     def __init__(self, idC, emailDueño, hashtags, mentions, startDate, finDate):
         '''  Constructor '''
-        self.idC=idC
+        self.idC = idC
         self.emailDueño = emailDueño
         self.hastags = hashtags    
         self.mentions = mentions   
         self.startDate = date(startDate[0],startDate[1],startDate[2])
         self.finDate = date(finDate[0],finDate[1],finDate[2])
-
 
     def get_idC(self):
         return self.__idC
