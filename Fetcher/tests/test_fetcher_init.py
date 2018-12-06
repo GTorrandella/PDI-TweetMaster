@@ -8,7 +8,7 @@ from Campaign import Campaign
 
 lastId = "967824267948770000"
 
-campaign = Campaign("idC", "emailDueño", ["mars"], ["mars"], "date.today()", "date.today()")
+campaign = Campaign("idC", "emailDueño", ["mars"], ["mars"], [2009,1,2], [2010,1,2])
 
 hastag = {
         "statuses": [
