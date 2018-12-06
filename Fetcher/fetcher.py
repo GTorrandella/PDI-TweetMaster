@@ -27,7 +27,7 @@ class Fetcher():
         tweets = []
         for tweetContent in rawTweets:
             for tweet in tweetContent:
-                tweets.append(Tweet(tweet))
+                tweets.append((Tweet(tweet)).to_json())
         return tweets
             
     def fetchTweets(self, campaign, lastId):

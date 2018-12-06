@@ -4,6 +4,7 @@ Created on Nov 20, 2018
 @author: Gabriel Torrandella
 '''
 import json
+from datetime import datetime
 
 class Tweet(object):
     '''
@@ -23,6 +24,8 @@ class Tweet(object):
         self.userID = tweet["id_str"];
         self.hashtags = entities["hashtags"]
         self.mentions = entities["user_mentions"]
+        self.date = datetime.strptime(entities["created_at"], "%a %b %d %X %z %Y")
+        
 
     def get_id(self):
         return self.__ID
@@ -43,11 +46,6 @@ class Tweet(object):
     def get_mentions(self):
         return self.__mentions
 
-
-    def get_text(self):
-        return self.__text
-
-
     def set_id(self, value):
         self.__ID = value
 
@@ -67,9 +65,6 @@ class Tweet(object):
     def set_mentions(self, value):
         self.__mentions = value
 
-
-    def set_text(self, value):
-        self.__text = value
 
 
     def del_id(self):
@@ -92,18 +87,14 @@ class Tweet(object):
         del self.__mentions
 
 
-    def del_text(self):
-        del self.__text
-
-
     def to_json(self):
         dictionary = {
             "id" : self.__ID,
-            "email" : self.__user,
-            "hastags" : self.__userID,
-            "mentions" : self.__hashtags,
-            "startDate" : self.__mentions,
-            "finDate" : self.__text,
+            "user" : self.__user,
+            "userID" : self.__userID,
+            "hashtags" : self.__hashtags,
+            "mentions" : self.__mentions,
+            "date" : self.date,
         }
         tweet_json = json.dumps(dictionary) 
         return tweet_json
@@ -113,4 +104,3 @@ class Tweet(object):
     userID = property(get_user_id, set_user_id, del_user_id, "userID's docstring")
     hashtags = property(get_hashtags, set_hashtags, del_hashtags, "hashtags's docstring")
     mentions = property(get_mentions, set_mentions, del_mentions, "mentions's docstring")
-    text = property(get_text, set_text, del_text, "text's docstring")
