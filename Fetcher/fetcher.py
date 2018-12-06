@@ -3,7 +3,6 @@ Created on Nov 20, 2018
 
 @author: Gabriel Torrandella
 '''
-from Tweet import Tweet
 from twython import Twython
 
 APP_KEY = "7zCU1BgDeQ3G65MfwvpNUZm3a"
