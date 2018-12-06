@@ -1,38 +1,58 @@
-import configTables
+import sys
+sys.path.append("..")
 import json
-import Campaign.Campaign
+from Campaign import *
+from datetime import date
+from DataBaseConnector import *
+#Antes: 
+#import configTables
+#from Campaign import Campaign.Campaign
 
 #Fetcher a campaign le manda una lista de tweets. Y tenemos que resolverla. 
-#Tarea juan:lo del json. Tarea mia: en la BD. en COnnector. 
+#Tarea juan:lo del json. Y hacer test para que se cree bien la campaña a partir del json recibido.
+#Tarea fede: Guardar en la BD y TESTEAR esto. Para esto ver la clase DBConnector. 
+#Fecha según lo que devuelve TW es → “Sun Feb 25 17:11:02 +0000 2018”.
+userInputs= '{"email":"donaldTrump@worlddomination.com","hashtags": "#donaldTrump", "mentions": "@donaldTrump", "sDate":"28-11-2018", "eDate":"02-12-2018"}'
 
-def makeCampaign():
-	#def makeCampaign(userInputs):
-	#Me llegan los datos del form que completa el usuario, ver que llegan en un json:
-    #fields = json.loads(userInputs) #De json a diccionario
-	#c = Campaign(fields["idAutor"], fields["hashtags"], fields["mentions", fields["startDate", fields["finDate")
-	# ^ (Usar los nombres de los campos correspondientes a los del json)
-	#Llamar a un metodo en Acceso a BD para agregar 
+def hola(numero):
+	numero=numero+1
+	print (numero)
 
-    #Testeamos que se cree bien la campaña a partir del json recibido o solo testeamos
-    #la parte de agregarla a la BD?
-	#Con estos datos armo un objeto campaña
-	campaign1=Campaign(1,"calongefederico@gmail.com", "Boca", "Carlitos" , "2018-11-30", "2018-11-20")
-	#campaign2=Campaign(1,"gaby@gmail.com", "Carlitos" , "2018,11-30", "2018-11-20")
+
+def makeCampaign(userInputs):
+	fields = json.loads(userInputs) #De json a diccionario
+
+	#Arrays con las fechas de inicio y fin de la campania. Formato de la fecha en "fields": dd-mm-yyyy
+	startDate=[]
+	endDate=[]
+	startDate.append(int(fields["sDate"][6:10])) 
+	startDate.append(int(fields["sDate"][3:5]))
+	startDate.append(int(fields["sDate"][0:2]))
+	endDate.append(int(fields["eDate"][6:10]))
+	endDate.append(int(fields["eDate"][3:5]))
+	endDate.append(int(fields["eDate"][0:2]))
 	
-	#Este objeto se lo mandamos a Connector para ingresarlo en la BD.
-	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD.
-	new_campaignBD=configTables.Campaign(startDate=(campaign1.get_start_date()), finDate=(campaign1.get_fin_date()), email=(campaign1.get_emailDueño()))
-	configTables.session.add(new_campaignBD)
+	#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña:
+	ObjetoCampaign = Campaign(1, fields["email"], fields["hashtags"], fields["mentions"], startDate, endDate)
+	#Ejemplo de un objeto campaign: 
+	#campaign1=Campaign(1,"calongefederico@gmail.com", "Boca", "Carlitos" , "2018-11-30", "2018-11-20")
+	
+	print (ObjetoCampaign)
+	print(c.get_start_date()) 
+	print(c.get_fin_date())
 
-	#new_hashTagBD = configTables.HashTag(campaign1.get_hastags(), campaign1.get_idC())
-	#configTables.session.add(new_hashTagBD)
+	#Llamamos a un metodo de Connector para agregar la campaña a la BD:
+	Connector.insertarCampaignBD(ObjetoCampaign)
 
-	#new_mencionBD = configTables.Mencion(campaign1.get_mentions(), campaign1.get_idC())
-	#configTables.session.add(new_mencionBD)
 
-	configTables.session.new
-	configTables.session.dirty
-	configTables.session.commit()
+#Para probar el ingreso a BD:
+def makeCampaign():
+	ObjetoCampaign=Campaign(1,"calongefederico@gmail.com", "Boca", "Carlitos" , "2018-11-30", "2018-11-20")
+	Connector.insertarCampaignBD(ObjetoCampaign)
 
+def deleteCampaign(InputNombreCampaña):
+	Connector.eliminarCampaignBD(InputNombreCampaña)
+
+	
 
 

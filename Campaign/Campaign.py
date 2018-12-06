@@ -3,18 +3,20 @@ Created on Nov 20, 2018
 
 @author: gabo
 '''
-
+from _datetime import date
+import json
 
 class Campaign(object):
 
     def __init__(self, idC, emailDueño, hashtags, mentions, startDate, finDate):
         '''  Constructor '''
-        self.idC = idC
+        self.idC=idC
         self.emailDueño = emailDueño
         self.hastags = hashtags    
         self.mentions = mentions   
-        self.startDate = startDate
-        self.finDate = finDate
+        self.startDate = date(startDate[0],startDate[1],startDate[2])
+        self.finDate = date(finDate[0],finDate[1],finDate[2])
+
 
     def get_idC(self):
         return self.__idC
@@ -51,6 +53,21 @@ class Campaign(object):
 
     def set_fin_date(self, value):
         self.__finDate = value
+
+    def to_json(self):
+        dictionary = {
+            "id" : self.__idC,
+            "email" : self.__emailDueño,
+            "hastags" : self.__hastags,
+            "mentions" : self.__mentions,
+            "startDate" : str(self.__startDate),
+            "finDate" : str(self.__finDate),
+        }
+        camp_json = json.dumps(dictionary) 
+        return camp_json
+
+    def __repr__(self):
+        return "<idC:%s emailDueño:%s hashtags:%s mentions:%s startDate:%s finDate:%s> " % (self.idC, self.emailDueño, self.hashtags, self.mentions, self.startDate, self.finDate)
     
     idC = property(get_idC, set_idC, "idC's docstring")
     emailDueño = property(get_emailDueño, set_emailDueño, "emailDueño's docstring")
