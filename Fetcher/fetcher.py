@@ -3,6 +3,7 @@ Created on Nov 20, 2018
 
 @author: Gabriel Torrandella
 '''
+from Tweet import Tweet
 from twython import Twython
 
 APP_KEY = "7zCU1BgDeQ3G65MfwvpNUZm3a"
@@ -26,7 +27,7 @@ class Fetcher():
         tweets = []
         for tweetContent in rawTweets:
             for tweet in tweetContent:
-                tweets.append(tweet.to_json())
+                tweets.append(Tweet(tweet).to_json())
         return tweets
             
     def fetchTweets(self, campaign, lastId):

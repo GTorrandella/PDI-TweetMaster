@@ -82,5 +82,6 @@ class test_fetcher_base(unittest.TestCase):
         
         self.response_fetchTweets = [self.responseHastag[0].to_json(),self.responseHastag[1].to_json(),self.responseMention[0].to_json(),self.responseMention[1].to_json()]
         
-        
-        
+        self.resquest_get_200_content = {"Campaing" : self.campaign.to_json(), "Last-ID" : self.lastId} 
+    
+            
