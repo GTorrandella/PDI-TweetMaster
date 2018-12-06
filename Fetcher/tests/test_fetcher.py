@@ -27,17 +27,24 @@ class test_fetcher(test_fetcher_base):
     
     def test_fetchByHashtag(self):
         result = self.test.fetchByHashtag("mars", self.lastId)
+        
         self.test.fetchByHashtag.assert_any_call("mars", self.lastId)
         self.assertEqual(result, self.responseHastag)
 
     
     def test_fetchByMentions(self):
         result = self.test.fetchByMention("mars", self.lastId)
+        
         self.test.fetchByMention.assert_any_call("mars", self.lastId)
         self.assertEqual(result, self.responseMention)
     
     def test_fetchCampagn(self):
-        pass
+        result = self.test.fetchTweets(self.campaign, self.lastId)
+        
+        self.test.fetchByHashtag.assert_called_once_with("mars", self.lastId)
+        self.test.fetchByMention.assert_called_once_with("mars", self.lastId)
+        
+        self.assertEqual(result, self.response_fetchTweets)
     
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

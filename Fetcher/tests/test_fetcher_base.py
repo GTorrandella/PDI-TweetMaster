@@ -77,3 +77,10 @@ class test_fetcher_base(unittest.TestCase):
         
         self.responseHastag = [tweet.Tweet(self.hastag["statuses"][0]), tweet.Tweet(self.hastag["statuses"][1])]
         self.responseMention = [tweet.Tweet(self.mention["statuses"][0]), tweet.Tweet(self.mention["statuses"][1])]
+        
+        self.param_makeTweets = self.responseHastag + self.responseMention
+        
+        self.response_fetchTweets = [self.responseHastag[0].to_json(),self.responseHastag[1].to_json(),self.responseMention[0].to_json(),self.responseMention[1].to_json()]
+        
+        
+        
