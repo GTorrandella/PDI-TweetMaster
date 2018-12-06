@@ -3,6 +3,7 @@ Created on Nov 20, 2018
 
 @author: Gabriel Torrandella
 '''
+import json
 
 class Tweet(object):
     '''
