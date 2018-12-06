@@ -4,7 +4,7 @@ Created on Nov 20, 2018
 @author: Gabriel Torrandella
 '''
 import unittest
-import Tweet as tweet
+from Tweet import Tweet
 from Campaign import Campaign
 
 
@@ -13,7 +13,7 @@ class test_fetcher_base(unittest.TestCase):
     def setUp(self):
         self.lastId = "967824267948770000"
 
-        self.campaign = Campaign("idC", "emailDueño", ["mars"], ["mars"], [2009,1,2], [2010,1,2])
+        self.campaign = Campaign("idC", "emailDueño", ["#mars"], ["@mars"], [2009,1,2], [2010,1,2])
 
         self.hastag = {
                 "statuses": [
@@ -75,12 +75,12 @@ class test_fetcher_base(unittest.TestCase):
                     ]
         }
         
-        self.responseHastag = [tweet.Tweet(self.hastag["statuses"][0]), tweet.Tweet(self.hastag["statuses"][1])]
-        self.responseMention = [tweet.Tweet(self.mention["statuses"][0]), tweet.Tweet(self.mention["statuses"][1])]
+        self.responseHastag = [self.hastag["statuses"][0], self.hastag["statuses"][1]]
+        self.responseMention = [self.mention["statuses"][0], self.mention["statuses"][1]]
         
         self.param_makeTweets = self.responseHastag + self.responseMention
         
-        self.response_fetchTweets = [self.responseHastag[0].to_json(),self.responseHastag[1].to_json(),self.responseMention[0].to_json(),self.responseMention[1].to_json()]
+        self.response_fetchTweets = [Tweet(self.responseHastag[0]).to_json(),Tweet(self.responseHastag[1]).to_json(),Tweet(self.responseMention[0]).to_json(),Tweet(self.responseMention[1]).to_json()]
         
         self.resquest_get_200_content = {"Campaing" : self.campaign.to_json(), "Last-ID" : self.lastId} 
     
