@@ -12,7 +12,7 @@ from DataBaseConnector import *
 #Tarea juan:lo del json. Y hacer test para que se cree bien la campaña a partir del json recibido.
 #Tarea fede: Guardar en la BD y TESTEAR esto. Para esto ver la clase DBConnector. 
 #Fecha según lo que devuelve TW es → “Sun Feb 25 17:11:02 +0000 2018”.
-userInputs= '{"email":"donaldTrump@worlddomination.com","hashtags": "#donaldTrump", "mentions": "@donaldTrump", "sDate":"28-11-2018", "eDate":"02-12-2018"}'
+userInputs= '{"email":"donaldTrump@worlddomination.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}'
 
 def makeCampaign(userInputs):
 	fields = json.loads(userInputs) #De json a diccionario
@@ -21,18 +21,17 @@ def makeCampaign(userInputs):
 	
 	#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña:
 	ObjetoCampaign = Campaign(1, fields["email"], fields["hashtags"], fields["mentions"], startDate, endDate)
-	
-	print (ObjetoCampaign)
-	print(c.get_start_date()) 
-	print(c.get_fin_date())
+
+	return ObjetoCampaign
 
 	#Llamamos a un metodo de Connector para agregar la campaña a la BD:
-	Connector.insertarCampaignBD(ObjetoCampaign)
+	#Connector.insertarCampaignBD(ObjetoCampaign)
 
 #Para probar el ingreso a BD:
-def makeCampaign():
+"""def makeCampaign():
 	ObjetoCampaign2=Campaign(1,"calongefederico@gmail.com", "Boca", "Carlitos" , "28-11-2018", "28-12-2018")
-	Connector.insertarCampaignBD(ObjetoCampaign2)
+	Connector.insertarCampaignBD(ObjetoCampaign2)"""
+
 
 def deleteCampaign(InputNombreCampaña):
 	Connector.eliminarCampaignBD(InputNombreCampaña)

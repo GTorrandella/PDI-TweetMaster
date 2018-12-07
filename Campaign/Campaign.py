@@ -8,7 +8,7 @@ class Campaign(object):
         '''  Constructor '''
         self.idC=idC
         self.emailDueño = emailDueño
-        self.hastags = hashtags    
+        self.hashtags = hashtags    
         self.mentions = mentions   
         self.startDate = date(startDate[0],startDate[1],startDate[2])
         self.finDate = date(finDate[0],finDate[1],finDate[2])
@@ -20,8 +20,8 @@ class Campaign(object):
     def get_emailDueño(self):
         return self.__emailDueño
 
-    def get_hastags(self):
-        return self.__hastags
+    def get_hashtags(self):
+        return self.__hashtags
 
     def get_mentions(self):
         return self.__mentions
@@ -38,8 +38,8 @@ class Campaign(object):
     def set_emailDueño(self, value):
         self.__emailDueño = value
 
-    def set_hastags(self, value):
-        self.__hastags = value
+    def set_hashtags(self, value):
+        self.__hashtags = value
 
     def set_mentions(self, value):
         self.__mentions = value
@@ -54,7 +54,7 @@ class Campaign(object):
         dictionary = {
             "id" : self.__idC,
             "email" : self.__emailDueño,
-            "hastags" : self.__hastags,
+            "hashtags" : self.__hashtags,
             "mentions" : self.__mentions,
             "startDate" : str(self.__startDate),
             "finDate" : str(self.__finDate),
@@ -67,7 +67,7 @@ class Campaign(object):
     
     idC = property(get_idC, set_idC, "idC's docstring")
     emailDueño = property(get_emailDueño, set_emailDueño, "emailDueño's docstring")
-    hastags = property(get_hastags, set_hastags, "hastags's docstring")
+    hashtags = property(get_hashtags, set_hashtags, "hashtags's docstring")
     mentions = property(get_mentions, set_mentions, "mentions's docstring")
     startDate = property(get_start_date, set_start_date, "startDate's docstring")
     finDate = property(get_fin_date, set_fin_date, "finDate's docstring")
