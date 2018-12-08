@@ -5,11 +5,15 @@ Created on Nov 20, 2018
 '''
 from Tweet import Tweet
 from twython import Twython
+from os import path
 
-APP_KEY = "7zCU1BgDeQ3G65MfwvpNUZm3a"
-APP_SECRET = "0Kii63THccgKCKMvE396GgaieUld5HtADLeU98wJmlpiWzfP47"
-ACCESS_TOKEN = "AAAAAAAAAAAAAAAAAAAAAHqS8wAAAAAAC%2FBQkp9ZMJ3igj1orr2ou%2BBzQKM%3DgodQO6bVl2TLlhjPZCm1hT2MbwTwXIdJj5Upc9oCPWE3mjBYIK"
-
+parentDir = path.dirname(path.abspath(__file__))
+tokenPath = path.join(parentDir, 'tokens')
+f = open(tokenPath)
+APP_KEY = f.readline()
+APP_SECRET = f.readline()
+ACCESS_TOKEN = f.readline()
+f.close
 
 class Fetcher():
     twitter = Twython(APP_KEY, APP_SECRET, oauth_version=2)
