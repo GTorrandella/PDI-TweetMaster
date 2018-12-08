@@ -20,7 +20,7 @@ class Campaign(BD):
 	idC = Column(Integer, primary_key=True)
 	startDate = Column(String(10))
 	finDate = Column(String(10))
-	email = Column(String(30))
+	email = Column(String(40))
     # hook = Column(String(10))
 
 	def __repr__(self):

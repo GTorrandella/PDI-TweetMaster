@@ -3,16 +3,13 @@ sys.path.append("..")
 import json
 from Campaign.Campaign import *
 from datetime import date
-from DataBaseConnector import *
-#Antes: 
-#import configTables
-#from Campaign import Campaign.Campaign
+from DataBaseConnector import Connector
 
 #Fetcher a campaign le manda una lista de tweets. Y tenemos que resolverla. 
 #Tarea juan:lo del json. Y hacer test para que se cree bien la campaña a partir del json recibido.
 #Tarea fede: Guardar en la BD y TESTEAR esto. Para esto ver la clase DBConnector. 
 #Fecha según lo que devuelve TW es → “Sun Feb 25 17:11:02 +0000 2018”.
-userInputs= '{"email":"donaldTrump@worlddomination.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}'
+userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}'
 
 def makeCampaign(userInputs):
 	fields = json.loads(userInputs) #De json a diccionario
@@ -22,10 +19,10 @@ def makeCampaign(userInputs):
 	#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña:
 	ObjetoCampaign = Campaign(1, fields["email"], fields["hashtags"], fields["mentions"], startDate, endDate)
 
-	return ObjetoCampaign
+	print(ObjetoCampaign)
 
 	#Llamamos a un metodo de Connector para agregar la campaña a la BD:
-	#Connector.insertarCampaignBD(ObjetoCampaign)
+	Connector.insertarCampaignBD(ObjetoCampaign)
 
 #Para probar el ingreso a BD:
 """def makeCampaign():

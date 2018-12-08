@@ -1,0 +1,66 @@
+<!--Formulario horizontal: Hacemos que el tamaño md los labels ocupen 2 columnas y los placeholder/párrafos ocupen 9 (así estan uno al lado de otro), y en tamaño xs (el mas chico) pusimos que todos ocupen 12 columnas, el 100% de tamaño (así estan uno debajo de otro).-->
+<!DOCTYPE html5>
+<html lang="es">
+<head> 
+	<meta charset="UTF-8">
+	<title>Alta Campaña</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> <!--Enlazo estilos de bootstrap-->
+	<link rel="shortcut icon" type="image/x-icon" href="http://4.bp.blogspot.com/-ZL3Z_5ghtMQ/UZTrCn-m-OI/AAAAAAAAEP4/j5UV1b_S04o/s1600/7df3h38zabcvjylnyfe3.png">
+</head>
+
+<body>
+	<div class="container"> 
+	<h1>Alta de Campaña</h1>
+	<br> 
+		<div class="jumbotron">
+			<form action="" class="form-horizontal"> <!--Tenemos un espacio de 12 columnas (tenemos que ubicar los elementos sin superar estas 12 columnas). Por ejemplo para el 1er label Nombre: le ponemos que ocupe 2 columnas en tamaño md (que ""EMPIECE"" por la columna 2 mejor dicho). Y después el placeholder que estaría al lado de Nombre: le ponemos que ocupe 6 columnas (Suman 8, no superan al 12 de máximo, bien).  -->
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-2 col-md-2 " for="name">Email Dueño:</label>
+					<div class="col-xs-12 col-sm-9 col-md-4">  <!--Así para tamaño medio va a tener 9 columnas.-->
+						<input class="form-control" type="text" placeholder="Email:" maxlength="8" name="nombre" id="name">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-2 col-md-2 " for="name">Fecha y hora de inicio:</label>
+					<div class="col-xs-12 col-sm-9 col-md-4">  
+						<input class="form-control" type="text" placeholder="MM:DD:AAAA:HH:MM:SS" maxlength="8" name="nombre" id="name">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-2 col-md-2 " for="name">Fecha y hora de fin:</label>
+					<div class="col-xs-12 col-sm-9 col-md-4">  
+						<input class="form-control" type="text" placeholder="MM:DD:AAAA:HH:MM:SS" maxlength="8" name="nombre" id="name">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-2 col-md-2 " for="name">HashTag a monitorear:</label>
+					<div class="col-xs-12 col-sm-9 col-md-4">  
+						<input class="form-control" type="text" placeholder="#" maxlength="8" name="nombre" id="name">
+					</div>
+				</div>
+
+				<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-2 col-md-2" for="email">Mencion al usuario a monitorear:</label>
+						<div class="col-xs-12 col-sm-9 col-md-4">
+							<input class="form-control" type="text" name="correo" id="email" placeholder="@">
+						</div>
+				</div>
+
+				<div class="form-group"> 
+					<div class="col-xs-12 col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2">
+						<button class="btn btn-success">ALTA</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+  			<script type="text/javascript" src="js/jquery.js"></script>
+    		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
