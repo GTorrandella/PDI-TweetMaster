@@ -8,6 +8,10 @@ import unittest
 
 class Test(unittest.TestCase):
 
+	#Para probar el ingreso a BD:
+	"""def makeCampaign():
+		ObjetoCampaign2=Campaign(1,"calongefederico@gmail.com", "Boca", "Carlitos" , "28-11-2018", "28-12-2018")
+		Connector.insertarCampaignBD(ObjetoCampaign2)"""
 
     def setUp(self):
         pass

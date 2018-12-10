@@ -9,7 +9,6 @@ class Tweet(object):
     '''
     classdocs
     '''
-    
 
     def __init__(self, tweet):
         '''
