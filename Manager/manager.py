@@ -14,8 +14,8 @@ class Manager():
 		
 		#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña.
 		#Pero antes de esto como fields["hashtags"] y fields["mentions"] son LISTAS, tenemos que pasarlas a un string para poder añadirlo a la BD como un varchar: 
-		stringHashtag = listaAString(fields["hashtags"]) # #donaldTrump-#G20
-		stringMention = listaAString(fields["mentions"]) # @donaldTrump-@miauricioOK
+		stringHashtag = self.listaAString(fields["hashtags"]) # #donaldTrump-#G20
+		stringMention = self.listaAString(fields["mentions"]) # @donaldTrump-@miauricioOK
 	
 		ObjetoCampaign = Campaign(1, fields["email"], stringHashtag, stringMention, fields["startDate"], fields["endDate"])
 		
