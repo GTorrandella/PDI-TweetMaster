@@ -7,6 +7,7 @@ To do that, it is necesary to create a _cron job_ that executes the module every
 
 First, look up the Python 3 path using **which**. If you are using a virtual enviroment, executute this command while working on it.  
 >which python3
+
 This will return your Python 3 path.
 
 Now add a the next cron job. (To add a cron job, use **crontab -e**):  
