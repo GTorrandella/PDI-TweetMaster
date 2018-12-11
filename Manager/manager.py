@@ -3,8 +3,10 @@ sys.path.append("..")
 import json
 from Campaign import Campaign
 from Tweet import Tweet
-from datetime import date
 from DataBaseConnector import Connector
+from fetcher import Fetcher
+import urllib.request
+import http.client
 
 #Lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):
 userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "endDate":"02 12 2018 19:26:22"}'
@@ -54,3 +56,23 @@ class Manager():
 	def listaAString(self, lista):
 		string = "-".join(lista)
 		return string
+	
+	def fetchCampaings(self, campaignsToFetch):
+		for idC in campaignsToFetch:
+			camp = self.returnCampaign(idC).to_json()
+			request = urllib.request.Request("locahost/fetcher", data = camp, method = 'GET')
+			request.add_header("Content-Type", "application/json")
+			response = urllib.request.urlopen(request)
+			self.insertTweets(str(response.read()).split(','))
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
