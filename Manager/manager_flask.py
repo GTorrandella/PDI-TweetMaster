@@ -17,7 +17,7 @@ def checkForm(form):
 def api_manager():
     
     if request.method == 'POST':
-        
+        if checkForm(request.form)
         
         return request(status_code = 201)
         
