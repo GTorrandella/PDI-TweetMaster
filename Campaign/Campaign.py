@@ -10,8 +10,8 @@ class Campaign(object):
         self.emailDueño = emailDueño
         self.hashtags = hashtags  
         self.mentions = mentions  
-        self.startDate = date(startDate[0],startDate[1],startDate[2])
-        self.finDate = date(finDate[0],finDate[1],finDate[2])
+        self.startDate = datetime.strptime(startDate, "%d %m %Y %X") #dd mm yyyy hh:mm:ss
+        self.finDate = datetime.strptime(finDate, "%d %m %Y %X") #dd mm yyyy hh:mm:ss
 
     def get_idC(self):
         return self.__idC

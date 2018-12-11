@@ -1,58 +1,76 @@
 import sys
 sys.path.append("..")
 import json
-from Campaign.Campaign import *
-from Tweet.Tweet import *
-from datetime import date
+from Campaign import Campaign
+from Tweet import Tweet
 from DataBaseConnector import Connector
+import urllib.request
 
-#Fecha según lo que devuelve TW es → “Sun Feb 25 17:11:02 +0000 2018”.
-#Lo que el usuario ingresa en la Interfaz Web (en formato JSON llegaria):
-userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}'
-#Lo que el Fetcher le manda a manager (lista de tweets) para que manager solo la inserte en la BD (en formato JSON llegaria):
-#Gaby dijo que es una lista de diccionarios de la forma TweettoJson()
-#EJemplo del objeto Tweet: en TweettoJson en la rama Fetcher (que es la versión final.), va a llegar 
-#una lista de esos ene l response. 
-
-#manager.insertCampaign('{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}')
-def insertCampaign(userInputs):
-	fields = json.loads(userInputs) #De json a diccionario
-	startDate = StringToIntArray(fields["sDate"])
-	endDate = StringToIntArray(fields["eDate"])
+#Lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):
+userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "endDate":"02 12 2018 19:26:22"}'
+class Manager():
+	def insertCampaign(self, userInputs):
+		fields = json.loads(userInputs) #De json a diccionario
+		
+		#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña.
+		#Pero antes de esto como fields["hashtags"] y fields["mentions"] son LISTAS, tenemos que pasarlas a un string para poder añadirlo a la BD como un varchar: 
+		stringHashtag = self.listaAString(fields["hashtags"]) # #donaldTrump-#G20
+		stringMention = self.listaAString(fields["mentions"]) # @donaldTrump-@miauricioOK
 	
-	#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña:
-	ObjetoCampaign = Campaign(1, fields["email"], fields["hashtags"], fields["mentions"], startDate, endDate)
-	#Arriba hay que sacar el 1 y que sea autoincrement (VER COMO). Creo que ni usa el 1 igual. 
-
-	print("Objeto Campaign:")
-	print(ObjetoCampaign)
-
-	#Llamamos a un metodo de Connector para agregar la campaña a la BD junto con las mentions y los hashtags:
-	#Connector.insertarCampaignBD(ObjetoCampaign)
-	#Connector.insertarHashTagsBD(ObjetoCampaign)
-	#Connector.insertarMentionsBD(ObjetoCampaign)
-
-def modifyCampaign(ObjetoCampaign):
-	#Hay que ver lo de la fecha que no supere la fecha de hoy.
-	Connector.modificarCampaignBD(ObjetoCampaign)
-
-def deleteCampaign(ObjetoCampaign):
-	Connector.eliminarCampaignBD(ObjetoCampaign)
-
-def returnCampaign(idCampaign):
-	retornarCampaignBD(idCampaign)
-
-#def insertTweet(TweetInput):
-#	ObjetoTweet=Tweet(1,"calongefederico@gmail.com", "Boca", "Carlitos" , "28-11-2018", "28-12-2018")
-#	Connector.insertTweet(TweetInput)
-
-#def insertarTweets(TweetsInput):
-	#La descomprimo en Tweets separados y llamo a insertTweet y lo agrego uno por uno.
-
-def StringToIntArray(str_date):
-	#Arrays con las fechas de inicio y fin de la campania. Formato de la fecha en "fields": dd-mm-yyyy
-	date_array=[]
-	date_array.append(int(str_date[6:10])) 		#Año
-	date_array.append(int(str_date[3:5]))		#Mes
-	date_array.append(int(str_date[0:2]))		#Dia
-	return date_array
+		ObjetoCampaign = Campaign(1, fields["email"], stringHashtag, stringMention, fields["startDate"], fields["endDate"])
+		
+		#Llamamos a un metodo de Connector para agregar la campaña a la BD junto con las mentions y los hashtags:
+		return Connector.insertarCampaignBD(ObjetoCampaign)
+	
+	def deleteCampaignporuser(self, email_user):
+		#Hay que ver que la campaña NO haya iniciado (que la fecha de hoy sea anterior a la fecha de inicio).
+		Connector.eliminarCampaignBDxUser(email_user)
+	
+	def deleteCampaignporid(self, idCampaign):
+		#Hay que ver que la campaña NO haya iniciado (que la fecha de hoy sea anterior a la fecha de inicio).
+		Connector.eliminarCampaignBDxID(idCampaign)
+	
+	def returnCampaign(self, idCampaign):
+		#Hay que ver que la campaña HAYA TERMINADO (que la fecha se la fecha de fin)
+		#Y hay que mandarla al Reporter.
+		return Connector.retornarCampaignBD(idCampaign)
+	
+	def modifyCampaign(self, idCampaign, columna, inputUser):
+		#Hay que ver que la campaña NO haya iniciado (que la fecha de hoy sea anterior a la fecha de inicio).
+		Connector.modificarCampaignBD(idCampaign, columna, inputUser)	
+	
+	#exec(open("manager.py").read())
+	#Fijarse en test_manager que sería este tweetsJson que recibe.
+	def insertTweets(self, tweetsJson):
+		tweets = json.loads(tweetsJson)
+		#Los separamos en tweets separados y llamamos a insertTweet para agregarlo uno por uno:
+		for i in range(len(tweets)):
+			t = Tweet(tweets[i])
+			self.insertTweet(t) #Le pasamos el objeto Tweet instanciado.
+	
+	def insertTweet(self, TweetInput):
+		Connector.insertTweet(TweetInput)
+	
+	def listaAString(self, lista):
+		string = "-".join(lista)
+		return string
+	
+	def fetchCampaings(self, campaignsToFetch):
+		for idC in campaignsToFetch:
+			camp = self.returnCampaign(idC).to_json()
+			request = urllib.request.Request("locahost/fetcher", data = camp, method = 'GET')
+			request.add_header("Content-Type", "application/json")
+			response = urllib.request.urlopen(request)
+			self.insertTweets(str(response.read()).split(','))
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
