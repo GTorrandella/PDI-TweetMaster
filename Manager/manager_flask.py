@@ -28,6 +28,8 @@ def api_manager():
             return Response(status_code = 412)
         
     if request.method == 'DELETE':
+        try:
+            manager.deleteCampaignporid(re)
         return Response(status_code = 200)
         
     else: 
