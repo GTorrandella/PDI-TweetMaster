@@ -42,10 +42,12 @@ def api_manager():
         return Response(status_code = 400)
 
 @app.route('/Campaing/<int:idC>', methods = ['GET', 'PATCH'])
-def api_manager_id():
+def api_manager_id(idC):
     
     if request.method == 'GET':
-        pass
+        jsonCampaing = manager.returnCampaign(idC).to_json()
+        res = Response(status_code = 200, content_type)
+        
     
     elif request.method == 'PATCH':
         pass
