@@ -10,8 +10,6 @@ from DataBaseConnector import Connector
 userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "endDate":"02 12 2018 19:26:22"}'
 def insertCampaign(userInputs):
 	fields = json.loads(userInputs) #De json a diccionario
-	startDate = fields["sDate"]
-	endDate = fields["eDate"]
 	
 	#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña.
 	#Pero antes de esto como fields["hashtags"] y fields["mentions"] son LISTAS, tenemos que pasarlas a un string para poder añadirlo a la BD como un varchar: 
