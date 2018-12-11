@@ -3,12 +3,10 @@ Created on Dec 10, 2018
 
 @author: Gabriel Torrandella
 '''
-from flask import Flask, json
-from wtforms import Form
+from flask import Flask
 from flask.globals import request
 from flask.wrappers import Response
 from werkzeug.wrappers import ETagRequestMixin, ETagResponseMixin, BaseRequest, BaseResponse
-from Campaign import Campaign
 import manager
 
 app = Flask(__name__)
@@ -35,7 +33,10 @@ def api_manager():
             return Response(status_code = 412)
         
     elif request.method == 'DELETE':
-        manager.deleteCampaignporid(request.get_etag())
+        if 'idC' in request.json:
+            manager.deleteCampaignporid(request.json['idC'])
+        elif 'email' in request.json:
+            manager.deleteCampaignporuser(request.json['email'])
         return Response(status_code = 200)
         
     else: 
@@ -46,16 +47,18 @@ def api_manager_id(idC):
     
     if request.method == 'GET':
         jsonCampaing = manager.returnCampaign(idC).to_json()
-        res = Response(status_code = 200, content_type)
+        res = Response(jsonCampaing, status = 200, mimetype = 'application/json')
+        return res
         
-    
     elif request.method == 'PATCH':
-        pass
-    
+        if ('columnaAModif' in request.json) and ('campoColumna' in request.json):
+            manager.modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])
+            return Response(status_code = 202)
+        else:
+            return Response(status_code = 404)
+        
     else:
         return Response(status_code = 404)
-    
-    pass
 
 if __name__ == "__main__":
     app.run()
