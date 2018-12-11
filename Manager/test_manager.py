@@ -4,38 +4,15 @@ import json
 from Campaign.Campaign import *
 from Tweet.Tweet import *
 from datetime import date
-from DataBaseConnector import Connector
+from DataBaseConnector import Connector, configTables
 import manager
-from DataBaseConnector import configTables
 import unittest
+#exec(open("test_manager.py").read())
 
-#Para probar el ingreso a BD:
-#def makeCampaign():
-	#ObjetoCampaign2=Campaign(1,"calongefederico@gmail.com", "Boca", "Carlitos" , "28-11-2018", "28-12-2018")
-	#Connector.insertarCampaignBD(ObjetoCampaign2)
-
-#Testeamos que se cree la campaña correctamente en la BD y que sea retornada sin modificaciones.
-#test_manager.testInsertCampaign()
-def testInsertCampaign():
-    #Entrada de ejemplo:
-    userInputs = '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}'
-    idCampaign=manager.insertCampaign(userInputs)
-    #Obtengo la campaña por nombre de email:
-    #campaignEspecifica = configTables.session.query(configTables.Campaign).filter_by(email="test@gmail.com").first()
-    campaignEspecificaRetornada = Connector.retornarCampaignBD(idC)
-    print (campaignEspecificaRetornada.email)
-    #assert campaignEspecificaRetornada.email == "test@gmail.com"
-    #assert campaignEspecificaRetornada.hashtags == "#test-#mock"
-    #assert campaignEspecificaRetornada.mentions == "@testCampaign-@mockOK"
-    #assert campaignEspecificaRetornada.startDate == "28-11-2018"
-    #assert campaignEspecificaRetornada.endDate == "02-12-2018"
-    #manager.returnCampaign(campaignEspecifica.id)
-    #assert campaignEspecifica == 200
-    #Despues eliminamos esa campaña y vemos si no está mas?
-
-#Testeamos que los tweets que me llegan se agregen correctamente a la BD.
+#Testeamos que los tweets que llegan se agregen correctamente a la BD.
+#import test_manager
+#test_manager.testinsertTweets()
 def testinsertTweets():
-
     #Ejemplo de los lista de diccionario de tweets en formato JSON que el Fetcher le manda a Manager (tweetsJson). 
     tweet1 = {
         "id_str" : "123456",
@@ -51,11 +28,37 @@ def testinsertTweets():
     }
 
     tweetsJson = json.dumps([tweet1,tweet2])
-    manager.insertTweets(tweetsJson)
-    #obtengo un tweet especifico:
-    #Y me fijo con assert si coinciden los campos con lo que deseaba guardar.
+    manager.Manager().insertTweets(tweetsJson)
+    #Obtengo el 2do Tweet:
+    tweetEspecificoRetornado = Connector.returnTweetByIDT("112112")
+    #Asserto los datos del 2do Tweet:
+    #print(tweetEspecificoRetornado.ID)
+    assert tweetEspecificoRetornado.ID == 112112
+    assert tweetEspecificoRetornado.userName == "MiauricioOK"
+    assert tweetEspecificoRetornado.userid ==  "451325"
+    assert tweetEspecificoRetornado.hashtags ==  "#DonaldNoMeDejes"
+    assert tweetEspecificoRetornado.mentions == "@donaldTrump-@G20"
+    assert tweetEspecificoRetornado.date == "2018-03-20 21:08:01"
 
-    
+#Testeamos que se cree la campaña correctamente en la BD y que sea retornada sin modificaciones.
+#import test_manager
+#test_manager.testInsertCampaign()
+def testInsertCampaign():
+    #Entrada de ejemplo, lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):
+    userInputs= '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"28 11 2018 18:02:00", "endDate":"02 12 2018 19:26:22"}'
+    idCampaign=manager.Manager().insertCampaign(userInputs)
+    #Obtengo la campaña por nombre de email:
+    #campaignEspecifica = configTables.session.query(configTables.Campaign).filter_by(email="test@gmail.com").first()
+    campaignEspecificaRetornada = Connector.retornarCampaignBD(idCampaign)
+    #print (campaignEspecificaRetornada.email)
+    #print (campaignEspecificaRetornada.id)
+    assert campaignEspecificaRetornada.email == "test@gmail.com"
+    assert campaignEspecificaRetornada.hashtags == "#test-#mock"
+    assert campaignEspecificaRetornada.mentions == "@testCampaign-@mockOK"
+    assert campaignEspecificaRetornada.startDate == "2018-11-28 18:02:00"
+    assert campaignEspecificaRetornada.endDate == "2018-12-02 19:26:22"
+    manager.returnCampaign(campaignEspecifica.id)
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

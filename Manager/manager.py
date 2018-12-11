@@ -1,13 +1,11 @@
 import sys
 sys.path.append("..")
 import json
-from Campaign import Campaign
-from Tweet import Tweet
+from Campaign.Campaign import Campaign
+from Tweet.Tweet import Tweet
 from datetime import date
 from DataBaseConnector import Connector
 
-#Lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):
-userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "endDate":"02 12 2018 19:26:22"}'
 class Manager():
 	def insertCampaign(self, userInputs):
 		fields = json.loads(userInputs) #De json a diccionario
@@ -47,7 +45,7 @@ class Manager():
 		for i in range(len(tweets)):
 			t = Tweet(tweets[i])
 			self.insertTweet(t) #Le pasamos el objeto Tweet instanciado.
-	
+
 	def insertTweet(self, TweetInput):
 		Connector.insertTweet(TweetInput)
 	

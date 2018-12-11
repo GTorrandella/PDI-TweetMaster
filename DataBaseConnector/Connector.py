@@ -1,5 +1,6 @@
 import flask_sqlalchemy
 from DataBaseConnector import configTables
+import json
 
 #Primero insertar si o si una campaig así se ejecuta la linea configTables.BD.metadata.create_all(configTables.engine) que crea la BD.
 #manager.insertCampaign('{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}')
@@ -7,7 +8,7 @@ def insertarCampaignBD(CampaignReceived):
 	#Insertamos la campaña
 	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (o no, dependiendo si se ejecutó antes).
 	#Insertamos fecha inicio, fecha fin, email dueño, hashtags y mentions en la tabla Campaign de la BD:
-	new_campaignBD=configTables.Campaign(startDate=(CampaignReceived.get_start_date()), finDate=(CampaignReceived.get_fin_date()), email=(CampaignReceived.get_emailDueño()), hashtags=(CampaignReceived.get_hashtags()), mentions=(CampaignReceived.get_mentions()))
+	new_campaignBD=configTables.Campaign(startDate=(CampaignReceived.startDate), finDate=(CampaignReceived.finDate), email=(CampaignReceived.emailDueño), hashtags=(CampaignReceived.hashtags), mentions=(CampaignReceived.mentions))
 	configTables.session.add(new_campaignBD)
 
 	#Y finalmente las agregamos a la BD con estas 3 lineas:
@@ -32,8 +33,8 @@ def eliminarCampaignBDxID(idC):
 def retornarCampaignBD(idC):
 	print("Campaña retornada:")
 	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC)
-	return campaignespecifica
-	#Que viaje en JSON, no como objeto. 
+	return(campaignespecifica)
+	#Que viaje en JSON, no como objeto (HACER). -->campaignJSON=(campaignespecifica).to_json() 
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
     #Devuelve esto: 2 donaldTrump@gmail.com hasgtags mentions 2018-11-28 2018-12-02 --> con print envés de return se ve.
 
@@ -66,9 +67,13 @@ def modificarCampaignBD(idC, inputColumn, inputUser):
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
 
 def insertTweet(TweetInput):
-	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD
+	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (o no, dependiendo si se ejecutó antes).
 	#Insertamos fecha publicacion, autor, mensaje y macheo en la tabla Tweet de la BD:
-	new_TweetBD=configTables.Tweet(ID=(TweetInput.ID), userName=(TweetInput.userName), userID=(TweetInput.userID), hashtags=(TweetInput.hashtags),mentions=(TweetInput.mentions), date=(TweetInput.date))
+	print ("TUIT")
+	stringHashtag = listaAString(TweetInput.hashtags) # #donaldTrump-#G20
+	stringMention = listaAString(TweetInput.mentions) # @donaldTrump-@miauricioOK
+	#print(TweetInput.ID, TweetInput.userName, TweetInput.userID, TweetInput.hashtags ,TweetInput.mentions, TweetInput.date)
+	new_TweetBD=configTables.Tweet(ID=(TweetInput.ID), userName=(TweetInput.userName), userid=(TweetInput.userID), hashtags=(stringHashtag),mentions=(stringMention), date=(TweetInput.date))
 	configTables.session.add(new_TweetBD)
 
 	#Y finalmente las agregamos a la BD con estas 3 lineas:
@@ -76,4 +81,20 @@ def insertTweet(TweetInput):
 	configTables.session.dirty
 	configTables.session.commit()
 
-#def retornarTweet(idT):
+def returnTweetByIDT(idT):
+	print("Tweet retornado:")
+	tweetEspecifico = configTables.session.query(configTables.Tweet).get(idT)
+	return tweetEspecifico
+
+#def returnTweetsByIDC(IDC):
+#esta funcion hacerla para Juan
+#DEfinir que en Tweet tenga la FK de Campaign.
+
+#def returnCampaignsInProgress(fecha en formato de fecha)
+#HACER FUNCION PARA GABY QUE me da una fecha en formato de Campaña y cuya hora de inicio es menor y hora de fin mayor.
+#Todas las campañas que comenzaron pero que no terminaron (todas las campañas en curso)
+#DEvolver lista de campañas 
+
+def listaAString(lista):
+		string = "-".join(lista)
+		return string

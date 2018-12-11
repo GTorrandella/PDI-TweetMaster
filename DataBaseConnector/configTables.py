@@ -19,25 +19,25 @@ class Campaign(BD):
 	__tablename__ = 'campaign'
 
 	id = Column(Integer, primary_key=True)
-	startDate = Column(String(10))
-	finDate = Column(String(10))
-	email = Column(String(40))
-	hashtags = Column(String(40))
-	mentions = Column(String(40))
+	startDate = Column(String(30))
+	finDate = Column(String(30))
+	email = Column(String(30))
+	hashtags = Column(String(50))
+	mentions = Column(String(50))
     # hook = Column(String(10))
 
 	def __repr__(self):
    	    return "<Campaign(idC='%s', startDate='%s', finDate='%s', email='%s', hashtags='%s', mentions='%s')>" % (self.id, self.startDate, self.finDate, self.email, self.hashtags, self.mentions)
 
-class Tweets(BD):
+class Tweet(BD):
 	__tablename__ = 'tweets'
 	
 	ID = Column(Integer, primary_key=True)
 	userName = Column(String(50))
-	userID = Integer
+	userid = Column(String(30))
 	hashtags = Column(String(50))
 	mentions = Column(String(50))
-	date = Column(String(50))
+	date = Column(String(30))
 
 	def __repr__(self):
 		return "<Tweets(idT='%s', fechaPublicacion='%s',autor='%s',mensaje='%s',macheo='%s')>" % (self.idT, self.fechaPublicacion, self.autor, self.mensaje, self.macheo)
