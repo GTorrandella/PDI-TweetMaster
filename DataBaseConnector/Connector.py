@@ -33,6 +33,7 @@ def retornarCampaignBD(idC):
 	print("Campaña retornada:")
 	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC)
 	return campaignespecifica
+	#Que viaje en JSON, no como objeto. 
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
     #Devuelve esto: 2 donaldTrump@gmail.com hasgtags mentions 2018-11-28 2018-12-02 --> con print envés de return se ve.
 
@@ -67,7 +68,7 @@ def modificarCampaignBD(idC, inputColumn, inputUser):
 def insertTweet(TweetInput):
 	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD
 	#Insertamos fecha publicacion, autor, mensaje y macheo en la tabla Tweet de la BD:
-	new_TweetBD=configTables.Tweet(startDate=(TweetInput.get_start_date()), finDate=(TweetReceived.get_fin_date()), email=(TweetReceived.get_emailDueño()), hashtags=(TweetReceived.get_hashtags()))
+	new_TweetBD=configTables.Tweet(ID=(TweetInput.ID), userName=(TweetInput.userName), userID=(TweetInput.userID), hashtags=(TweetInput.hashtags),mentions=(TweetInput.mentions), date=(TweetInput.date))
 	configTables.session.add(new_TweetBD)
 
 	#Y finalmente las agregamos a la BD con estas 3 lineas:

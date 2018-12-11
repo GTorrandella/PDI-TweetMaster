@@ -32,11 +32,12 @@ class Campaign(BD):
 class Tweets(BD):
 	__tablename__ = 'tweets'
 	
-	id = Column(Integer, primary_key=True)
-	fechaPublicacion = Column(String(50))
-	autor=Column(String(10))
-	mensaje=Column(String(10))
-	macheo=Column(String(10))
+	ID = Column(Integer, primary_key=True)
+	userName = Column(String(50))
+	userID = Integer
+	hashtags = Column(String(50))
+	mentions = Column(String(50))
+	date = Column(String(50))
 
 	def __repr__(self):
 		return "<Tweets(idT='%s', fechaPublicacion='%s',autor='%s',mensaje='%s',macheo='%s')>" % (self.idT, self.fechaPublicacion, self.autor, self.mensaje, self.macheo)
