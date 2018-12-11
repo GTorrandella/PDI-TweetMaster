@@ -11,7 +11,9 @@
 
 ### Requirements
 
-Install the packages in here. The easiest way is using **pip3**, as the API is made in Python 3.5.
+Python 3.5.2+
+
+Install the packages in here. The easiest way is using **pip3**:
 
 >pip3 install -r requirements.txt
 
@@ -33,3 +35,8 @@ This will return your Python 3 path.
 
 Now add a the next cron job. (To add a cron job, use **crontab -e**):  
 >*/5 * * * * PYTHONPATH {path to scheduler.py}/scheduler.py
+
+# Optional: Setting up the Swagger tool
+
+There is a Swagger documentation for TweetMaster. It's comes bundled with the app.  
+To use it, open /API_DOC/README.md and follow the steps.
