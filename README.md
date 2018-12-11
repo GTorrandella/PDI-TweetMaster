@@ -1,10 +1,23 @@
 # PDI-TweetMaster
 
+>Thanks thanking your time in finding TweetMaster!
+>
+>This RESTful API is a college's project, so expect mediocre code and a lot of to-do's.
+>
+>Autors: Federico Calonge, Juan David, Gabriel Torrandella
+>Professor: Juan Lagostena
 
+## Setting Up TweetMaster
+
+### Requirements
+
+Install the packages in here. The easiest way is using **pip3**, as the API is made in Python 3.5.
+
+>pip3 install -r requirements.txt
 
 ### Setting up the database
 
-TweetMaster uses a MySQL datebase during operations.  
+TweetMaster uses a MySQL database during operations.  
 Fortunately, the necesary set-up is controlled by the app during it's first execution.  
 Worry no more!
 
