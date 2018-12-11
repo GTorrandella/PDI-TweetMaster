@@ -1,5 +1,13 @@
 # PDI-TweetMaster
 
+
+
+### Setting up the database
+
+TweetMaster uses a MySQL datebase during operations.  
+Fortunately, the necesary set-up is controlled by the app during it's first execution.  
+Worry no more!
+
 ### Setting up the scheduler
 
 The Scheduler is a small Python module accessed once every 5 minutes.  
