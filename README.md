@@ -36,7 +36,7 @@ This will return your Python 3 path.
 Now add a the next cron job. (To add a cron job, use **crontab -e**):  
 >*/5 * * * * PYTHONPATH {path to scheduler.py}/scheduler.py
 
-# Optional: Setting up the Swagger tool
+### Optional: Setting up the Swagger tool
 
 There is a Swagger documentation for TweetMaster. It's comes bundled with the app.  
 To use it, open /API_DOC/README.md and follow the steps.
