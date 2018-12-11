@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 import json
-from Campaign.Campaign import *
+from Campaign import Campaign
 from Tweet.Tweet import *
 from datetime import date
 from DataBaseConnector import Connector

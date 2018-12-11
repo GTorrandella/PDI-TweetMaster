@@ -14,6 +14,7 @@ def insertarCampaignBD(CampaignReceived):
 	configTables.session.new
 	configTables.session.dirty
 	configTables.session.commit() #Para que los cambios se efectivicen en la BD
+	return new_campaignBD.id
 
 #manager.deleteCampaignporuser("donaldTrump@gmail.com")
 def eliminarCampaignBDxUser(email_user):
@@ -34,8 +35,6 @@ def retornarCampaignBD(idC):
 	return campaignespecifica
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
     #Devuelve esto: 2 donaldTrump@gmail.com hasgtags mentions 2018-11-28 2018-12-02 --> con print envés de return se ve.
-
-def retornarTweet(idT):
 
 #manager.modifyCampaign(2, "email", "calonshi@gmail.com")
 #Desde la Interfaz (en ModifCampaign) le llegaría al manager la columna a modificar, el campo para esa columna (inputUser) y el id de campaña.
@@ -65,14 +64,15 @@ def modificarCampaignBD(idC, inputColumn, inputUser):
 	
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
 
-"""def insertarTweets(TweetReceived):
+def insertTweet(TweetInput):
 	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD
 	#Insertamos fecha publicacion, autor, mensaje y macheo en la tabla Tweet de la BD:
-	new_TweetBD=configTables.Tweet(startDate=(TweetReceived.get_start_date()), finDate=(TweetReceived.get_fin_date()), email=(TweetReceived.get_emailDueño()), hashtags=(TweetReceived.get_hashtags()))
+	new_TweetBD=configTables.Tweet(startDate=(TweetInput.get_start_date()), finDate=(TweetReceived.get_fin_date()), email=(TweetReceived.get_emailDueño()), hashtags=(TweetReceived.get_hashtags()))
 	configTables.session.add(new_TweetBD)
 
 	#Y finalmente las agregamos a la BD con estas 3 lineas:
 	configTables.session.new
 	configTables.session.dirty
 	configTables.session.commit()
-"""
+
+#def retornarTweet(idT):
