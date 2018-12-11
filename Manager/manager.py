@@ -4,9 +4,7 @@ import json
 from Campaign import Campaign
 from Tweet import Tweet
 from DataBaseConnector import Connector
-from fetcher import Fetcher
 import urllib.request
-import http.client
 
 #Lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):
 userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "endDate":"02 12 2018 19:26:22"}'
