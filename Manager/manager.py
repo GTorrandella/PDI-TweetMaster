@@ -48,18 +48,35 @@ def modifyCampaign(idCampaign, columna, inputUser):
 	#Hay que ver que la campaña NO haya iniciado (que la fecha de hoy sea anterior a la fecha de inicio).
 	Connector.modificarCampaignBD(idCampaign, columna, inputUser)
 
-#El Fetcher le manda a Manager una lista de tweets para que únicamente lo inserte en la BD (en formato JSON llegaria):
-#Gaby dijo que es una lista de diccionarios de la forma TweettoJson()
-#EJemplo del objeto Tweet: en TweettoJson en la rama Fetcher (que es la versión final.), va a llegar 
-#una lista de esos en el response. 
-#Fecha según lo que devuelve TW es → “Sun Feb 25 17:11:02 +0000 2018”.
+#Ejemplo de los lista de diccionario de tweets en formato JSON que el Fetcher le manda a Manager (tweetsJson). 
+tweet1 = {
+	"id": "789456",
+	"userID": "123456",
+	"userName": "NASAOk",
+	"email": "lanasaoficialamigonofeik@algo.com",
+	"hashtags": ["mars","venus","earth"],
+	"mentions": ["NASA", "planets"]
+}
+tweet2 = {
+	"id": "98976",
+	"userID": "61558",
+	"userName": "miauricioOK",
+	"email": "macri@whiskas.cat",
+	"hashtags": ["DonaldVolveNoMeDejes"],
+	"mentions": ["donaldTrump", "(?"],
+	"date": "Sun Mar 20 15:11:01 2018"
+}
 
-#def insertTweet(TweetInput):
-#	ObjetoTweet=Tweet(VERESTEOBJETO)
-#	Connector.insertTweet(TweetInput)
+tweetsJson = json.dumps([tweet1,tweet2])	
 
-#def insertarTweets(TweetsInput):
-	#La descomprimo en Tweets separados y llamo a insertTweet y lo agrego uno por uno.
+def insertTweets(tweetsJson):
+	tweets = json.loads(tweetsJson)
+	#Los separamos en tweets separados y llamamos a insertTweet para agregarlo uno por uno:
+	for tuit in tweets:
+		insertTweet(tuit)
+
+def insertTweet(TweetInput):
+	Connector.insertTweet(TweetInput)
 
 def StringToIntArray(str_date):
 	#Arrays con las fechas de inicio y fin de la campania. Formato de la fecha en "fields": dd-mm-yyyy
