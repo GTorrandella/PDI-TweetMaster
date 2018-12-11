@@ -41,8 +41,8 @@ class test_fetcher(test_fetcher_base):
     def test_fetchCampagn(self):
         result = self.test.fetchTweets(self.campaign, self.lastId)
         
-        self.test.fetchByHashtag.assert_called_once_with("mars", self.lastId)
-        self.test.fetchByMention.assert_called_once_with("mars", self.lastId)
+        self.test.fetchByHashtag.assert_called_once_with("#mars", self.lastId)
+        self.test.fetchByMention.assert_called_once_with("@mars", self.lastId)
         
         self.assertEqual(result, self.response_fetchTweets)
     

@@ -10,9 +10,11 @@ from flask.wrappers import Response
 from Campaign import Campaign
 
 def fixDate(stringDate):
-    date = []
+    dateList = []
     for d in stringDate.split('-'):
-        date.append(int(d))
+        for ds in d.split(' '):
+            dateList.append(ds)
+    date = dateList[2] + " " + dateList[1] + " " + dateList[0] + " " + dateList[3]
     return date
 
 app = Flask(__name__)
@@ -28,7 +30,7 @@ def api_fetcher():
             sd = fixDate(cJson["startDate"]) 
             ed = fixDate(cJson["finDate"])
             
-            campaign = Campaign(cJson["id"],cJson["email"],cJson["hastags"],cJson["mentions"],sd,ed)
+            campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],sd,ed)
                                     
             tweets =  Fetcher().fetchTweets(campaign, lastId)
             resp = Response(tweets, status = 200, mimetype = 'application/json')

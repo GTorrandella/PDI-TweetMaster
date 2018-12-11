@@ -1,5 +1,5 @@
-from datetime import date
-from _datetime import date
+from datetime import datetime
+from _datetime import datetime
 import json
 
 class Campaign(object):

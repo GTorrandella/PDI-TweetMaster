@@ -6,6 +6,7 @@ Created on Nov 20, 2018
 import unittest
 from Tweet import Tweet
 from Campaign import Campaign
+from _datetime import datetime
 
 
 class test_fetcher_base(unittest.TestCase):
@@ -13,7 +14,7 @@ class test_fetcher_base(unittest.TestCase):
     def setUp(self):
         self.lastId = "967824267948770000"
 
-        self.campaign = Campaign("idC", "emailDueño", ["#mars"], ["@mars"], [2009,1,2], [2010,1,2])
+        self.campaign = Campaign("idC", "emailDueño", ["#mars"], ["@mars"], "06 12 2018 23:20:00", "07 12 2018 00:00:30")
 
         self.hastag = {
                 "statuses": [

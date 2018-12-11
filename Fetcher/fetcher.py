@@ -37,7 +37,7 @@ class Fetcher():
     def fetchTweets(self, campaign, lastId):
         rawTweets = []
         
-        for hashtag in campaign.get_hastags():
+        for hashtag in campaign.get_hashtags():
             rawTweets.append(self.fetchByHashtag(hashtag, lastId))
             
         for mention in campaign.get_mentions():
