@@ -21,15 +21,8 @@ def insertCampaign(userInputs):
 
 	ObjetoCampaign = Campaign(1, fields["email"], stringHashtag, stringMention, startDate, endDate)
 	
-	print("Strings:")
-	print(stringHashtag)
-	print(stringMention)
-
-	print("Objeto Campaign:")
-	print(ObjetoCampaign)
-	
 	#Llamamos a un metodo de Connector para agregar la campaña a la BD junto con las mentions y los hashtags:
-	Connector.insertarCampaignBD(ObjetoCampaign)
+	return Connector.insertarCampaignBD(ObjetoCampaign)
 
 def deleteCampaignporuser(email_user):
 	#Hay que ver que la campaña NO haya iniciado (que la fecha de hoy sea anterior a la fecha de inicio).
