@@ -1,17 +1,16 @@
 import sys
 sys.path.append("..")
 import json
-from Campaign import Campaign
-from Tweet import Tweet
+from Campaign.Campaign import Campaign
+from Tweet.Tweet import *
 from DataBaseConnector import Connector
 import urllib.request
 
 #Lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):
-userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "endDate":"02 12 2018 19:26:22"}'
+#userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "endDate":"02 12 2018 19:26:22"}'
 class Manager():
 	def insertCampaign(self, userInputs):
-		fields = json.loads(userInputs) #De json a diccionario
-		
+		fields = userInputs
 		#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña.
 		#Pero antes de esto como fields["hashtags"] y fields["mentions"] son LISTAS, tenemos que pasarlas a un string para poder añadirlo a la BD como un varchar: 
 		stringHashtag = self.listaAString(fields["hashtags"]) # #donaldTrump-#G20

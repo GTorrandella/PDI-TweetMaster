@@ -25,7 +25,7 @@ def api_manager():
     
     if request.method == 'POST':
         if checkForm(request.form):
-            idCampaing = Manager.insertCampaign(request.form)
+            idCampaing = Manager().insertCampaign(request.get_json())
             res = Response(status_code = 201)
             res.set_etag(idCampaing, weak = False)    
             return res
@@ -61,4 +61,4 @@ def api_manager_id(idC):
         return Response(status_code = 404)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
