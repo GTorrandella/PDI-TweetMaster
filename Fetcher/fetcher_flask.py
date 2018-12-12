@@ -25,14 +25,13 @@ def api_fetcher():
     if request.headers['Content-Type'] == 'application/json':
         if 'Campaing' in request.json and 'Last-ID' in request.json:
             cJson = json.loads(request.json['Campaing'])
-            lastId = request.json['Last-ID']
             
             sd = fixDate(cJson["startDate"]) 
             ed = fixDate(cJson["finDate"])
             
             campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],sd,ed)
                                     
-            tweets =  Fetcher().fetchTweets(campaign, lastId)
+            tweets =  Fetcher().fetchTweets(campaign)
             resp = Response(tweets, status = 200, mimetype = 'application/json')
             return resp
         else:

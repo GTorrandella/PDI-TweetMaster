@@ -19,12 +19,12 @@ class Fetcher():
     twitter = Twython(APP_KEY, APP_SECRET, oauth_version=2)
     twitter = Twython(APP_KEY, access_token=ACCESS_TOKEN)
     
-    def fetchByHashtag(self, hashtag, lastId):
-        rawTweet = self.twitter.cursor(self.twitter.search, q=hashtag, result_type="recent", since_id=lastId)
+    def fetchByHashtag(self, hashtag):
+        rawTweet = self.twitter.cursor(self.twitter.search, q=hashtag, result_type="recent")
         return rawTweet
     
-    def fetchByMention(self, mention, lastId):
-        rawTweet = self.twitter.cursor(self.twitter.search, q=mention, result_type="recent", since_id=lastId)
+    def fetchByMention(self, mention):
+        rawTweet = self.twitter.cursor(self.twitter.search, q=mention, result_type="recent")
         return rawTweet
     
     def makeTweet(self, rawTweets):
@@ -34,13 +34,13 @@ class Fetcher():
                 tweets.append(Tweet(tweet).to_json())
         return tweets
             
-    def fetchTweets(self, campaign, lastId):
+    def fetchTweets(self, campaign):
         rawTweets = []
         
         for hashtag in campaign.get_hashtags():
-            rawTweets.append(self.fetchByHashtag(hashtag, lastId))
+            rawTweets.append(self.fetchByHashtag(hashtag))
             
         for mention in campaign.get_mentions():
-            rawTweets.append(self.fetchByMention(mention, lastId))
+            rawTweets.append(self.fetchByMention(mention))
                
         return self.makeTweet(rawTweets)
