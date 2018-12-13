@@ -1,7 +1,6 @@
 import sys
 sys.path.append("..")
 import json
-<<<<<<< HEAD
 from Tweet.Tweet import *
 from Campaign.Campaign import *
 from Manager.manager import Manager

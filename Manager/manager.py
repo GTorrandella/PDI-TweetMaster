@@ -8,15 +8,6 @@ from datetime import date
 from DataBaseConnector import Connector
 import urllib.request
 
-=======
-from Campaign import Campaign
-from Tweet import Tweet
-import Connector
-import urllib.request
-
-#Lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):
-#userInputs= '{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "endDate":"02 12 2018 19:26:22"}'
->>>>>>> 136fb2ed907eca7e7c3029c9e7570502155e8b28
 class Manager():
 	def insertCampaign(self, userInputs):
 		fields = userInputs

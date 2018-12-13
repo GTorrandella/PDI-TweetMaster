@@ -2,23 +2,13 @@ from datetime import date
 import json
 import sys
 import unittest
-
 from Campaign.Campaign import *
-<<<<<<< HEAD:Manager/test_manager.py
 from Tweet.Tweet import *
 from datetime import date
 from DataBaseConnector import Connector, configTables
 import manager
-import unittest
-#exec(open("test_manager.py").read())
-=======
-from DataBaseConnector import Connector
-from DataBaseConnector import configTables
-from Tweet.Tweet import *
-import manager
 
 sys.path.append("..")
->>>>>>> 136fb2ed907eca7e7c3029c9e7570502155e8b28:Manager/tests/test_manager.py
 
 #Testeamos que los tweets que llegan se agregen correctamente a la BD.
 #import test_manager
