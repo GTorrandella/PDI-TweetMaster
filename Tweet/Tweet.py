@@ -11,7 +11,7 @@ class Tweet(object):
         self.userName = user['name']
         self.userID = user['id_str']
         self.hashtags = entities['hashtags']
-        self.mentions = entities['mentions']
+        self.mentions = entities['user_mentions']
         self.date = datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y")
         #Sun Mar 20 21:08:01 2018"
 
@@ -20,8 +20,8 @@ class Tweet(object):
             "id_str" : self.ID,
             "user" : {"name" : self.userName, "id_str" : self.userID},
             "entities" : {"hashtags" : self.hashtags,
-            "mentions" : self.mentions},
-            "created_at" : str(self.date),
+            "user_mentions" : self.mentions},
+            "created_at" : str(self.date)
         }
         tweet_json = json.dumps(dictionary) 
         return tweet_json

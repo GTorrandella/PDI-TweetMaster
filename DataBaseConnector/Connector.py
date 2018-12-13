@@ -1,6 +1,10 @@
 import flask_sqlalchemy
+<<<<<<< HEAD
 from DataBaseConnector import configTables
 import json
+=======
+import configTables
+>>>>>>> 136fb2ed907eca7e7c3029c9e7570502155e8b28
 
 #Primero insertar si o si una campaig así se ejecuta la linea configTables.BD.metadata.create_all(configTables.engine) que crea la BD.
 #manager.insertCampaign('{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}')

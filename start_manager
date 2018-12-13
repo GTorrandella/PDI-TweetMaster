@@ -1,0 +1,3 @@
+cd Manager/
+export FLASK_APP=manager_flask.py
+flask run --port 5000
