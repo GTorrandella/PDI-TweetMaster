@@ -20,12 +20,12 @@ class Campaign(object):
 
     def to_dict(self):
         dictionary = {
-            "id" : self.__idC,
-            "email" : self.__emailDueño,
-            "hashtags" : self.__hashtags,
-            "mentions" : self.__mentions,
-            "startDate" : str(self.__startDate),
-            "finDate" : str(self.__finDate),
+            "id" : self.idC,
+            "email" : self.emailDueño,
+            "hashtags" : self.hashtags,
+            "mentions" : self.mentions,
+            "startDate" : datetime.strftime(self.startDate,"%d %m %Y %X"),
+            "finDate" : datetime.strftime(self.finDate,"%d %m %Y %X"),
         }
         return dictionary
 

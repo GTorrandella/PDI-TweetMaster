@@ -24,7 +24,7 @@ class Campaign(BD):
 	email = Column(String(30))
 	hashtags = Column(String(50))
 	mentions = Column(String(50))
-    # hook = Column(String(10))
+	tuits = relationship("Tweet")
 
 	def __repr__(self):
    	    return "<Campaign(idC='%s', startDate='%s', finDate='%s', email='%s', hashtags='%s', mentions='%s')>" % (self.id, self.startDate, self.finDate, self.email, self.hashtags, self.mentions)
@@ -38,11 +38,10 @@ class Tweet(BD):
 	hashtags = Column(String(50))
 	mentions = Column(String(50))
 	date = Column(String(30))
+	idCampaign = Column(Integer, ForeignKey('campaign.id'))
 
 	def __repr__(self):
-		return "<Tweets(idT='%s', fechaPublicacion='%s',autor='%s',mensaje='%s',macheo='%s')>" % (self.idT, self.fechaPublicacion, self.autor, self.mensaje, self.macheo)
-
-
+		return "<Tweets(ID='%s', userName='%s',userid='%s',hashtags='%s',mentions='%s',date='%s',idCampaign='%s')>" % (self.ID, self.userName, self.userid, self.hashtags, self.mentions, self.date, self.idCampaign)
 
 
 
