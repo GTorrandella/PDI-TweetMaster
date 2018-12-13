@@ -1,0 +1,3 @@
+cd Fetcher/
+export FLASK_APP=fetcher_flask.py
+flask run --port 5001

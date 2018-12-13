@@ -9,5 +9,6 @@
 <path>/${PROJECT_DIR_NAME}/Manager</path>
 <path>/${PROJECT_DIR_NAME}/Reporter</path>
 <path>/${PROJECT_DIR_NAME}/Scheduler</path>
+<path>/${PROJECT_DIR_NAME}/DataBaseConnector</path>
 </pydev_pathproperty>
 </pydev_project>

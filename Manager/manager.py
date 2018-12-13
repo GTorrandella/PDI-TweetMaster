@@ -1,9 +1,9 @@
 import sys
 sys.path.append("..")
 import json
-from Campaign.Campaign import Campaign
-from Tweet.Tweet import *
-from DataBaseConnector import Connector
+from Campaign import Campaign
+from Tweet import Tweet
+import Connector
 import urllib.request
 
 #Lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):

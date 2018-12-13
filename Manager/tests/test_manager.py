@@ -1,13 +1,15 @@
-import sys
-sys.path.append("..")
-import json
-from Campaign.Campaign import *
-from Tweet.Tweet import *
 from datetime import date
-from DataBaseConnector import Connector
-import manager
-from DataBaseConnector import configTables
+import json
+import sys
 import unittest
+
+from Campaign.Campaign import *
+from DataBaseConnector import Connector
+from DataBaseConnector import configTables
+from Tweet.Tweet import *
+import manager
+
+sys.path.append("..")
 
 #Para probar el ingreso a BD:
 #def makeCampaign():

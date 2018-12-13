@@ -26,23 +26,23 @@ class test_fetcher(test_fetcher_base):
         
     
     def test_fetchByHashtag(self):
-        result = self.test.fetchByHashtag("mars", self.lastId)
+        result = self.test.fetchByHashtag("#mars")
         
-        self.test.fetchByHashtag.assert_any_call("mars", self.lastId)
+        self.test.fetchByHashtag.assert_any_call("#mars")
         self.assertEqual(result, self.responseHastag)
 
     
     def test_fetchByMentions(self):
-        result = self.test.fetchByMention("mars", self.lastId)
+        result = self.test.fetchByMention("@mars")
         
-        self.test.fetchByMention.assert_any_call("mars", self.lastId)
+        self.test.fetchByMention.assert_any_call("@mars")
         self.assertEqual(result, self.responseMention)
     
     def test_fetchCampagn(self):
-        result = self.test.fetchTweets(self.campaign, self.lastId)
+        result = self.test.fetchTweets(self.campaign)
         
-        self.test.fetchByHashtag.assert_called_once_with("#mars", self.lastId)
-        self.test.fetchByMention.assert_called_once_with("@mars", self.lastId)
+        self.test.fetchByHashtag.assert_called_once_with("#mars")
+        self.test.fetchByMention.assert_called_once_with("@mars")
         
         self.assertEqual(result, self.response_fetchTweets)
     

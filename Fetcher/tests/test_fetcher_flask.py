@@ -12,7 +12,7 @@ from unittest.mock import MagicMock
 
 class test_fetcher_flask(test_fetcher_base):
 
-    def return_values(self, search, q, result_type, since_id):
+    def return_values(self, search, q, result_type):
         if q == "#mars":
             return self.responseHastag
         

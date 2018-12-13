@@ -4,7 +4,7 @@ Created on Dec 04, 2018
 @author: Gabriel Torrandella
 '''
 from flask import Flask, json
-from fetcher import Fetcher
+import fetcher
 from flask.globals import request
 from flask.wrappers import Response
 from Campaign import Campaign
@@ -31,7 +31,7 @@ def api_fetcher():
             
             campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],sd,ed)
                                     
-            tweets =  Fetcher().fetchTweets(campaign)
+            tweets = fetcher.Fetcher().fetchTweets(campaign)
             resp = Response(tweets, status = 200, mimetype = 'application/json')
             return resp
         else:

@@ -7,7 +7,9 @@ from flask import Flask
 from flask.globals import request
 from flask.wrappers import Response
 from werkzeug.wrappers import ETagRequestMixin, ETagResponseMixin, BaseRequest, BaseResponse
-from manager import Manager
+
+import Manager
+
 
 app = Flask(__name__)
 
