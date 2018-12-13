@@ -24,21 +24,22 @@ class Reporter():
 
 	def countTweets(self, tweets):
 		cant_tweets = 0
-        for cant_tweets in range tweets:
-        	cant_tweets = cant_tweets +1
-        	return cant_tweets
-        
+		for cant_tweets in range tweets:
+			cant_tweets = cant_tweets +1
+			return cant_tweets
+		
 	def reportSummary(self, idC): 
 		campaign = self.getcampaign(idC)
 		#tweets = Connector().returnTweetsByIDC()  #Busca tweets de determinada campaña (falta hacer en Connector
 		
 		cant_tweets = self.countTweets(tweets)			#contar cantidad de tweets	
-        dictionary = ["cant_tweets"] = cant_tweets	#lo agrego al diccionario
-        summary = json.dumps(dictionary)
-        #Cantidad diferente de usuarios
-
-        #Autor con mas tweets
-
+		dictionary = ["cant_tweets"] = cant_tweets	#lo agrego al diccionario
+		summary = json.dumps(dictionary)
+		
+		#Cantidad diferente de usuarios
+		
+		#Autor con mas tweets
+		
 		campaignJson = campaign.to_json()
 
 
