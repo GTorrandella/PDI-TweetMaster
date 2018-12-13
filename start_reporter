@@ -1,0 +1,3 @@
+cd Reporter/
+export FLASK_APP=reporter_flask.py
+flask run --port 5002
