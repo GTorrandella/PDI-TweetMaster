@@ -25,6 +25,11 @@ TweetMaster uses a MySQL database during operations.
 Fortunately, the necesary set-up is controlled by the app during it's first execution.  
 Worry no more!
 
+### Setting up the servers
+
+Execute in diferent terminals _start_manager_, _start_fetcher_ and _start_reporter_, from TweetMaster's root directory.  
+The order is indistint.
+
 ### Setting up the scheduler
 
 The Scheduler is a small Python module accessed once every 5 minutes.  
