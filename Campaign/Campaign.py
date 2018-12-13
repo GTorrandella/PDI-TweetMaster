@@ -1,4 +1,5 @@
 from datetime import datetime
+from _datetime import datetime
 import json
 
 class Campaign(object):
@@ -17,7 +18,6 @@ class Campaign(object):
         camp_json = json.dumps(dictionary) 
         return camp_json
 
-
     def to_dict(self):
         dictionary = {
             "id" : self.__idC,
@@ -31,5 +31,6 @@ class Campaign(object):
 
     def __repr__(self):
         return "<idC:%s emailDueño:%s hashtags:%s mentions:%s startDate:%s finDate:%s> " % (self.idC, self.emailDueño, self.hashtags, self.mentions, self.startDate, self.finDate)
+    
         
     
