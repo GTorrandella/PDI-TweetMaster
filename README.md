@@ -30,6 +30,11 @@ Worry no more!
 Execute in diferent terminals _start_manager_, _start_fetcher_ and _start_reporter_, from TweetMaster's root directory.  
 The order is indistint.
 
+The servers will live in:  
+ * Manger:   127.0.0.1/5000
+ * Fetcher:  127.0.0.1/5001
+ * Reporter: 127.0.0.1/5002
+ 
 ### Setting up the scheduler
 
 The Scheduler is a small Python module accessed once every 5 minutes.  
