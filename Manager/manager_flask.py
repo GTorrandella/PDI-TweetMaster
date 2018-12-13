@@ -7,9 +7,9 @@ from flask import Flask
 from flask.globals import request
 from flask.wrappers import Response
 from werkzeug.wrappers import ETagRequestMixin, ETagResponseMixin, BaseRequest, BaseResponse
-
-import Manager
-
+import manager
+sys.path.append("../..")
+from DatabaseConnector import configTables
 
 app = Flask(__name__)
 
@@ -27,7 +27,7 @@ def api_manager():
     
     if request.method == 'POST':
         if checkForm(request.form):
-            idCampaing = Manager().insertCampaign(request.get_json())
+            idCampaing = manager().insertCampaign(request.get_json())
             res = Response(status_code = 201)
             res.set_etag(idCampaing, weak = False)    
             return res
