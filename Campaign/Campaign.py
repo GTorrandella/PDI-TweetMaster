@@ -13,6 +13,12 @@ class Campaign(object):
         self.finDate = datetime.strptime(finDate, "%d %m %Y %X") #dd mm yyyy hh:mm:ss
 
     def to_json(self):
+        dictionary = self.to_dict() #Llamamos a la funcion de abajo
+        camp_json = json.dumps(dictionary) 
+        return camp_json
+
+
+    def to_dict(self):
         dictionary = {
             "id" : self.__idC,
             "email" : self.__emailDueño,
@@ -21,8 +27,7 @@ class Campaign(object):
             "startDate" : str(self.__startDate),
             "finDate" : str(self.__finDate),
         }
-        camp_json = json.dumps(dictionary) 
-        return camp_json
+        return dictionary
 
     def __repr__(self):
         return "<idC:%s emailDueño:%s hashtags:%s mentions:%s startDate:%s finDate:%s> " % (self.idC, self.emailDueño, self.hashtags, self.mentions, self.startDate, self.finDate)
