@@ -1,9 +1,7 @@
-import sys
-sys.path.append("..")
 import json
-from Tweet.Tweet import *
-from Campaign.Campaign import *
-from Manager.manager import Manager
+from Tweet.Tweet import Tweet as Tweet
+from Campaign.Campaign import Campaign as Campaign
+from Manager.manager import Manager as Manager
 from DataBaseConnector import Connector
 from collections import Counter
 
@@ -33,8 +31,8 @@ class Reporter():
 	c = {"id":"1234", "email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "finDate":"02 12 2018 19:26:22"}
 	campaign = Campaign(c["id"], c["email"], c["hashtags"], c["mentions"], c["startDate"], c["finDate"])
 
-	def getCampaign(self, idC): #OK falta probar con lo de Connector
-		c_dict = Connector.retornarCampaignBD(idC)	#Traer campaña de la BD (diccionario)
+	def getCampaign(self, c_dict): #RECIBE CAMPAIGN EN VEZ DE C_DICT SE SUPONE (VER QUE DEVUELVE LA BD #OK falta probar con lo de Connector
+		#c_dict = Connector.retornarCampaignBD(idC)	#Traer campaña de la BD (diccionario)
 		campaign = Campaign(c_dict["id"], c_dict["email"], c_dict["hashtags"], c_dict["mentions"], c_dict["startDate"], c_dict["finDate"])
 		return campaign
 

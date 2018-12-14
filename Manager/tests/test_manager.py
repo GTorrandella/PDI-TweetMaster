@@ -1,8 +1,8 @@
 import unittest
-from Campaign.Campaign import *
-from Tweet.Tweet import *
+from Tweet.Tweet import Tweet as Tweet
+from Campaign.Campaign import Campaign as Campaign
 from datetime import date
-from DataBaseConnector.Connector
+from DataBaseConnector import Connector
 
 class test_manager(unittest.TestCase):
     #Testeamos que los tweets que llegan se agregen correctamente a la BD.

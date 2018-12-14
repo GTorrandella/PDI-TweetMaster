@@ -1,10 +1,8 @@
-import sys
-sys.path.append("..")
 import json
-from Campaign.Campaign import Campaign
-from Tweet.Tweet import Tweet
+from Tweet.Tweet import Tweet as Tweet
+from Campaign.Campaign import Campaign as Campaign
 from datetime import date
-from DataBaseConnector import Connector
+from DataBaseConnector import Connector as Connector
 import urllib.request
 
 class Manager():

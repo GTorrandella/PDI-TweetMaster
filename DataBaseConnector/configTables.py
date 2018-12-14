@@ -6,7 +6,7 @@ from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import relationship
 
 #Es nuestra abstraccion de la base de datos:
-engine = create_engine("mysql+pymysql://root:4236@localhost:3306/BDTweetMaster", echo=True)
+engine = create_engine("mysql+pymysql://root:1234@localhost:3306/BDTweetMaster", echo=True)
 if not database_exists(engine.url):
     create_database(engine.url)
 #Este objeto va a contener la meta-informacion de nuestros mapeos:
