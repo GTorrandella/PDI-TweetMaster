@@ -2,11 +2,10 @@ from datetime import date
 import json
 import sys
 import unittest
-sys.path.append("../..")
 from Campaign.Campaign import *
 from Tweet.Tweet import *
 from datetime import date
-from DataBaseConnector import Connector, configTables
+from DataBaseConnector.Connector
 from Manager import manager
 
 #Testeamos que los tweets que llegan se agregen correctamente a la BD.
@@ -28,8 +27,8 @@ def testinsertTweets():
     }
 
     tweetsJson = json.dumps([tweet1,tweet2])
-    #INsertamos un tweet con ID campaign 3.
-    manager.Manager().insertTweets(tweetsJson, 3)
+    #INsertamos un tweet con ID campaign 2.
+    manager.Manager().insertTweets(tweetsJson, 2)
     #Obtengo el 2do Tweet:
     tweetEspecificoRetornado = Connector.returnTweetByIDT("112112")
     #Asserto los datos del 2do Tweet:
@@ -61,9 +60,13 @@ def testInsertCampaign():
     #assert campaignEspecificaRetornada.endDate == "2018-12-02 19:26:22"
     #manager.returnCampaign(campaignEspecifica.id)
 
-def retornarCampaignBD():
+def testReturnCampaignBD():
     #Le pasamos la ID de Campaign 2
-    Connector.retornarCampaignBD(5)
+    Connector.retornarCampaignBD(2)
+
+def testReturnTweetsByIDC():
+    #Retornamos los tuits con IDC 2 (de la 2da campaña)
+    Connector.returnTweetsByIDC(2)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

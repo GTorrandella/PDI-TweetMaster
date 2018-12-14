@@ -8,7 +8,7 @@ from flask.globals import request
 from flask.wrappers import Response
 from werkzeug.wrappers import ETagRequestMixin, ETagResponseMixin, BaseRequest, BaseResponse
 import manager
-sys.path.append("../..")
+sys.path.append("..")
 from DatabaseConnector import configTables
 
 app = Flask(__name__)

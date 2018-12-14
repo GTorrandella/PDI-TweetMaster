@@ -1,14 +1,12 @@
 import flask_sqlalchemy
-import configTables
 from datetime import datetime
 import json
 import sys
+from DataBaseConnector import configTables
 sys.path.append("..")
 from Campaign import *
 
-
-
-#Primero insertar si o si una campaig así se ejecuta la linea configTables.BD.metadata.create_all(configTables.engine) que crea la BD.
+#Primerio insertar si o si una campaig así se ejecuta la linea configTables.BD.metadata.create_all(configTables.engine) que crea la BD.
 #manager.insertCampaign('{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}')
 def insertarCampaignBD(CampaignReceived):
 	#Insertamos la campaña
@@ -100,10 +98,11 @@ def returnTweetByIDT(idT):
 
 def returnTweetsByIDC(IDC):
 	tweetsBD = configTables.session.query(configTables.Tweet).filter_by(idCampaign=IDC).all()
-	print(tweetsBD)
+	print(tweetsBD[1])
 
 	#Nos tiró esto (lista de Tweets en el formato de SQL ALCHEMY): 
-	#[<Tweets(ID='112112', userName='MiauricioOK',userid='451325',hashtags='#DonaldNoMeDejes',mentions='@donaldTrump-@G20',date='2018-03-20 21:08:01',idCampaign='3')>, <Tweets(ID='123456', userName='NASAOk',userid='789456',hashtags='#mars-#venus-#earth',mentions='@NASA-@planets',date='2018-03-20 15:11:01',idCampaign='3')>]
+	#[<Tweets(ID='112112', userName='MiauricioOK',userid='451325',hashtags='#DonaldNoMeDejes',mentions='@donaldTrump-@G20',date='2018-03-20 21:08:01',idCampaign='3')>, 
+	#<Tweets(ID='123456', userName='NASAOk',userid='789456',hashtags='#mars-#venus-#earth',mentions='@NASA-@planets',date='2018-03-20 15:11:01',idCampaign='3')>]
 	#Tenemos que separar los tweets y crear objetos tweets. Y hacerles el to json. 
 	#Y hacer una lista de esos to json. 
 	
