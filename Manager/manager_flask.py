@@ -1,8 +1,3 @@
-'''
-Created on Dec 10, 2018
-
-@author: Gabriel Torrandella
-'''
 from flask import Flask
 from flask.globals import request
 from flask.wrappers import Response
