@@ -96,9 +96,9 @@ def returnTweetByIDT(idT):
 
 def returnTweetsByIDC(IDC):
 	tweetsBD = configTables.session.query(configTables.Tweet).filter_by(idCampaign=IDC).all()
-	print(tweetsBD[1])
+	print(tweetsBD[0])
 
-	#Nos tiró esto (lista de Tweets en el formato de SQL ALCHEMY): 
+	#Nos tiró esto (lista de Tweets en el formato del modelo de SQL ALCHEMY que esta en configTables): 
 	#[<Tweets(ID='112112', userName='MiauricioOK',userid='451325',hashtags='#DonaldNoMeDejes',mentions='@donaldTrump-@G20',date='2018-03-20 21:08:01',idCampaign='3')>, 
 	#<Tweets(ID='123456', userName='NASAOk',userid='789456',hashtags='#mars-#venus-#earth',mentions='@NASA-@planets',date='2018-03-20 15:11:01',idCampaign='3')>]
 	#Tenemos que separar los tweets y crear objetos tweets. Y hacerles el to json. 
@@ -121,12 +121,11 @@ def returnTweetsByIDC(IDC):
 	#return(campaignespecifica)
 	#Que viaje en JSON, no como objeto:
 	#campaignJSON=(campaignespecifica).to_json()
-	return
-	objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
+	#objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
 	#print(type(objetoCampaign))
 	#print(objetoCampaign)
-	c=objetoCampaign.to_dict()
-	return(c)
+	#c=objetoCampaign.to_dict()
+	#return(c)
 
 #def returnCampaignsInProgress(fecha en formato de fecha)
 #HACER FUNCION PARA GABY QUE me da una fecha en formato de Campaña y cuya hora de inicio es menor y hora de fin mayor.
