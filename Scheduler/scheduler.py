@@ -4,7 +4,7 @@ Created on Dec 10, 2018
 @author: Gabriel Torrandella
 '''
 from DataBseConnector.Connector import returnCampaingsInProgress
-from manager import Manager
+from Manager.manager import Manager
 from _datetime import datetime
 
 class Scheduler():

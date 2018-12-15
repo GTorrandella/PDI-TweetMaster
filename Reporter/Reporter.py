@@ -2,7 +2,7 @@ import json
 from Tweet.Tweet import Tweet as Tweet
 from Campaign.Campaign import Campaign as Campaign
 from Manager.manager import Manager as Manager
-from DataBaseConnector import Connector
+import DataBaseConnector.Connector as Connector
 from collections import Counter
 
 class Reporter():

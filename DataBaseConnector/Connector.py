@@ -1,7 +1,7 @@
 import flask_sqlalchemy
 from datetime import datetime
 import json
-from DataBaseConnector import configTables
+import DataBaseConnector.configTables as configTables
 from Campaign.Campaign import Campaign as Campaign
 
 #Primerio insertar si o si una campaig así se ejecuta la linea configTables.BD.metadata.create_all(configTables.engine) que crea la BD.
