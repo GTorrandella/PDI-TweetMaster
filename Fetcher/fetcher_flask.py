@@ -7,8 +7,8 @@ from flask import Flask, json
 from flask.globals import request
 from flask.wrappers import Response
 
-from Campaign.Campaign import Campaign
 import Fetcher.fetcher as fetcher
+from Campaign.Campaign import Campaign
 
 
 def fixDate(stringDate):
