@@ -3,12 +3,6 @@
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Tweet Master</pydev_property>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python interpreter</pydev_property>
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
-<path>/${PROJECT_DIR_NAME}/Tweet</path>
-<path>/${PROJECT_DIR_NAME}/Campaign</path>
-<path>/${PROJECT_DIR_NAME}/Fetcher</path>
-<path>/${PROJECT_DIR_NAME}/Manager</path>
-<path>/${PROJECT_DIR_NAME}/Reporter</path>
-<path>/${PROJECT_DIR_NAME}/Scheduler</path>
-<path>/${PROJECT_DIR_NAME}/DataBaseConnector</path>
+<path>/${PROJECT_DIR_NAME}</path>
 </pydev_pathproperty>
 </pydev_project>
