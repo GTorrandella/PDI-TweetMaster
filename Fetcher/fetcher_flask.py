@@ -14,7 +14,7 @@ def fixDate(stringDate):
     for d in stringDate.split('-'):
         for ds in d.split(' '):
             dateList.append(ds)
-    date = dateList[2] + " " + dateList[1] + " " + dateList[0] + " " + dateList[3]
+    date = dateList[0] + " " + dateList[1] + " " + dateList[2] + " " + dateList[3]
     return date
 
 app = Flask(__name__)
