@@ -4,10 +4,10 @@ Created on Nov 20, 2018
 @author: Gabriel Torrandella
 '''
 import unittest
-import fetcher as fetch
 from unittest.mock import MagicMock
-from tests.test_fetcher_base import test_fetcher_base
 
+import Fetcher.fetcher as fetch
+from Fetcher.tests.test_fetcher_base import test_fetcher_base
 
 
 class test_fetcher(test_fetcher_base):

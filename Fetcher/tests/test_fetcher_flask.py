@@ -4,11 +4,12 @@ Created on Nov 20, 2018
 @author: Gabriel Torrandella
 '''
 import unittest
-from tests.test_fetcher_base import test_fetcher_base
-
-import fetcher_flask
-from fetcher import Fetcher
 from unittest.mock import MagicMock
+
+from Fetcher.fetcher import Fetcher
+import Fetcher.fetcher_flask as fetcher_flask
+from Fetcher.tests.test_fetcher_base import test_fetcher_base
+
 
 class test_fetcher_flask(test_fetcher_base):
 

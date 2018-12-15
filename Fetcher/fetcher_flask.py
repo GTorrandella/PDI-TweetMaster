@@ -4,10 +4,12 @@ Created on Dec 04, 2018
 @author: Gabriel Torrandella
 '''
 from flask import Flask, json
-import fetcher
 from flask.globals import request
 from flask.wrappers import Response
-from Campaign import Campaign
+
+from Campaign.Campaign import Campaign
+import Fetcher.fetcher as fetcher
+
 
 def fixDate(stringDate):
     dateList = []

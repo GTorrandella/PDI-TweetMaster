@@ -4,9 +4,9 @@ Created on Nov 20, 2018
 @author: Gabriel Torrandella
 '''
 import unittest
-from Tweet import Tweet
-from Campaign import Campaign
-from _datetime import datetime
+
+from Campaign.Campaign import Campaign
+from Tweet.Tweet import Tweet
 
 
 class test_fetcher_base(unittest.TestCase):
