@@ -6,9 +6,9 @@ Created on Dec 12, 2018
 import unittest
 from unittest.mock import MagicMock
 
-from Connector import configTables
-from manager import Manager
-import manager_flask
+import DataBaseConnector.configTables as configTables
+from Manager.manager import Manager
+import Manager.manager_flask
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base

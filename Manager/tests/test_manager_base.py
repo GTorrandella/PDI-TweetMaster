@@ -5,7 +5,7 @@ Created on Dec 12, 2018
 '''
 import unittest
 
-from Campaign import Campaign
+from Campaign.Campaign import Campaign
 
 
 class test_manager_base(unittest.TestCase):
