@@ -31,20 +31,13 @@ class Reporter():
 	c = {"id":"1234", "email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "startDate":"28 11 2018 18:02:00", "finDate":"02 12 2018 19:26:22"}
 	campaign = Campaign(c["id"], c["email"], c["hashtags"], c["mentions"], c["startDate"], c["finDate"])
 
-	def getCampaign(self, c_dict): #RECIBE CAMPAIGN EN VEZ DE C_DICT SE SUPONE (VER QUE DEVUELVE LA BD #OK falta probar con lo de Connector
-		#c_dict = Connector.retornarCampaignBD(idC)	#Traer campaña de la BD (diccionario)
-		campaign = Campaign(c_dict["id"], c_dict["email"], c_dict["hashtags"], c_dict["mentions"], c_dict["startDate"], c_dict["finDate"])
-		return campaign
-
-	def getCampaignTweets(self, idC): #OK falta lo de Connector y probarlo con eso
-		#tweetsJson = Connector().returnTweetsByIDC(idC)  #Busca tweets de determinada campaña (falta hacer en Connector)
+	def getCampaignAndTweets(self, idC): #OK falta lo de Connector y probarlo con eso
+		tweets = Connector().returnTweetsByIDC(idC)  #Busca tweets de determinada campaña (falta hacer en Connector)
 		#tweetsJson es lista de json -> tengo que pasarlos a diccionario
-		tweets = []	
-		tweets=self.getDictList(tweetsJson) 
-		return (tweetsList) #lista de tw_diccionario
-
+		return (tweets) #lista de tw_diccionario
+	
 	def reportRawData(self, idC): #OK rawData
-		campaign = self.getCampaign(idC)	#Busco la campaña con un idCampaña
+		campaign = Connector().retornarCampaignBD(idC):
 		tweetsList = self.getCampaignTweets(idC) #Busca tweets de determinada campaña (falta hacer en Connector)
 		rawData = {"campaign" : campaign.to_dict(), "tweets" : tweetsList}
 		return (rawData)
@@ -61,8 +54,7 @@ class Reporter():
 		}
 		return summary
 
-	def getUserWithMoreTw(self,jsonTweets): #OK (falta el caso en que sean varios users en el 1er puesto)
-		tweets=self.getDictList(jsonTweets)
+	def getUserWithMoreTw(self,tweets): #OK (falta el caso en que sean varios users en el 1er puesto)
 		users=[]
 		for t in tweets:
 			users.append(t["user"]["name"])	#Lista de user names
@@ -70,8 +62,7 @@ class Reporter():
 		mostTwUser=count[0][0]
 		return mostTwUser
 
-	def getUserQuantity(self, jsonTweets): #OK
-		dictTweets=self.getDictList(jsonTweets)
+	def getUserQuantity(self, dictTweets): #OK
 		users=self.getUsersList(dictTweets)
 		count=Counter(users)	#contador de ocurrencias en users
 		uQuantity= len(count)	#cantidad de usuarios distintos
@@ -82,9 +73,3 @@ class Reporter():
 		for t in dictTweets:
 			users.append(t["user"]["name"])	#Lista de user names
 		return users
-
-	def getDictList(self,jsonList): #OK
-		dictList = []	
-		for j in jsonList:
-			dictList.append(json.loads(j)) #Armo lista de diccionarios
-		return (dictList)
