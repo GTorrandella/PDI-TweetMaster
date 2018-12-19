@@ -1,12 +1,15 @@
-from Campaign.Campaign import Campaign 
-from Manager.manager import Manager 
-from Tweet.Tweet import Tweet 
 import unittest
+from Reporter import Reporter
 from collections import Counter
+from Tweet.Tweet import Tweet 
+from Campaign.Campaign import Campaign
+from datetime import date
+from DataBaseConnector import Connector
+from Manager import manager
 import json
 
 class test_reporter(unittest.TestCase):
-		
+	
 	#Dada la campaña y tweets testeamos si los datos raw son retornados correctamente:
 	def test_reportRawData(self):  #OK
 
@@ -64,23 +67,20 @@ class test_reporter(unittest.TestCase):
 		
 		#Lo que me llegaría de Connector().returnTweetsbyIDC(idC):
 		tweets = [tweet1,tweet2,tweet3]
-
-		users=[]
-		for t in tweets:
-			users.append(t["user"]["name"])	#Lista de user names
-		count=Counter(users).most_common(1)
-		mostTwUser=count[0][0]
+		mostTwUser = Reporter().getUserWithMoreTw(tweets)
 		return mostTwUser
+		#asserts....
 
 	#Testeamos retornar el usuario con mayor cantidad de menciones:
 	def test_getUserQuantity(self): #OK
 		#VEr--> dictTweets=
-		userQuantity = (Reporter()getUserQuantity(self, dictTweets))
+		userQuantity = (Reporter().getUserQuantity(self, dictTweets))
+		return userQuantity
 		#assert userQuantity == NUMERO
 	
 	#Testeamos retornamos todos los usuarios:
-	def test_getUsersList(self,dictTweets): #OK
-		users=[]
-		for t in dictTweets:
-			users.append(t["user"]["name"])	#Lista de user names
-		return users
+	def test_getUsersList(self): #OK
+		#VEr--> dictTweets=
+		usersList = (Reporter().getUsersList(self, dictTweets))
+		return usersList
+		#asserts....

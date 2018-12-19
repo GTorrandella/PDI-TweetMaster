@@ -46,12 +46,14 @@ def retornarCampaignBD(idC):
     #Para ver el tipo de objeto: print(type(objetoCampaign))
 
 	#Debe viajar como JSON, NO como objeto:
-	campaignJSON=(campaignespecifica).to_json()
+	#campaignJSON=(objetoCampaign).to_json()
 	
 	#Si quisieramos devolver un objeto campaign como diccionario:
 	#c=objetoCampaign.to_dict()
 	#return(c)
 	
+	return objetoCampaign
+
 #manager.modifyCampaign(2, "email", "calonshi@gmail.com")
 #Desde la Interfaz (en ModifCampaign) le llegaría al manager la columna a modificar, el campo para esa columna (inputUser) y el id de campaña.
 def modificarCampaignBD(idC, inputColumn, inputUser):

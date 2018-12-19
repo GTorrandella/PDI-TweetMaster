@@ -1,26 +1,18 @@
 import json
-from Tweet.Tweet import Tweet
-from Campaign.Campaign import Campaign
-from Manager.manager import Manager
 import DataBaseConnector.Connector as Connector
 from collections import Counter
 
 class Reporter():
 
-	def getCampaignAndTweets(self, idC): #OK falta lo de Connector y probarlo con eso
-		tweets = Connector().returnTweetsByIDC(idC)  #Busca tweets de determinada campaña (falta hacer en Connector)
-		#tweetsJson es lista de json -> tengo que pasarlos a diccionario
-		return (tweets) #lista de tw_diccionario
-	
-	def reportRawData(self, idC): #OK rawData
-		campaign = Connector().retornarCampaignBD(idC): #Objeto campaign
-		tweets = Connector().returnTweetsByIDC(idC) #Lista de diccionarios tweet
+	def reportRawData(self, idC): #OK
+		campaign = Connector.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
+		tweets = Connector.returnTweetsByIDC(idC) #Busca tweets de determinada campaña
 		rawData = {"campaign" : campaign.to_dict(), "tweets" : tweets}
 		return (json.dumps(rawData))
 
 	def reportSummary(self, idC): #OK
-		campaign = Connector().retornarCampaignBD(idC): #Objeto campaign
-		tweets = Connector().returnTweetsByIDC(idC) #Lista de diccionarios tweet
+		campaign = Connector.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
+		tweets = Connector.returnTweetsByIDC(idC) #Lista de diccionarios tweet
 
 		summary = {
 			"campaign" : campaign.to_dict(), #como diccionario para que se pueda acceder a los campos mas facil

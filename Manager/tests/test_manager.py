@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import unittest
 from Tweet.Tweet import Tweet 
 from Campaign.Campaign import Campaign
@@ -60,10 +59,21 @@ class test_manager(unittest.TestCase):
 
     def test_ReturnCampaignBD(self):
         #Le pasamos la ID de Campaign 2
-        Connector.retornarCampaignBD(2)
-        #assert....
+        objetoCampaign = Connector.retornarCampaignBD(2)
+        print (objetoCampaign)
+        #IMprime esto:
+        # <idC:2 emailDueño:test@gmail.com hashtags:#test-#mock mentions:@testCampaign-@mockOK startDate:2018-11-28 18:02:00 finDate:2018-12-02 19:26:22> 
+        
+        #asserts....
 
     def test_ReturnTweetsByIDC(self):
         #Retornamos los tuits con IDC 3 (de la 3ra campaña)
-        Connector.returnTweetsByIDC(3)
-        #assert...
+        tweets = Connector.returnTweetsByIDC(3)
+        print(tweets)
+        #Esto me devuelve, una lista de diccionarios tweets. La clave es tweetN y el valor es otro diccionario con los atributos del tweet:
+        #{'tweet0': [{'id_str': 112112, 'user': {'name': 'MiauricioOK', 'id_str': '451325'}, 'entities': {'hashtags': '#DonaldNoMeDejes',
+        # 'user_mentions': '@donaldTrump-@G20'}, 'created_at': '2018-03-20 21:08:01'}], 
+        #'tweet1': [{'id_str': 123456, 'user': {'name': 'NASAOk', 'id_str': '789456'}, 'entities': {'hashtags': '#mars-#venus-#earth', 
+        #'user_mentions': '@NASA-@planets'}, 'created_at': '2018-03-20 15:11:01'}]}
+
+        #asserts...
