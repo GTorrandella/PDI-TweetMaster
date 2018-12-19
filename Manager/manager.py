@@ -3,7 +3,7 @@ from Tweet.Tweet import Tweet as Tweet
 from Campaign.Campaign import Campaign as Campaign
 from datetime import date
 from DataBaseConnector import Connector as Connector
-import urllib.request
+import requests
 
 class Manager():
 	def insertCampaign(self, userInputs):
@@ -52,11 +52,11 @@ class Manager():
 	
 	def fetchCampaings(self, campaignsToFetch):
 		for idC in campaignsToFetch:
-			camp = self.returnCampaign(idC).to_json()
-			request = urllib.request.Request("locahost/fetcher", data = camp, method = 'GET')
-			request.add_header("Content-Type", "application/json")
-			response = urllib.request.urlopen(request)
-			self.insertTweets((str(response.read()).split(',')),(idC))
+			jsonCampaign = {"Campaign":self.returnCampaign(idC).to_json()}
+			url = "http://127.0.0.1:5001/fetcher"
+			headers = {"Content-Type":"application/json"}			
+			response = requests.get(url, json=jsonCampaign, headers=headers)
+			self.insertTweets(response.json()["Tweets"],idC)
 			
 			
 			
