@@ -13,7 +13,6 @@ class Manager():
 		stringMention = self.listaAString(userInputs["mentions"]) # @donaldTrump-@miauricioOK
 	
 		ObjetoCampaign = Campaign(1, userInputs["email"], stringHashtag, stringMention, userInputs["startDate"], userInputs["endDate"])
-		print("manager.Manager().insertCampaign()")
 		#Llamamos a un metodo de Connector para agregar la campaña a la BD junto con las mentions y los hashtags:
 		return Connector.insertarCampaignBD(ObjetoCampaign)
 

@@ -21,21 +21,21 @@ def api_manager():
     if request.method == 'POST':
         if checkForm(request.form):
             idCampaing = Manager().insertCampaign(request.get_json())
-            res = Response(status_code = 201)
-            res.set_etag(idCampaing, weak = False)    
+            res = Response(status = 201)
+            res.set_etag(str(idCampaing), weak = False)    
             return res
         else:
-            return Response(status_code = 412)
+            return Response(status = 412)
         
     elif request.method == 'DELETE':
         if 'idC' in request.json:
             Manager().deleteCampaignporid(request.json['idC'])
         elif 'email' in request.json:
             Manager().deleteCampaignporuser(request.json['email'])
-        return Response(status_code = 200)
+        return Response(status = 200)
         
     else: 
-        return Response(status_code = 400)
+        return Response(status = 400)
 
 @app.route('/Campaing/<int:idC>', methods = ['GET', 'PATCH'])
 def api_manager_id(idC):
@@ -48,12 +48,12 @@ def api_manager_id(idC):
     elif request.method == 'PATCH':
         if ('columnaAModif' in request.json) and ('campoColumna' in request.json):
             Manager().modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])
-            return Response(status_code = 202)
+            return Response(status = 202)
         else:
-            return Response(status_code = 404)
+            return Response(status = 404)
         
     else:
-        return Response(status_code = 404)
+        return Response(status = 404)
 
 if __name__ == "__main__":
     app.run(debug=True)

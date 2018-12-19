@@ -6,6 +6,8 @@ Created on Dec 12, 2018
 import unittest
 from unittest.mock import MagicMock
 
+from DataBaseConnector import test_database
+
 import DataBaseConnector.configTables as configTables
 from Manager.manager import Manager
 from Manager import manager_flask
@@ -26,11 +28,12 @@ class test_manager_flask(test_manager_base):
         
         test_manager_base.setUp(self)
         
-        configTables.engine = create_engine("sqlite://")
-        create_database(configTables.engine.url)
-        configTables.BD = declarative_base()
-        Session = sessionmaker(bind=configTables.engine)
-        configTables.session = Session()
+        configTables.engine = test_database.engine
+        configTables.BD = test_database.BD
+        configTables.session = test_database.session
+        
+        configTables.Campaign = test_database.Campaign
+        configTables.Tweet = test_database.Tweet
         
         self.test_app = manager_flask.app.test_client()
 
