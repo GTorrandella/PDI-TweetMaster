@@ -15,7 +15,7 @@ tokenPath = path.join(parentDir, 'tokens')
 f = open(tokenPath)
 APP_KEY = f.readline()
 APP_SECRET = f.readline()
-ACCESS_TOKEN = f.readline()
+ACCESS_TOKEN = f.readline().rstrip()
 f.close
 
 class Fetcher():
@@ -35,7 +35,7 @@ class Fetcher():
         for tweetContent in rawTweets:
             for tweet in tweetContent:
                 tweets.append(Tweet(tweet).to_json())
-        return tweets
+        return {'Tweets':tweets}
             
     def fetchTweets(self, campaign):
         rawTweets = []

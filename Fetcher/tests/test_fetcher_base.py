@@ -81,8 +81,8 @@ class test_fetcher_base(unittest.TestCase):
         
         self.param_makeTweets = self.responseHastag + self.responseMention
         
-        self.response_fetchTweets = [Tweet(self.responseHastag[0]).to_json(),Tweet(self.responseHastag[1]).to_json(),Tweet(self.responseMention[0]).to_json(),Tweet(self.responseMention[1]).to_json()]
+        self.response_fetchTweets = {'Tweets':[Tweet(self.responseHastag[0]).to_json(),Tweet(self.responseHastag[1]).to_json(),Tweet(self.responseMention[0]).to_json(),Tweet(self.responseMention[1]).to_json()]}
         
-        self.resquest_get_200_content = {"Campaing" : self.campaign.to_json(), "Last-ID" : self.lastId} 
+        self.resquest_get_200_content = {"Campaign" : self.campaign.to_json(), "Last-ID" : self.lastId} 
     
             

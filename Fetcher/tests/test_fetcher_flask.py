@@ -38,6 +38,9 @@ class test_fetcher_flask(test_fetcher_base):
         response = self.test_app.get('/fetcher',json=self.resquest_get_200_content, content_type = 'application/json')
         
         self.assertEqual(response.status, '200 OK')
+        self.assertTrue('Content-Type' in response.headers.keys())
+        self.assertEqual('application/json', response.headers['Content-Type'])
+        self.assertEqual(self.response_fetchTweets, response.json)
         
     def test_GET_400(self):
         response = self.test_app.get('/fetcher', content_type = 'application/json')
