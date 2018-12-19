@@ -1,7 +1,7 @@
 import flask_sqlalchemy
 from datetime import datetime
 import json
-import DataBaseConnector.configTables as configTables
+from DataBaseConnector import configTables
 from Campaign.Campaign import Campaign as Campaign
 
 #Primerio insertar si o si una campaig así se ejecuta la linea configTables.BD.metadata.create_all(configTables.engine) que crea la BD.
@@ -96,9 +96,21 @@ def returnTweetByIDT(idT):
 
 def returnTweetsByIDC(IDC):
 	tweetsBD = configTables.session.query(configTables.Tweet).filter_by(idCampaign=IDC).all()
-	print(tweetsBD[0])
 
-	#Nos tiró esto (lista de Tweets en el formato del modelo de SQL ALCHEMY que esta en configTables): 
+	tweets = {}
+	i=0
+	for t in tweetsBD:
+		dictionary = {
+        	"id_str" : t.ID,
+        	"user" : {"name" : t.userName, "id_str" : t.userid},
+        	"entities" : {"hashtags" : t.hashtags,"user_mentions" : t.mentions},
+        	"created_at" : t.date,
+    	}
+		tweets["tweet"+str(i)]=[dictionary]
+		i=i+1
+	return tweets
+
+	#Nos tiró esto (lista de Tweets en el formato de SQL ALCHEMY): 
 	#[<Tweets(ID='112112', userName='MiauricioOK',userid='451325',hashtags='#DonaldNoMeDejes',mentions='@donaldTrump-@G20',date='2018-03-20 21:08:01',idCampaign='3')>, 
 	#<Tweets(ID='123456', userName='NASAOk',userid='789456',hashtags='#mars-#venus-#earth',mentions='@NASA-@planets',date='2018-03-20 15:11:01',idCampaign='3')>]
 	#Tenemos que separar los tweets y crear objetos tweets. Y hacerles el to json. 
@@ -112,21 +124,20 @@ def returnTweetsByIDC(IDC):
         "created_at" : "Sun Mar 20 15:11:01 +0000 2018",
     }
 	
-
-	for t in tweetsBD:
-		tweets.append(Tweet(tweet).to_json())
-	return tweets
 	"""
-
+	
+	
+	"""
 	#return(campaignespecifica)
 	#Que viaje en JSON, no como objeto:
 	#campaignJSON=(campaignespecifica).to_json()
-	#objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
+	return
+	objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
 	#print(type(objetoCampaign))
 	#print(objetoCampaign)
-	#c=objetoCampaign.to_dict()
-	#return(c)
-
+	c=objetoCampaign.to_dict()
+	return(c)
+	"""
 #def returnCampaignsInProgress(fecha en formato de fecha)
 #HACER FUNCION PARA GABY QUE me da una fecha en formato de Campaña y cuya hora de inicio es menor y hora de fin mayor.
 #Todas las campañas que comenzaron pero que no terminaron (todas las campañas en curso)
