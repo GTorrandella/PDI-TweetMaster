@@ -25,6 +25,8 @@ class test_manager_base(unittest.TestCase):
     campaignDeleteByIDCData = {'idC':1}
     campaignDeleteByEmailData = {'email':"b@example.com"}
     campaignDeleteDataError = {'hype':"JOKER_IN_SMASH"}
+    
+    campaignPatchData = {'idC':3}
 
 
     initialCampaigns = [Campaign(1, "a@example.com", '#NothingBreaksLikeAHeart', "", "06 12 2018 23:20:00", "07 12 2018 00:30:00"),

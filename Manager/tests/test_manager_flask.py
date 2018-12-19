@@ -7,20 +7,12 @@ import unittest
 from unittest.mock import MagicMock
 
 from DataBaseConnector import test_database
-
 import DataBaseConnector.configTables as configTables
-from Manager.manager import Manager
+
 from Manager import manager_flask
 from Manager.tests.test_manager_base import test_manager_base
 
 from datetime import datetime
-
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy_utils import database_exists, create_database
-from distutils.command.config import config
 
 
 class test_manager_flask(test_manager_base):
@@ -112,9 +104,15 @@ class test_manager_flask(test_manager_base):
         afterCampaigns = configTables.session.query(configTables.Campaign).all()
         self.assertEqual(len(afterCampaigns), 2)
         self.assertFalse(2 in [afterCampaigns[0].id,afterCampaigns[1].id])
-            
+    
+    @unittest.expectedFailure
     def test_DELETE_404(self):
-        pass
+        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        self.assertEqual(initialCampaignNumber, 3)
+        
+        response = self.test_app.delete('/Campaing', json = self.campaignDeleteDataError, content_type='application/json')
+        
+        self.assertEqual(response.status, '404 NOT FOUND')
     
     def test_DELETE_412(self):
         initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
@@ -128,10 +126,30 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(len(afterCampaigns), 3)
     
     def test_GET_200(self):
-        pass
+        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        self.assertEqual(initialCampaignNumber, 3)
+        
+        response = self.test_app.get('/Campaing/3')
+        self.assertEqual(response.status, '200 OK')
+        
+        responseCampaign = response.json
+        self.assertEqual(responseCampaign['id'], 3)
+        self.assertEqual(responseCampaign['email'], 'c@example.com')
+        self.assertEqual(responseCampaign['hashtags'], '#nintendo-#SMASH')
+        self.assertEqual(responseCampaign['mentions'], '@Sora_Sakurai-@nintendo')
+        self.assertEqual(responseCampaign['startDate'], '06 12 2018 23:20:00')
+        self.assertEqual(responseCampaign['finDate'], '07 12 2018 00:30:00')
+        
+        afterCampaigns = configTables.session.query(configTables.Campaign).all()
+        self.assertEqual(len(afterCampaigns), 3)
     
+    @unittest.expectedFailure
     def test_GET_404(self):
-        pass
+        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        self.assertEqual(initialCampaignNumber, 3)
+        
+        response = self.test_app.get('/Campaing/8')
+        self.assertEqual(response.status, '404 NOT FOUND')
     
     def test_PACTH_202(self):
         pass
