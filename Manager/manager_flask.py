@@ -3,7 +3,6 @@ from flask.globals import request
 from flask.wrappers import Response
 from werkzeug.wrappers import ETagRequestMixin, ETagResponseMixin, BaseRequest, BaseResponse
 from Manager.manager import Manager
-import DataBaseConnector.configTables as configTables
 
 app = Flask(__name__)
 

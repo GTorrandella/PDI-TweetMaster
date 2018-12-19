@@ -12,8 +12,13 @@ class test_manager_base(unittest.TestCase):
 
 
     def setUp(self):
-        self.campaignCreationDate = {'email':'hype@example.com', 
+        self.campaignCreationData = {'email':'hype@example.com', 
                                      'hashtags':'#JOKER-#smash', 
+                                     'mentions':'@Sora_Sakurai',
+                                     'startDate':"06 12 2018 23:20:00",
+                                     'endDate':"07 12 2018 00:30:00"}
+        
+        self.campaignCreationDataError = {'hashtags':'#JOKER-#smash', 
                                      'mentions':'@Sora_Sakurai',
                                      'startDate':"06 12 2018 23:20:00",
                                      'endDate':"07 12 2018 00:30:00"}
