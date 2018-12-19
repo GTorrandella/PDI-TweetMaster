@@ -67,7 +67,7 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(newCampaign.hashtags, '#JOKER-#SMASH')
         self.assertEqual(newCampaign.mentions, '@Sora_Sakurai')
         self.assertEqual(newCampaign.startDate, "06 12 2018 23:20:00")
-        self.assertEqual(newCampaign.finDate, "07 12 2018 00:30:00"),
+        self.assertEqual(newCampaign.finDate, "07 12 2018 00:30:00")
                                  
     
     def test_POST_412(self):
@@ -152,13 +152,59 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(response.status, '404 NOT FOUND')
     
     def test_PACTH_202(self):
-        pass
-    
+        initialCampaign = configTables.session.query(configTables.Campaign).all()
+        self.assertEqual(len(initialCampaign), 3)
+        
+        campaignToPatch = initialCampaign[2]
+        self.assertEqual(campaignToPatch.id, 3)
+        self.assertEqual(campaignToPatch.email, 'c@example.com')
+        self.assertEqual(campaignToPatch.hashtags, '#nintendo-#SMASH')
+        self.assertEqual(campaignToPatch.mentions, '@Sora_Sakurai-@nintendo')
+        self.assertEqual(campaignToPatch.startDate, "06 12 2018 23:20:00")
+        self.assertEqual(campaignToPatch.finDate, "07 12 2018 00:30:00")
+        
+        response = self.test_app.patch('/Campaing/3', json=self.campaignPatchHashtagsData, content_type='application/json')
+        self.assertEqual(response.status, "202 ACCEPTED")
+        
+        patchedCampaigns = configTables.session.query(configTables.Campaign).all()
+        self.assertEqual(len(patchedCampaigns), 3)
+        
+        patchedHashtagsCampaign = patchedCampaigns[2]
+        self.assertEqual(patchedHashtagsCampaign.id, 3)
+        self.assertEqual(patchedHashtagsCampaign.email, 'c@example.com')
+        self.assertEqual(patchedHashtagsCampaign.hashtags, '#qatherine-#katherine-#catherine')
+        self.assertEqual(patchedHashtagsCampaign.mentions, '@Sora_Sakurai-@nintendo')
+        self.assertEqual(patchedHashtagsCampaign.startDate, "06 12 2018 23:20:00")
+        self.assertEqual(patchedHashtagsCampaign.finDate, "07 12 2018 00:30:00")
+        
+        response = self.test_app.patch('/Campaing/3', json=self.campaignPatchMentionsData, content_type='application/json')
+        self.assertEqual(response.status, "202 ACCEPTED")
+        
+        patchedCampaigns = configTables.session.query(configTables.Campaign).all()
+        self.assertEqual(len(patchedCampaigns), 3)
+        
+        patchedHashtagsCampaign = patchedCampaigns[2]
+        self.assertEqual(patchedHashtagsCampaign.id, 3)
+        self.assertEqual(patchedHashtagsCampaign.email, 'c@example.com')
+        self.assertEqual(patchedHashtagsCampaign.hashtags, '#qatherine-#katherine-#catherine')
+        self.assertEqual(patchedHashtagsCampaign.mentions, '@atlususa-@stud_zero')
+        self.assertEqual(patchedHashtagsCampaign.startDate, "06 12 2018 23:20:00")
+        self.assertEqual(patchedHashtagsCampaign.finDate, "07 12 2018 00:30:00")
+        
+    @unittest.expectedFailure
     def test_PACTH_404(self):
-        pass
+        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        self.assertEqual(initialCampaignNumber, 3)
+        
+        response = self.test_app.patch('/Campaing/8', json=self.campaignPatchHashtagsData, content_type='application/json')
+        self.assertEqual(response.status, '404 NOT FOUND')
 
     def test_PACTH_412(self):
-        pass
+        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        self.assertEqual(initialCampaignNumber, 3)
+        
+        response = self.test_app.patch('/Campaing/3', json=self.campaignPatchErrorData, content_type='application/json')
+        self.assertEqual(response.status, '412 PRECONDITION FAILED')
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

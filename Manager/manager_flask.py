@@ -52,7 +52,7 @@ def api_manager_id(idC):
             Manager().modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])
             return Response(status = 202)
         else:
-            return Response(status = 404)
+            return Response(status = 412)
         
     else:
         return Response(status = 404)

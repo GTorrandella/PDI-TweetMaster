@@ -26,7 +26,13 @@ class test_manager_base(unittest.TestCase):
     campaignDeleteByEmailData = {'email':"b@example.com"}
     campaignDeleteDataError = {'hype':"JOKER_IN_SMASH"}
     
-    campaignPatchData = {'idC':3}
+    campaignPatchHashtagsData = {'columnaAModif':'hashtags',
+                                'campoColumna':'#qatherine-#katherine-#catherine'}
+    
+    campaignPatchMentionsData = {'columnaAModif':'mentions',
+                                'campoColumna':'@atlususa-@stud_zero'}
+    
+    campaignPatchErrorData = {'campoColumna':'@atlususa-@stud_zero'}
 
 
     initialCampaigns = [Campaign(1, "a@example.com", '#NothingBreaksLikeAHeart', "", "06 12 2018 23:20:00", "07 12 2018 00:30:00"),
