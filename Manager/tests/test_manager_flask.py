@@ -8,7 +8,8 @@ from unittest.mock import MagicMock
 
 import DataBaseConnector.configTables as configTables
 from Manager.manager import Manager
-import Manager.manager_flask
+from Manager import manager_flask
+from Manager.tests.test_manager_base import test_manager_base
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -17,40 +18,28 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 
 
-class test_manager_flask(unittest.TestCase):
+class test_manager_flask(test_manager_base):
 
-
-    def variables(self):
-        self.campaignCreationData = {'email':'hype@example.com', 
-                                     'hashtags':'#JOKER-#smash', 
-                                     'mentions':'@Sora_Sakurai',
-                                     'startDate':"06 12 2018 23:20:00",
-                                     'endDate':"07 12 2018 00:30:00"}
-        
-        self.campaignCreationDataError = {'hashtags':'#JOKER-#smash', 
-                                     'mentions':'@Sora_Sakurai',
-                                     'startDate':"06 12 2018 23:20:00",
-                                     'endDate':"07 12 2018 00:30:00"}
-        
-        
 
     def setUp(self):
         global BD, engine, Session, session
+        
+        test_manager_base.setUp(self)
+        
         configTables.engine = create_engine("sqlite://")
-        create_database(engine.url)
+        create_database(configTables.engine.url)
         configTables.BD = declarative_base()
-        configTables.Session = sessionmaker(bind=engine)
+        Session = sessionmaker(bind=configTables.engine)
         configTables.session = Session()
         
         self.test_app = manager_flask.app.test_client()
-        
 
     def tearDown(self):
         pass
 
 
     def test_POST_201(self):
-        response = self.test_app.get('/Campaing', json = self.campaignCreationData, content_type='application/json')
+        response = self.test_app.post('/Campaing', json = self.campaignCreationData, content_type='application/json')
         print(response)
     
     def test_POST_412(self):

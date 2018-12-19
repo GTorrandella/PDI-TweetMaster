@@ -3,7 +3,7 @@ Created on Dec 04, 2018
 
 @author: Gabriel Torrandella
 '''
-from flask import Flask, json
+from flask import Flask, json, jsonify
 from flask.globals import request
 from flask.wrappers import Response
 
@@ -23,22 +23,23 @@ app = Flask(__name__)
 
 @app.route('/fetcher', methods = ['GET'])
 def api_fetcher():
-    
-    if request.headers['Content-Type'] == 'application/json':
-        if 'Campaing' in request.json and 'Last-ID' in request.json:
-            cJson = json.loads(request.json['Campaing'])
-            
-            sd = fixDate(cJson["startDate"]) 
-            ed = fixDate(cJson["finDate"])
-            
-            campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],sd,ed)
-                                    
-            tweets = fetcher.Fetcher().fetchTweets(campaign)
-            resp = Response(tweets, status = 200, mimetype = 'application/json')
-            return resp
-        else:
-            return Response(status = 400)
-            
+    if 'Content-Type' in request.headers.keys():
+        if request.headers['Content-Type'] == 'application/json':
+            if 'Campaign' in request.json.keys():
+                
+                cJson = json.loads(request.json['Campaign'])
+                
+                sd = fixDate(cJson["startDate"]) 
+                ed = fixDate(cJson["finDate"])
+                
+                campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],sd,ed)
+                                        
+                tweets = jsonify(fetcher.Fetcher().fetchTweets(campaign))
+
+                return tweets
+            else:
+                return Response(status = 400)
+                
     else:
         return Response(status = 400)
 
