@@ -11,7 +11,7 @@ from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import relationship
 
 
-engine = create_engine("sqlite://")
+engine = create_engine("sqlite:///:memory:")
 if not database_exists(engine.url):
     create_database(engine.url)
 #Este objeto va a contener la meta-informacion de nuestros mapeos:
@@ -32,7 +32,7 @@ class Campaign(BD):
     tuits = relationship("Tweet")
 
     def __repr__(self):
-           return "<Campaign(idC='%s', startDate='%s', finDate='%s', email='%s', hashtags='%s', mentions='%s')>" % (self.id, self.startDate, self.finDate, self.email, self.hashtags, self.mentions)
+        return "<Campaign(idC='%s', startDate='%s', finDate='%s', email='%s', hashtags='%s', mentions='%s')>" % (self.id, self.startDate, self.finDate, self.email, self.hashtags, self.mentions)
 
 class Tweet(BD):
     __tablename__ = 'tweets'

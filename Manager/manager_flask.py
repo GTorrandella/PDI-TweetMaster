@@ -12,14 +12,15 @@ class Response(BaseResponse, ETagResponseMixin):
 class Resquest(BaseRequest, ETagRequestMixin):
     pass
 
-def checkForm(form):
-    return True
+def checkForm(json):
+    keys = json.keys()
+    return ('email' in keys and "hashtags" in keys and "mentions" in keys and "startDate" in keys and "endDate" in keys)
 
 @app.route('/Campaing', methods = ['POST', 'DELETE'])
 def api_manager():
     
-    if request.method == 'POST':
-        if checkForm(request.form):
+    if request.method == 'POST' and 'application/json' == request.headers['Content-Type']:
+        if checkForm(request.json):
             idCampaing = Manager().insertCampaign(request.get_json())
             res = Response(status = 201)
             res.set_etag(str(idCampaing), weak = False)    
@@ -28,11 +29,13 @@ def api_manager():
             return Response(status = 412)
         
     elif request.method == 'DELETE':
-        if 'idC' in request.json:
+        if 'idC' in request.json.keys():
             Manager().deleteCampaignporid(request.json['idC'])
-        elif 'email' in request.json:
+            return Response(status = 200)
+        elif 'email' in request.json.keys():
             Manager().deleteCampaignporuser(request.json['email'])
-        return Response(status = 200)
+            return Response(status = 200)
+        return Response(status = 412)
         
     else: 
         return Response(status = 400)
