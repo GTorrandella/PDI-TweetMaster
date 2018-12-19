@@ -35,17 +35,23 @@ def eliminarCampaignBDxID(idC):
 def retornarCampaignBD(idC):
 	print("Campaña retornada:")
 	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC)
-	#return(campaignespecifica)
-	#Que viaje en JSON, no como objeto:
-	#campaignJSON=(campaignespecifica).to_json()
-	objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
-	#print(type(objetoCampaign))
-	#print(objetoCampaign)
-	c=objetoCampaign.to_dict()
-	return(c)
+	#Con la campaignespecifica de arriba accedemos a los atributos así: (ya que es el objeto Campaign de configTables.py)
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
     #Devuelve esto: 2 donaldTrump@gmail.com #federicio-#federicio2 @hola-@hola2 2018-11-28 2018-12-02 --> con print envés de return se ve.
+	
+	objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
+	#Con el objetoCampaign de arriba accedemos a los atributos así: (ya que es el objeto Campaign de Campaign.py)
+	#print(campaignespecifica.idC, campaignespecifica.emailDueño, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
+    
+    #Para ver el tipo de objeto: print(type(objetoCampaign))
 
+	#Debe viajar como JSON, NO como objeto:
+	campaignJSON=(campaignespecifica).to_json()
+	
+	#Si quisieramos devolver un objeto campaign como diccionario:
+	#c=objetoCampaign.to_dict()
+	#return(c)
+	
 #manager.modifyCampaign(2, "email", "calonshi@gmail.com")
 #Desde la Interfaz (en ModifCampaign) le llegaría al manager la columna a modificar, el campo para esa columna (inputUser) y el id de campaña.
 def modificarCampaignBD(idC, inputColumn, inputUser):
