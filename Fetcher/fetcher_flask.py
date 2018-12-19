@@ -10,8 +10,6 @@ from flask.wrappers import Response
 import Fetcher.fetcher as fetcher
 from Campaign.Campaign import Campaign
 
-from os import path
-
 
 def fixDate(stringDate):
     dateList = []
@@ -37,11 +35,7 @@ def api_fetcher():
                 campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],sd,ed)
                                         
                 tweets = jsonify(fetcher.Fetcher().fetchTweets(campaign))
-                parentDir = path.dirname(path.abspath(__file__))
-                tokenPath = path.join(parentDir, 'log')
-                f = open(tokenPath, 'w')
-                f.write(str(tweets))
-                f.close
+
                 return tweets
             else:
                 return Response(status = 400)
