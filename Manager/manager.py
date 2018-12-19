@@ -49,6 +49,7 @@ class Manager():
 	def insertTweet(self, TweetInput, idC):
 		Connector.insertTweet(TweetInput, idC)
 	
+	#Comunicacion entre Fetcher y Manager. Cada campaña se codifica a json:
 	def fetchCampaings(self, campaignsToFetch):
 		for idC in campaignsToFetch:
 			camp = self.returnCampaign(idC).to_json()
