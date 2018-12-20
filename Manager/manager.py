@@ -105,7 +105,7 @@ class Manager():
 		campaignsToFetch = self.returnCampaignsInProgress()
 		for C in campaignsToFetch:
 			c = self._campaignStringToList(self._dbCampaignToCampaig(C))
-			jsonCampaign = {"Campaign":c.to_json()}
+			jsonCampaign = c.to_json()
 			url = "http://127.0.0.1:5001/fetcher"
 			headers = {"Content-Type":"application/json"}			
 			response = requests.get(url, json=jsonCampaign, headers=headers)
