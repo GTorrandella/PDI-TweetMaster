@@ -35,6 +35,9 @@ class Manager():
 		if not (fecha_inicio_campaign < fecha_actual):
 		#La campaña NO inició, eliminamos la campaña:
 			Connector.eliminarCampaignBDxID(idCampaign)
+			return True
+		else:
+			return False
 			
 	def returnCampaign(self, idCampaign):
 		return Connector.retornarCampaignBD(idCampaign)
