@@ -105,15 +105,6 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(len(afterCampaigns), 2)
         self.assertFalse(2 in [afterCampaigns[0].id,afterCampaigns[1].id])
     
-    @unittest.expectedFailure
-    def test_DELETE_404(self):
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
-        self.assertEqual(initialCampaignNumber, 3)
-        
-        response = self.test_app.delete('/Campaing', json = self.campaignDeleteDataError, content_type='application/json')
-        
-        self.assertEqual(response.status, '404 NOT FOUND')
-    
     def test_DELETE_412(self):
         initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
@@ -143,7 +134,6 @@ class test_manager_flask(test_manager_base):
         afterCampaigns = configTables.session.query(configTables.Campaign).all()
         self.assertEqual(len(afterCampaigns), 3)
     
-    @unittest.expectedFailure
     def test_GET_404(self):
         initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
@@ -191,7 +181,6 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(patchedHashtagsCampaign.startDate, "31 12 2050 23:20:00")
         self.assertEqual(patchedHashtagsCampaign.finDate, "01 01 2051 00:30:00")
         
-    @unittest.expectedFailure
     def test_PACTH_404(self):
         initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)

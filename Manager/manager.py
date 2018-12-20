@@ -32,12 +32,9 @@ class Manager():
 		fecha_inicio_campaign = campaignRetornada.startDate
 		fecha_actual = datetime.now()
 		#La campaña inició (fecha de inicio de campaign es MENOR a fecha actual), no hacemos nada:
-		if (fecha_inicio_campaign < fecha_actual):
-			print("La campaña ya inició")
+		if not (fecha_inicio_campaign < fecha_actual):
 		#La campaña NO inició, eliminamos la campaña:
-		else:
 			Connector.eliminarCampaignBDxID(idCampaign)
-			print("Campaign eliminada")
 			
 	def returnCampaign(self, idCampaign):
 		return Connector.retornarCampaignBD(idCampaign)
@@ -45,15 +42,15 @@ class Manager():
 	def modifyCampaign(self, idCampaign, columna, inputUser):
 		#Se puede modificar la campaña sólo si esta NO está iniciada:
 		campaignRetornada = Connector.retornarCampaignBD(idCampaign)
+		if campaignRetornada == []:
+			return False
 		fecha_inicio_campaign = campaignRetornada.startDate
 		fecha_actual = datetime.now()
 		#La campaña inició (fecha de inicio de campaign es MENOR a fecha actual), no hacemos nada:
-		if (fecha_inicio_campaign < fecha_actual):
-			print("La campaña ya inició")
+		if not (fecha_inicio_campaign < fecha_actual):
 		#La campaña NO inició, modificamos la campaña:
-		else:
-			Connector.modificarCampaignBD(idCampaign, columna, inputUser) 
-			print("Datos modificados")
+			Connector.modificarCampaignBD(idCampaign, columna, inputUser)
+		return True
 
 	def returnCampaignsInProgress(self):
 		#Obtenemos TODAS las Campañas y vemos una por una si la fecha de inicio de campaign es MENOR a
@@ -72,8 +69,8 @@ class Manager():
 			fecha_actual=datetime.now()
 			if ((fecha_inicio_campaign < fecha_actual) and (fecha_fin_campaign > fecha_actual)):  #La campaña está en curso. Agrego la campaña a la nueva lista a devolver.
 				listaNuevaCampaigns.append(c)
-			else:  #Si la campaña no inició no hago nada. 
-				print ("Campaña no iniciada")
+			#Si la campaña no inició no hago nada. 
+			
 
 		return (listaNuevaCampaigns) #Devolvemos la lista de campañas en curso (que todavía no finalizaron)
 		#[<Campaign(idC='15', startDate='28 11 2018 18:02:00', finDate='25 12 2018 19:26:22', email='test@gmail.com', hashtags='#test-#mock', mentions='@testCampaign-@mockOK')>, 

@@ -3,6 +3,7 @@ from datetime import datetime
 import json
 from DataBaseConnector import configTables
 from Campaign.Campaign import Campaign as Campaign
+from _pytest.compat import NoneType
 
 def insertarCampaignBD(CampaignReceived):
 	#Insertamos la campaña
@@ -29,11 +30,8 @@ def eliminarCampaignBDxUser(email_user):
 		campaignRetornada = retornarCampaignBD(idCampaign)
 		fecha_inicio_campaign = campaignRetornada.startDate
 		fecha_actual=datetime.now()
-		if (fecha_inicio_campaign < fecha_actual):
-			print("La campaña ya inició")
-		else: 
+		if not (fecha_inicio_campaign < fecha_actual):
 			eliminarCampaignBDxID(idCampaign)
-			print("Campaign eliminada")
 
 def eliminarCampaignBDxID(idC):
 	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC) #Obtengo al campaña con id especifico idC.
@@ -45,7 +43,8 @@ def retornarCampaignBD(idC):
 	#Con la campaignespecifica de arriba accedemos a los atributos así: (ya que es el objeto Campaign de configTables.py)
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
     #Devuelve esto: 2 donaldTrump@gmail.com #federicio-#federicio2 @hola-@hola2 2018-11-28 2018-12-02 --> con print envés de return se ve.
-	
+	if type(campaignespecifica) == NoneType:
+		return []
 	objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
 	#Con el objetoCampaign de arriba accedemos a los atributos así: (ya que es el objeto Campaign de Campaign.py)
 	#print(campaignespecifica.idC, campaignespecifica.emailDueño, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 

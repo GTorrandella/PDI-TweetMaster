@@ -52,14 +52,19 @@ def api_manager():
 def api_manager_id(idC):
     
     if request.method == 'GET':
-        dataCampaing = fixCampaing(Manager().returnCampaign(idC)).to_json()
+        campaign = Manager().returnCampaign(idC)
+        if campaign == []:
+            return Response(status = 404)
+        dataCampaing = fixCampaing(campaign).to_json()
         return jsonify(dataCampaing)
 
         
     elif request.method == 'PATCH':
         if ('columnaAModif' in request.json.keys()) and ('campoColumna' in request.json.keys()):
-            Manager().modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])
-            return Response(status = 202)
+            if(Manager().modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])):
+                return Response(status = 202)
+            else:
+                return Response(status = 404)
         else:
             return Response(status = 412)
         
