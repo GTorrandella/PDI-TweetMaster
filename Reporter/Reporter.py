@@ -1,5 +1,5 @@
 import json
-import DataBaseConnector.Connector as Connector
+from DataBaseConnector import Connector as Connector
 from collections import Counter
 
 class Reporter():
