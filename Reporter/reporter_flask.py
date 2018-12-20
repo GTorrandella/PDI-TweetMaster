@@ -3,7 +3,7 @@ Created on Dec 12, 2018
 
 @author: Gabriel Torrandella
 '''
-from flask import Flask, json
+from flask import Flask, json, jsonify
 from flask.globals import request
 from flask.wrappers import Response
 
@@ -15,8 +15,8 @@ app = Flask(__name__)
 def api_report_json(idC):
 
     if True: # Aca se fija si existe el recurso
-        json = Reporter().reportSummary(idC)
-        return Response(json, status = 200, mimetype='aplication/json')
+        summary = Reporter().reportSummary(idC)
+        return jsonify(summary)
             
     else:
         return Response(status = 404)

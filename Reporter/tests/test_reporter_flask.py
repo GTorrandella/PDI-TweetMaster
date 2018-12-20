@@ -25,6 +25,18 @@ class test_reporter_flask(test_reporter_base):
         
         configTables.Campaign.metadata.create_all(configTables.engine)
         configTables.Tweet.metadata.create_all(configTables.engine)
+        
+        for c in self.initialCampaigns:
+            configTables.session.add(configTables.Campaign(startDate=(datetime.strftime((c.startDate),"%d %m %Y %X")), finDate=(datetime.strftime((c.finDate),"%d %m %Y %X")), email=(c.emailDueño), hashtags=(c.hashtags), mentions=(c.mentions)))
+        configTables.session.new
+        configTables.session.dirty
+        configTables.session.commit()
+        
+        for t in self.initialTweets:
+            configTables.session.add(configTables.Tweet(idCampaign=t['idCampaign'], ID=t['ID'], userName=t['userName'], userid=t['userid'], hashtags=t['hashtags'],mentions=t['mentions'], date=t['date']))
+        configTables.session.new
+        configTables.session.dirty
+        configTables.session.commit()
 
     def setUp(self):
         test_reporter_base.setUp(self)
