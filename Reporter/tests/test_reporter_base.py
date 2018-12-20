@@ -9,9 +9,9 @@ from Campaign.Campaign import Campaign
 
 class test_reporter_base(unittest.TestCase):
     
-    initialCampaigns = [Campaign(1, "a@example.com", '#NothingBreaksLikeAHeart', "", "31 12 2050 23:20:00", "01 01 2051 00:30:00"),
-                        Campaign(2, "b@example.com", "", '@atlususa', "31 12 2050 23:20:00", "01 01 2051 00:30:00"),
-                        Campaign(3, "c@example.com", '#nintendo-#SMASH', '@Sora_Sakurai-@nintendo', "31 12 2050 23:20:00", "01 01 2051 00:30:00")]
+    initialCampaigns = [Campaign(1, "a@example.com", '#NothingBreaksLikeAHeart', "", "25 02 2018 18:00:00", "25 02 2018 18:30:00"),
+                        Campaign(2, "b@example.com", "", '@atlususa', "25 02 2018 18:00:00", "25 02 2018 18:30:00"),
+                        Campaign(3, "c@example.com", '#nintendo-#SMASH', '@Sora_Sakurai-@nintendo', "25 02 2018 18:00:00", "25 02 2018 18:30:00")]
     
     initialTweets = [{'ID':'1000',
                       'userName':'@uno',
