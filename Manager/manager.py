@@ -95,11 +95,17 @@ class Manager():
 		c.hashtags = c.hashtags.split("-")
 		c.mentions = c.mentions.split("-")
 		return c
+	
+	#POR QUË NO LO HACE EL CONECTOR
+	def _dbCampaignToCampaig(self, dbC):
+		return Campaign(dbC.id, dbC.email, dbC.hashtags, dbC.mentions, dbC.startDate, dbC.finDate)
 		
 	#Comunicacion entre Fetcher y Manager. Cada campaña se codifica a json:
-	def fetchCampaings(self, campaignsToFetch):
-		for idC in campaignsToFetch:
-			jsonCampaign = {"Campaign":self.returnCampaign(idC).to_json()}
+	def fetchCampaings(self):
+		campaignsToFetch = self.returnCampaignsInProgress()
+		for C in campaignsToFetch:
+			c = self._campaignStringToList(self._dbCampaignToCampaig(C))
+			jsonCampaign = {"Campaign":c.to_json()}
 			url = "http://127.0.0.1:5001/fetcher"
 			headers = {"Content-Type":"application/json"}			
 			response = requests.get(url, json=jsonCampaign, headers=headers)
