@@ -135,8 +135,8 @@ class test_manager_flask(test_manager_base):
         responseCampaign = json.loads(response.json)
         self.assertEqual(responseCampaign['id'], 3)
         self.assertEqual(responseCampaign['email'], 'c@example.com')
-        self.assertEqual(responseCampaign['hashtags'], '#nintendo-#SMASH')
-        self.assertEqual(responseCampaign['mentions'], '@Sora_Sakurai-@nintendo')
+        self.assertEqual(responseCampaign['hashtags'], ['#nintendo','#SMASH'])
+        self.assertEqual(responseCampaign['mentions'], ['@Sora_Sakurai','@nintendo'])
         self.assertEqual(responseCampaign['startDate'], '06 12 2018 23:20:00')
         self.assertEqual(responseCampaign['finDate'], '07 12 2018 00:30:00')
         

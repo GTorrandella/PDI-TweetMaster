@@ -48,6 +48,13 @@ class Manager():
 	def insertTweet(self, TweetInput, idC):
 		Connector.insertTweet(TweetInput, idC)
 	
+	#Arregla el desastre de #-# y @-@
+	def _campaignStringToList(self, c):
+		c.hashtags = c.hashtags.split("-")
+		c.mentions = c.mentions.split("-")
+		return c
+		
+	
 	#Comunicacion entre Fetcher y Manager. Cada campaña se codifica a json:
 	def fetchCampaings(self, campaignsToFetch):
 		for idC in campaignsToFetch:
