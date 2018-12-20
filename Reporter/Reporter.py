@@ -1,6 +1,7 @@
 import json
 from DataBaseConnector import Connector as Connector
 from collections import Counter
+from datetime import datetime
 
 class Reporter():
 
@@ -9,6 +10,8 @@ class Reporter():
 		tweets = Connector.returnTweetsByIDC(idC) #Busca tweets de determinada campaña
 		
 		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
+			return []
+		if (campaign.finDate > datetime.now()):		#la campana no finalizo aun
 			return []
 		
 		rawData = {"campaign" : campaign.to_dict(), "tweets" : tweets}
@@ -19,6 +22,8 @@ class Reporter():
 		tweets = Connector.returnTweetsByIDC(idC) #Lista de diccionarios tweet
 		
 		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
+			return []
+		if (campaign.finDate > datetime.now()):		#la campana no finalizo aun
 			return []
 		
 		summary = {
