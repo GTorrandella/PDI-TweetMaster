@@ -36,8 +36,7 @@ class Manager():
 	def modifyCampaign(self, idCampaign, columna, inputUser):
 		#Hay que ver que la campaña NO haya iniciado (que la fecha de hoy sea anterior a la fecha de inicio).
 		Connector.modificarCampaignBD(idCampaign, columna, inputUser)	
-	
-	#exec(open("manager.py").read())
+
 	#Fijarse en test_manager que sería este tweetsJson que recibe.
 	def insertTweets(self, tweetsJson, idC):
 		tweets = json.loads(tweetsJson)
@@ -49,6 +48,7 @@ class Manager():
 	def insertTweet(self, TweetInput, idC):
 		Connector.insertTweet(TweetInput, idC)
 	
+	#Comunicacion entre Fetcher y Manager. Cada campaña se codifica a json:
 	def fetchCampaings(self, campaignsToFetch):
 		for idC in campaignsToFetch:
 			jsonCampaign = {"Campaign":self.returnCampaign(idC).to_json()}

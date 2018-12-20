@@ -1,7 +1,7 @@
 import flask_sqlalchemy
 from datetime import datetime
 import json
-import DataBaseConnector.configTables as configTables
+from DataBaseConnector import configTables
 from Campaign.Campaign import Campaign as Campaign
 
 #Primerio insertar si o si una campaig así se ejecuta la linea configTables.BD.metadata.create_all(configTables.engine) que crea la BD.
@@ -33,18 +33,16 @@ def eliminarCampaignBDxID(idC):
 
 #manager.returnCampaign(1)
 def retornarCampaignBD(idC):
-	print("Campaña retornada:")
 	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC)
-	#return(campaignespecifica)
-	#Que viaje en JSON, no como objeto:
-	#campaignJSON=(campaignespecifica).to_json()
-	objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
-	#print(type(objetoCampaign))
-	#print(objetoCampaign)
-	c=objetoCampaign.to_dict()
-	return(c)
+	#Con la campaignespecifica de arriba accedemos a los atributos así: (ya que es el objeto Campaign de configTables.py)
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
     #Devuelve esto: 2 donaldTrump@gmail.com #federicio-#federicio2 @hola-@hola2 2018-11-28 2018-12-02 --> con print envés de return se ve.
+	
+	objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
+	#Con el objetoCampaign de arriba accedemos a los atributos así: (ya que es el objeto Campaign de Campaign.py)
+	#print(campaignespecifica.idC, campaignespecifica.emailDueño, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
+
+	return objetoCampaign
 
 #manager.modifyCampaign(2, "email", "calonshi@gmail.com")
 #Desde la Interfaz (en ModifCampaign) le llegaría al manager la columna a modificar, el campo para esa columna (inputUser) y el id de campaña.
@@ -90,42 +88,29 @@ def insertTweet(TweetInput, idC):
 	configTables.session.commit()
 
 def returnTweetByIDT(idT):
-	print("Tweet retornado:")
 	tweetEspecifico = configTables.session.query(configTables.Tweet).get(idT)
 	return tweetEspecifico
 
 def returnTweetsByIDC(IDC):
 	tweetsBD = configTables.session.query(configTables.Tweet).filter_by(idCampaign=IDC).all()
-	print(tweetsBD[0])
-
-	#Nos tiró esto (lista de Tweets en el formato del modelo de SQL ALCHEMY que esta en configTables): 
+	#tweetsBD es una lista de Tweets en el formato de Tweet de ConfigTables: 
 	#[<Tweets(ID='112112', userName='MiauricioOK',userid='451325',hashtags='#DonaldNoMeDejes',mentions='@donaldTrump-@G20',date='2018-03-20 21:08:01',idCampaign='3')>, 
 	#<Tweets(ID='123456', userName='NASAOk',userid='789456',hashtags='#mars-#venus-#earth',mentions='@NASA-@planets',date='2018-03-20 15:11:01',idCampaign='3')>]
+	
 	#Tenemos que separar los tweets y crear objetos tweets. Y hacerles el to json. 
 	#Y hacer una lista de esos to json. 
-	
-	"""
-	tweetDict = {
-        "id_str" : "123456",
-        "user" : {"name" : "NASAOk", "id_str" : "789456"},
-        "entities" : {"hashtags" : ["#mars","#venus","#earth"],"user_mentions" : ["@NASA", "@planets"]},
-        "created_at" : "Sun Mar 20 15:11:01 +0000 2018",
-    }
-	
-
+	tweets = {}
+	i=0
 	for t in tweetsBD:
-		tweets.append(Tweet(tweet).to_json())
+		dictionary = {
+        	"id_str" : t.ID,
+        	"user" : {"name" : t.userName, "id_str" : t.userid},
+        	"entities" : {"hashtags" : t.hashtags,"user_mentions" : t.mentions},
+        	"created_at" : t.date,
+    	}
+		tweets["tweet"+str(i)]=[dictionary]
+		i=i+1
 	return tweets
-	"""
-
-	#return(campaignespecifica)
-	#Que viaje en JSON, no como objeto:
-	#campaignJSON=(campaignespecifica).to_json()
-	#objetoCampaign=Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
-	#print(type(objetoCampaign))
-	#print(objetoCampaign)
-	#c=objetoCampaign.to_dict()
-	#return(c)
 
 #def returnCampaignsInProgress(fecha en formato de fecha)
 #HACER FUNCION PARA GABY QUE me da una fecha en formato de Campaña y cuya hora de inicio es menor y hora de fin mayor.
