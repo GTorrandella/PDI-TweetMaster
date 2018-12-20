@@ -4,8 +4,6 @@ import json
 from DataBaseConnector import configTables
 from Campaign.Campaign import Campaign as Campaign
 
-#Primerio insertar si o si una campaig así se ejecuta la linea configTables.BD.metadata.create_all(configTables.engine) que crea la BD.
-#manager.insertCampaign('{"email":"donaldTrump@gmail.com","hashtags": ["#donaldTrump", "#G20"], "mentions": ["@donaldTrump", "@miauricioOK"], "sDate":"28-11-2018", "eDate":"02-12-2018"}')
 def insertarCampaignBD(CampaignReceived):
 	#Insertamos la campaña
 	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (o no, dependiendo si se ejecutó antes).
@@ -19,19 +17,29 @@ def insertarCampaignBD(CampaignReceived):
 	configTables.session.commit() #Para que los cambios se efectivicen en la BD
 	return new_campaignBD.id
 
-#manager.deleteCampaignporuser("donaldTrump@gmail.com")
 def eliminarCampaignBDxUser(email_user):
-	#Pueden ser 1 o mas campañas asociadas a un usuario, elimina TODAS:
-	configTables.session.query(configTables.Campaign).filter_by(email=email_user).delete()
-	configTables.session.commit()
+	#Pueden ser 1 o mas campañas asociadas a un usuario, para eliminar TODAS sin importar la fecha hacemos: configTables.session.query(configTables.Campaign).filter_by(email=email_user).delete() y configTables.session.commit()
+	listaCampaigns = configTables.session.query(configTables.Campaign).filter_by(email=email_user).all()
+	#Ahora tenemos que ver que cada una de estas campañas NO hayan iniciado (que fecha_inicio_campaign < 
+	# fecha_actual). Para esto hay que recorrer la lista y eliminar las que SI iniciaron.
+	for c in listaCampaigns:
+		#Cada c es un: <Campaign(idC='1', startDate='28 11 2018 18:02:00', finDate='02 12 2018 19:26:22', email='test@gmail.com', hashtags='#test-#mock', mentions='@testCampaign-@mockOK')>
+		#Y accedo a los atributos con c.atributo (el atributo está en la tabla Campaign dentro de configTables), osea asi: print (c.id)
+		idCampaign = c.id
+		campaignRetornada = retornarCampaignBD(idCampaign)
+		fecha_inicio_campaign = campaignRetornada.startDate
+		fecha_actual=datetime.now()
+		if (fecha_inicio_campaign < fecha_actual):
+			print("La campaña ya inició")
+		else: 
+			eliminarCampaignBDxID(idCampaign)
+			print("Campaign eliminada")
 
-#manager.deleteCampaignporid(1)
 def eliminarCampaignBDxID(idC):
-	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC) #Obtengo al camaña con id especifico idC.
+	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC) #Obtengo al campaña con id especifico idC.
 	configTables.session.delete(campaignespecifica)
 	configTables.session.commit()
 
-#manager.returnCampaign(1)
 def retornarCampaignBD(idC):
 	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC)
 	#Con la campaignespecifica de arriba accedemos a los atributos así: (ya que es el objeto Campaign de configTables.py)
@@ -44,7 +52,6 @@ def retornarCampaignBD(idC):
 
 	return objetoCampaign
 
-#manager.modifyCampaign(2, "email", "calonshi@gmail.com")
 #Desde la Interfaz (en ModifCampaign) le llegaría al manager la columna a modificar, el campo para esa columna (inputUser) y el id de campaña.
 def modificarCampaignBD(idC, inputColumn, inputUser):
 	#Lenguaje MYSQL: UPDATE Campaign SET columna = "inputuser" WHERE id = "idC".
@@ -99,7 +106,7 @@ def returnTweetsByIDC(IDC):
 	
 	#Tenemos que separar los tweets y crear objetos tweets. Y hacerles el to json. 
 	#Y hacer una lista de esos to json. 
-	tweets = {}
+	tweets = []
 	i=0
 	for t in tweetsBD:
 		dictionary = {
@@ -108,14 +115,9 @@ def returnTweetsByIDC(IDC):
         	"entities" : {"hashtags" : t.hashtags,"user_mentions" : t.mentions},
         	"created_at" : t.date,
     	}
-		tweets["tweet"+str(i)]=[dictionary]
+		tweets[i]=dictionary
 		i=i+1
 	return tweets
-
-#def returnCampaignsInProgress(fecha en formato de fecha)
-#HACER FUNCION PARA GABY QUE me da una fecha en formato de Campaña y cuya hora de inicio es menor y hora de fin mayor.
-#Todas las campañas que comenzaron pero que no terminaron (todas las campañas en curso)
-#DEvolver lista de campañas 
 
 def listaAString(lista):
 		string = "-".join(lista)
