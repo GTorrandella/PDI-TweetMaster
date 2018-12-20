@@ -4,7 +4,6 @@ Created on Dec 12, 2018
 @author: Gabriel Torrandella
 '''
 import unittest
-from unittest.mock import MagicMock
 
 from DataBaseConnector import test_database
 import DataBaseConnector.configTables as configTables
@@ -13,6 +12,7 @@ from Manager import manager_flask
 from Manager.tests.test_manager_base import test_manager_base
 
 from datetime import datetime
+from flask import json
 
 
 class test_manager_flask(test_manager_base):
@@ -132,7 +132,7 @@ class test_manager_flask(test_manager_base):
         response = self.test_app.get('/Campaing/3')
         self.assertEqual(response.status, '200 OK')
         
-        responseCampaign = response.json
+        responseCampaign = json.loads(response.json)
         self.assertEqual(responseCampaign['id'], 3)
         self.assertEqual(responseCampaign['email'], 'c@example.com')
         self.assertEqual(responseCampaign['hashtags'], '#nintendo-#SMASH')

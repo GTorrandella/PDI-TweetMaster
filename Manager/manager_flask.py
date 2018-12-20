@@ -3,6 +3,7 @@ from flask.globals import request
 from flask.wrappers import Response
 from werkzeug.wrappers import ETagRequestMixin, ETagResponseMixin, BaseRequest, BaseResponse
 from Manager.manager import Manager
+from Campaign.Campaign import Campaign
 
 app = Flask(__name__)
 
@@ -44,8 +45,9 @@ def api_manager():
 def api_manager_id(idC):
     
     if request.method == 'GET':
-        jsonCampaing = Manager().returnCampaign(idC)
-        return jsonify(jsonCampaing)
+        dataCampaing = Manager().returnCampaign(idC).to_json()
+        return jsonify(dataCampaing)
+
         
     elif request.method == 'PATCH':
         if ('columnaAModif' in request.json.keys()) and ('campoColumna' in request.json.keys()):
