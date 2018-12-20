@@ -8,7 +8,7 @@ class Reporter():
 		campaign = Connector.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
 		tweets = Connector.returnTweetsByIDC(idC) #Busca tweets de determinada campaña
 		
-		if campaign == []:			#Revisa que exista campaña con esa ID
+		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
 			return []
 		
 		rawData = {"campaign" : campaign.to_dict(), "tweets" : tweets}
@@ -18,7 +18,7 @@ class Reporter():
 		campaign = Connector.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
 		tweets = Connector.returnTweetsByIDC(idC) #Lista de diccionarios tweet
 		
-		if campaign == []:			#Revisa que exista campaña con esa ID
+		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
 			return []
 		
 		summary = {
