@@ -6,6 +6,8 @@ from flask import json
 from six import BytesIO
 
 from swagger_server.models.campaign import Campaign  # noqa: E501
+from swagger_server.models.delete import Delete  # noqa: E501
+from swagger_server.models.patch import Patch  # noqa: E501
 from swagger_server.models.reporter import Reporter  # noqa: E501
 from swagger_server.models.tweet import Tweet  # noqa: E501
 from swagger_server.test import BaseTestCase
@@ -33,12 +35,11 @@ class TestPublicAPIController(BaseTestCase):
 
         Eliminar una campaña.
         """
-        headers = [('_email', '_email_example'),
-                   ('_idC', 56)]
+        email_e_iC = Delete()
         response = self.client.open(
             '/FedericoCalonge/TweetMaster/1.0.0/Campaign',
             method='DELETE',
-            headers=headers,
+            data=json.dumps(email_e_iC),
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -84,12 +85,11 @@ class TestPublicAPIController(BaseTestCase):
 
         Modificar una Campaña.
         """
-        headers = [('columnaAModif', 'columnaAModif_example'),
-                   ('campoColumna', 'campoColumna_example')]
+        columnas = Patch()
         response = self.client.open(
             '/FedericoCalonge/TweetMaster/1.0.0/Campaign/{_idC}'.format(_idC=56),
             method='PATCH',
-            headers=headers,
+            data=json.dumps(columnas),
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

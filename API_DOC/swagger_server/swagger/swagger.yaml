@@ -71,22 +71,20 @@ paths:
         required: true
         type: "integer"
         format: "int32"
-      - name: "columnaAModif"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "campoColumna"
-        in: "header"
-        required: true
-        type: "string"
+      - in: "body"
+        name: "columnas"
+        description: "columnaAmodif y campoColumna."
+        required: false
+        schema:
+          $ref: "#/definitions/patch"
       responses:
         202:
           description: "Accepted - Campaña modificada."
         404:
-          description: "Not Found - La Campaña no existe o no se especificaron los\
-            \ 3 los parametros."
+          description: "Not Found - La Campaña no existe o no se especifico el idC."
         412:
-          description: "Precondition Failed - La Campaña ya empezó."
+          description: "Precondition Failed - No se especificaron columnaAModif o\
+            \ campoColumna o la Campaña ya empezó."
       x-swagger-router-controller: "swagger_server.controllers.public_api_controller"
   /Campaign:
     post:
@@ -125,15 +123,12 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "_email"
-        in: "header"
+      - in: "body"
+        name: "email_e_iC"
+        description: "email e iC."
         required: false
-        type: "string"
-      - name: "_idC"
-        in: "header"
-        required: false
-        type: "integer"
-        format: "int32"
+        schema:
+          $ref: "#/definitions/delete"
       responses:
         200:
           description: "OK - Campaña eliminada."
@@ -170,7 +165,7 @@ paths:
               $ref: "#/definitions/Tweet"
         404:
           description: "Not Found - La Campaña no existe o el _idc no fue especificado\
-            \ o no terminó la campaña."
+            \ o no terminó la campaña o la campaña no tiene tweets asociados."
       x-swagger-router-controller: "swagger_server.controllers.public_api_controller"
   /Reporter/ReporterJSON/{_idC}:
     get:
@@ -199,7 +194,7 @@ paths:
               $ref: "#/definitions/Reporter"
         404:
           description: "Not Found - La Campaña no existe o el _idc no fue especificado\
-            \ o no terminó la campaña."
+            \ o no terminó la campaña o la campaña no tiene tweets asociados."
       x-swagger-router-controller: "swagger_server.controllers.public_api_controller"
   /Fetcher:
     get:
@@ -213,7 +208,13 @@ paths:
       - "application/json"
       produces:
       - "application/json"
-      parameters: []
+      parameters:
+      - in: "body"
+        name: "Campaign"
+        description: "Campaign to add."
+        required: false
+        schema:
+          $ref: "#/definitions/CampaignFetcher"
       responses:
         200:
           description: "Devuelve una lista de Tweets en formato JSON."
@@ -264,6 +265,57 @@ definitions:
       - "@mauriciomacriOK"
       startDate: "28 11 2018 18:02:00"
       email: "calongefederico@gmail.com"
+  CampaignFetcher:
+    type: "object"
+    required:
+    - "email"
+    - "finDate"
+    - "hashtags"
+    - "id"
+    - "mentions"
+    - "startDate"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        example: 28
+      startDate:
+        type: "string"
+        format: "date-time"
+        example: "28 11 2018 18:02:00"
+      finDate:
+        type: "string"
+        format: "date-time"
+        example: "28 12 2018 18:22:00"
+      email:
+        type: "string"
+        format: "email"
+        example: "calongefederico@gmail.com"
+      mentions:
+        type: "array"
+        example:
+        - "@fedecalongeOK"
+        - "@mauriciomacriOK"
+        items:
+          type: "string"
+      hashtags:
+        type: "array"
+        example:
+        - "#bocaXFox"
+        - "#riverXFox"
+        items:
+          type: "string"
+    example:
+      hashtags:
+      - "#bocaXFox"
+      - "#riverXFox"
+      mentions:
+      - "@fedecalongeOK"
+      - "@mauriciomacriOK"
+      id: 28
+      startDate: "28 11 2018 18:02:00"
+      email: "calongefederico@gmail.com"
+      finDate: "28 12 2018 18:22:00"
   Tweet:
     type: "object"
     required:
@@ -369,3 +421,31 @@ definitions:
       fechaFin: "2018 30 06 00:00:00"
       email: "calongefederico@gmail.com"
       cant_tweets: 300
+  delete:
+    type: "object"
+    required:
+    - "email"
+    - "idC"
+    properties:
+      idC:
+        type: "integer"
+        format: "int32"
+        example: 2
+      email:
+        type: "string"
+        format: "date-time"
+        example: "calongefederico@gmail.com"
+  patch:
+    type: "object"
+    required:
+    - "campoColumna"
+    - "columnaAModif"
+    properties:
+      columnaAModif:
+        type: "integer"
+        format: "int32"
+        example: "email"
+      campoColumna:
+        type: "string"
+        format: "date-time"
+        example: "calongefederico@gmail.com"

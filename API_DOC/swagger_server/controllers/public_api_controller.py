@@ -2,6 +2,8 @@ import connexion
 import six
 
 from swagger_server.models.campaign import Campaign  # noqa: E501
+from swagger_server.models.delete import Delete  # noqa: E501
+from swagger_server.models.patch import Patch  # noqa: E501
 from swagger_server.models.reporter import Reporter  # noqa: E501
 from swagger_server.models.tweet import Tweet  # noqa: E501
 from swagger_server import util
@@ -22,18 +24,18 @@ def add_campaign(Campaign=None):  # noqa: E501
     return 'do some magic!'
 
 
-def del_campaign(_email=None, _idC=None):  # noqa: E501
+def del_campaign(email_e_iC=None):  # noqa: E501
     """Eliminar una campaña.
 
     Elimina una campaña del sistema al proporcionarle su ID o el email del dueño. Será eliminada únicamente si la campaña todavía no empezó. # noqa: E501
 
-    :param _email: 
-    :type _email: str
-    :param _idC: 
-    :type _idC: int
+    :param email_e_iC: email e iC.
+    :type email_e_iC: dict | bytes
 
     :rtype: None
     """
+    if connexion.request.is_json:
+        email_e_iC = Delete.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
 
 
@@ -76,18 +78,18 @@ def get_reporter_raw(_idC):  # noqa: E501
     return 'do some magic!'
 
 
-def mod_campaign_byid_c(_idC, columnaAModif, campoColumna):  # noqa: E501
+def mod_campaign_byid_c(_idC, columnas=None):  # noqa: E501
     """Modificar una Campaña.
 
     Modifica una Campaña en el sistema sólo si esta todavía no empezó. Se debe ingresar el _idC, una columna a modificar en coumnaAModif (email, startDate, finDate, hashtags, mentions) y el valor a modificar (en campoCOlumna). # noqa: E501
 
     :param _idC: 
     :type _idC: int
-    :param columnaAModif: 
-    :type columnaAModif: str
-    :param campoColumna: 
-    :type campoColumna: str
+    :param columnas: columnaAmodif y campoColumna.
+    :type columnas: dict | bytes
 
     :rtype: None
     """
+    if connexion.request.is_json:
+        columnas = Patch.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
