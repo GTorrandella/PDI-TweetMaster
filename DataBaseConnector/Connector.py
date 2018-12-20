@@ -106,7 +106,7 @@ def returnTweetsByIDC(IDC):
 	
 	#Tenemos que separar los tweets y crear objetos tweets. Y hacerles el to json. 
 	#Y hacer una lista de esos to json. 
-	tweets = {}
+	tweets = []
 	i=0
 	for t in tweetsBD:
 		dictionary = {
@@ -115,7 +115,7 @@ def returnTweetsByIDC(IDC):
         	"entities" : {"hashtags" : t.hashtags,"user_mentions" : t.mentions},
         	"created_at" : t.date,
     	}
-		tweets["tweet"+str(i)]=[dictionary]
+		tweets[i]=dictionary
 		i=i+1
 	return tweets
 
