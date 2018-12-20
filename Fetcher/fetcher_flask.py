@@ -9,6 +9,7 @@ from flask.wrappers import Response
 
 import Fetcher.fetcher as fetcher
 from Campaign.Campaign import Campaign
+from Manager.manager_flask import checkForm
 
 
 def fixDate(stringDate):
@@ -21,14 +22,21 @@ def fixDate(stringDate):
 
 app = Flask(__name__)
 
-@app.route('/fetcher', methods = ['GET'])
+def check(json):
+    k = request.json.keys()
+    return ('id' in k and 'email' in k and "hashtags" in k and "mentions" in k and "startDate" in k and "finDate" in k) 
+
+@app.route('/fetcher', methods = ['GET', 'POST'])
 def api_fetcher():
     if 'Content-Type' in request.headers.keys():
         if request.headers['Content-Type'] == 'application/json':
-            if 'Campaign' in request.json.keys():
-                
-                cJson = json.loads(request.json['Campaign'])
-                
+            if check(request.json):
+                       
+                cJson = request.json
+                 
+                f = open("log", 'a')
+                f.write(str(cJson))
+                f.close
                 sd = fixDate(cJson["startDate"]) 
                 ed = fixDate(cJson["finDate"])
                 
@@ -39,6 +47,8 @@ def api_fetcher():
                 return tweets
             else:
                 return Response(status = 400)
+        else:
+            return Response(400)
                 
     else:
         return Response(status = 400)
