@@ -57,7 +57,6 @@ def api_manager_id(idC):
         campaign = Manager().returnCampaign(idC)
         return (Response(status = 404) if campaign == [] else jsonify(fixCampaing(campaign).to_json()))
 
-        
     elif request.method == 'PATCH':
         if ('columnaAModif' in request.json.keys()) and ('campoColumna' in request.json.keys()):
             if(Manager().modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])):

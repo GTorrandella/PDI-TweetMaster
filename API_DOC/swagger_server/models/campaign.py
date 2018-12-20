@@ -15,15 +15,13 @@ class Campaign(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id_c: int=None, fecha_inicio: datetime=None, fecha_fin: datetime=None, email: str=None, mentions: List[str]=None, hashtags: List[str]=None):  # noqa: E501
+    def __init__(self, start_date: datetime=None, end_date: datetime=None, email: str=None, mentions: List[str]=None, hashtags: List[str]=None):  # noqa: E501
         """Campaign - a model defined in Swagger
 
-        :param id_c: The id_c of this Campaign.  # noqa: E501
-        :type id_c: int
-        :param fecha_inicio: The fecha_inicio of this Campaign.  # noqa: E501
-        :type fecha_inicio: datetime
-        :param fecha_fin: The fecha_fin of this Campaign.  # noqa: E501
-        :type fecha_fin: datetime
+        :param start_date: The start_date of this Campaign.  # noqa: E501
+        :type start_date: datetime
+        :param end_date: The end_date of this Campaign.  # noqa: E501
+        :type end_date: datetime
         :param email: The email of this Campaign.  # noqa: E501
         :type email: str
         :param mentions: The mentions of this Campaign.  # noqa: E501
@@ -32,26 +30,23 @@ class Campaign(Model):
         :type hashtags: List[str]
         """
         self.swagger_types = {
-            'id_c': int,
-            'fecha_inicio': datetime,
-            'fecha_fin': datetime,
+            'start_date': datetime,
+            'end_date': datetime,
             'email': str,
             'mentions': List[str],
             'hashtags': List[str]
         }
 
         self.attribute_map = {
-            'id_c': 'idC',
-            'fecha_inicio': 'fechaInicio',
-            'fecha_fin': 'fechaFin',
+            'start_date': 'startDate',
+            'end_date': 'endDate',
             'email': 'email',
             'mentions': 'mentions',
             'hashtags': 'hashtags'
         }
 
-        self._id_c = id_c
-        self._fecha_inicio = fecha_inicio
-        self._fecha_fin = fecha_fin
+        self._start_date = start_date
+        self._end_date = end_date
         self._email = email
         self._mentions = mentions
         self._hashtags = hashtags
@@ -68,73 +63,46 @@ class Campaign(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id_c(self) -> int:
-        """Gets the id_c of this Campaign.
+    def start_date(self) -> datetime:
+        """Gets the start_date of this Campaign.
 
 
-        :return: The id_c of this Campaign.
-        :rtype: int
-        """
-        return self._id_c
-
-    @id_c.setter
-    def id_c(self, id_c: int):
-        """Sets the id_c of this Campaign.
-
-
-        :param id_c: The id_c of this Campaign.
-        :type id_c: int
-        """
-        if id_c is None:
-            raise ValueError("Invalid value for `id_c`, must not be `None`")  # noqa: E501
-
-        self._id_c = id_c
-
-    @property
-    def fecha_inicio(self) -> datetime:
-        """Gets the fecha_inicio of this Campaign.
-
-
-        :return: The fecha_inicio of this Campaign.
+        :return: The start_date of this Campaign.
         :rtype: datetime
         """
-        return self._fecha_inicio
+        return self._start_date
 
-    @fecha_inicio.setter
-    def fecha_inicio(self, fecha_inicio: datetime):
-        """Sets the fecha_inicio of this Campaign.
+    @start_date.setter
+    def start_date(self, start_date: datetime):
+        """Sets the start_date of this Campaign.
 
 
-        :param fecha_inicio: The fecha_inicio of this Campaign.
-        :type fecha_inicio: datetime
+        :param start_date: The start_date of this Campaign.
+        :type start_date: datetime
         """
-        if fecha_inicio is None:
-            raise ValueError("Invalid value for `fecha_inicio`, must not be `None`")  # noqa: E501
 
-        self._fecha_inicio = fecha_inicio
+        self._start_date = start_date
 
     @property
-    def fecha_fin(self) -> datetime:
-        """Gets the fecha_fin of this Campaign.
+    def end_date(self) -> datetime:
+        """Gets the end_date of this Campaign.
 
 
-        :return: The fecha_fin of this Campaign.
+        :return: The end_date of this Campaign.
         :rtype: datetime
         """
-        return self._fecha_fin
+        return self._end_date
 
-    @fecha_fin.setter
-    def fecha_fin(self, fecha_fin: datetime):
-        """Sets the fecha_fin of this Campaign.
+    @end_date.setter
+    def end_date(self, end_date: datetime):
+        """Sets the end_date of this Campaign.
 
 
-        :param fecha_fin: The fecha_fin of this Campaign.
-        :type fecha_fin: datetime
+        :param end_date: The end_date of this Campaign.
+        :type end_date: datetime
         """
-        if fecha_fin is None:
-            raise ValueError("Invalid value for `fecha_fin`, must not be `None`")  # noqa: E501
 
-        self._fecha_fin = fecha_fin
+        self._end_date = end_date
 
     @property
     def email(self) -> str:

@@ -6,6 +6,8 @@ from flask import json
 from six import BytesIO
 
 from swagger_server.models.campaign import Campaign  # noqa: E501
+from swagger_server.models.reporter import Reporter  # noqa: E501
+from swagger_server.models.tweet import Tweet  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 

@@ -2,6 +2,8 @@ import connexion
 import six
 
 from swagger_server.models.campaign import Campaign  # noqa: E501
+from swagger_server.models.reporter import Reporter  # noqa: E501
+from swagger_server.models.tweet import Tweet  # noqa: E501
 from swagger_server import util
 
 
@@ -56,7 +58,7 @@ def get_reporter_json(_idC):  # noqa: E501
     :param _idC: 
     :type _idC: int
 
-    :rtype: None
+    :rtype: List[Reporter]
     """
     return 'do some magic!'
 
@@ -69,7 +71,7 @@ def get_reporter_raw(_idC):  # noqa: E501
     :param _idC: 
     :type _idC: int
 
-    :rtype: None
+    :rtype: List[Tweet]
     """
     return 'do some magic!'
 

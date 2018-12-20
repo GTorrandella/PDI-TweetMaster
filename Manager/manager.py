@@ -54,7 +54,7 @@ class Manager():
 		#La campaña NO inició, modificamos la campaña:
 			Connector.modificarCampaignBD(idCampaign, columna, inputUser)
 		return True
-
+		
 	def returnCampaignsInProgress(self):
 		#Obtenemos TODAS las Campañas y vemos una por una si la fecha de inicio de campaign es MENOR a
 		#la fecha actual y la fecha de fin de la campaña es MAYOR a la fecha actual. Y si sucede esto la agregamos a una nueva lista.

@@ -1,344 +1,371 @@
 ---
-swagger: '2.0'
+swagger: "2.0"
 info:
-  description: API que permite extraer informacion de Twitter. Mediante esta API se pueden generar campañas de extracción de información de TWitter, que se ejecuten cada cierto tiempo. Y en base a esa información se generan reportes.
-  version: 1.0.0
-  title: Tweet Master API
+  description: "API que permite extraer informacion de Twitter. Mediante esta API\
+    \ se pueden generar campañas de extracción de información de TWitter, que se ejecuten\
+    \ cada cierto tiempo. Y en base a esa información se generan reportes."
+  version: "1.0.0"
+  title: "Tweet Master API"
   contact:
-    email: calongefederico@gmail.com
-
+    email: "calongefederico@gmail.com"
   license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-    
-#tags para ordenar la información:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "virtserver.swaggerhub.com"
+basePath: "/FedericoCalonge/TweetMaster/1.0.0"
 tags:
-  - name: PublicAPI
-    description: Punto de acceso para los usuarios mediante la Interfaz Web.
-    externalDocs:
-      url: http://docs.my-api.com/pet-operations.htm
-  - name: PrivateAPI
-    description: Interacciones entre las 3 APIS Internas (Fetcher, Reporter y Manager)
-  
-#Se usara esta URL para la API: https/TweetMaster/API.
-# host: TweetMaster
-# basePath: /API
+- name: "PublicAPI"
+  description: "Punto de acceso para los usuarios mediante la Interfaz Web."
+  externalDocs:
+    url: "http://docs.my-api.com/pet-operations.htm"
+- name: "PrivateAPI"
+  description: "Interacciones entre las 3 APIS Internas (Fetcher, Reporter y Manager)"
 schemes:
- - https
- - http
-
-#A excepción de /Fetcher, a las demás URLS les pega directamente el usuario mediante la Interfaz Web. 
+- "https"
+- "http"
 paths:
   /Campaign/{_idC}:
     get:
       tags:
-        - PublicAPI
-      summary: Obtener una Campaña.
-      operationId: getCampaign
-      description: Indicando el id correcto se obtendrá información de la Campaña.
+      - "PublicAPI"
+      summary: "Obtener una Campaña."
+      description: "Indicando el id correcto se obtendrá información de la Campañ\
+        a."
+      operationId: "get_campaign"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: "path"
-        name: "_idC"
-        type: integer
-        format: int32
+      - name: "_idC"
+        in: "path"
         required: true
-          
+        type: "integer"
+        format: "int32"
       responses:
         200:
-          description: OK - Campaña devuelta.
-          #La Campaña que devolvemos en el body del request:
+          description: "OK - Campaña devuelta."
           schema:
-            type: array
+            type: "array"
             items:
-              $ref: '#/definitions/Campaign'
+              $ref: "#/definitions/Campaign"
         404:
-          description: Not Found - La Campaña no existe en la BD o el _idC no fue especificado.
-  
+          description: "Not Found - La Campaña no existe en la BD o el _idC no fue\
+            \ especificado."
+      x-swagger-router-controller: "swagger_server.controllers.public_api_controller"
     patch:
       tags:
-        - PublicAPI
-      summary: Modificar una Campaña.
-      operationId: modCampaignByidC
-      description: Modifica una Campaña en el sistema sólo si esta todavía no empezó. Se debe ingresar el _idC, una columna a modificar en coumnaAModif (email, startDate, finDate, hashtags, mentions) y el valor a modificar (en campoCOlumna).
+      - "PublicAPI"
+      summary: "Modificar una Campaña."
+      description: "Modifica una Campaña en el sistema sólo si esta todavía no empezó\
+        . Se debe ingresar el _idC, una columna a modificar en coumnaAModif (email,\
+        \ startDate, finDate, hashtags, mentions) y el valor a modificar (en campoCOlumna)."
+      operationId: "mod_campaign_byid_c"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: "path"
-        name: "_idC"
-        type: integer
-        format: int32
+      - name: "_idC"
+        in: "path"
         required: true
-      - in: header
-        name: "columnaAModif"
-        type: string
+        type: "integer"
+        format: "int32"
+      - name: "columnaAModif"
+        in: "header"
         required: true
-      - in: header
-        name: "campoColumna"
-        type: string
+        type: "string"
+      - name: "campoColumna"
+        in: "header"
         required: true
-     
+        type: "string"
       responses:
-        202: 
-          description: Accepted - Campaña modificada.
-          
+        202:
+          description: "Accepted - Campaña modificada."
         404:
-          description: Not Found - La Campaña no existe o no se especificaron los 3 los parametros.
+          description: "Not Found - La Campaña no existe o no se especificaron los\
+            \ 3 los parametros."
         412:
-          description: Precondition Failed - La Campaña ya empezó.
-  
-  /Campaign:  
-    delete:
-      tags:
-        - PublicAPI
-      summary: Eliminar una campaña.
-      operationId: delCampaign
-      description: Elimina una campaña del sistema al proporcionarle su ID o el email del dueño. Será eliminada únicamente si la campaña todavía no empezó.
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-        - in: header
-          name: "_email"
-          type: string
-          required: false
-          
-        - in: header
-          name: "_idC"
-          type: integer
-          format: int32
-          required: false
-          
-      responses:
-        200: 
-          description: OK - Campaña eliminada.
-        404:
-          description: Not Found - El usuario no tiene ninguna campaña registrada con su email.
-        412:
-          description: Precondition Failed - La Campaña ya empezó o no se indicaron los parametros _email ni _idC.
-
+          description: "Precondition Failed - La Campaña ya empezó."
+      x-swagger-router-controller: "swagger_server.controllers.public_api_controller"
+  /Campaign:
     post:
       tags:
-        - PublicAPI
-      summary: Añade una Campaña.
-      operationId: addCampaign
-      description: Añade una Campaña al sistema.
+      - "PublicAPI"
+      summary: "Añade una Campaña."
+      description: "Añade una Campaña al sistema."
+      operationId: "add_campaign"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: body
-        name: Campaign
-        description: Campaign to add.
-
-        #Acá en el request especificamos la Campaña a crearse:
+      - in: "body"
+        name: "Campaign"
+        description: "Campaign to add."
+        required: false
         schema:
-          $ref: '#/definitions/Campaign'
-        
+          $ref: "#/definitions/Campaign"
       responses:
         201:
-          description: Created - Campaña creada.
+          description: "Created - Campaña creada."
         412:
-          description: Precondition failed - No se asignaron todos los campos a la Campaña.
-    
+          description: "Precondition failed - No se asignaron todos los campos a la\
+            \ Campaña."
+      x-swagger-router-controller: "swagger_server.controllers.public_api_controller"
+    delete:
+      tags:
+      - "PublicAPI"
+      summary: "Eliminar una campaña."
+      description: "Elimina una campaña del sistema al proporcionarle su ID o el email\
+        \ del dueño. Será eliminada únicamente si la campaña todavía no empezó."
+      operationId: "del_campaign"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "_email"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "_idC"
+        in: "header"
+        required: false
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "OK - Campaña eliminada."
+        404:
+          description: "Not Found - El usuario no tiene ninguna campaña registrada\
+            \ con su email."
+        412:
+          description: "Precondition Failed - La Campaña ya empezó o no se indicaron\
+            \ los parametros _email ni _idC."
+      x-swagger-router-controller: "swagger_server.controllers.public_api_controller"
   /Reporter/ReporterRaw/{_idC}:
     get:
       tags:
-        - PublicAPI
-      summary: Obtener un reporte crudo.
-      operationId: getReporterRaw
-      description: Se puede obtener el reporte en crudo dada la Campaña _idC. 
+      - "PublicAPI"
+      summary: "Obtener un reporte crudo."
+      description: "Se puede obtener el reporte en crudo dada la Campaña _idC."
+      operationId: "get_reporter_raw"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: "path"
-        name: "_idC"
-        type: integer
-        format: int32
+      - name: "_idC"
+        in: "path"
         required: true
-          
+        type: "integer"
+        format: "int32"
       responses:
         200:
-          description: OK - Reporte retornado.
+          description: "OK - Reporte retornado."
           schema:
-            type: array
+            type: "array"
             items:
-              $ref: '#/definitions/Tweet'
+              $ref: "#/definitions/Tweet"
         404:
-          description: Not Found - La Campaña no existe o el _idc no fue especificado o no terminó la campaña.
-          
+          description: "Not Found - La Campaña no existe o el _idc no fue especificado\
+            \ o no terminó la campaña."
+      x-swagger-router-controller: "swagger_server.controllers.public_api_controller"
   /Reporter/ReporterJSON/{_idC}:
     get:
       tags:
-        - PublicAPI
-      summary: Obtener un resumen del reporte en JSON.
-      operationId: getReporterJSON
-      description: Se puede obtener el resumen del reporte en JSON dada la Campaña _idC.
+      - "PublicAPI"
+      summary: "Obtener un resumen del reporte en JSON."
+      description: "Se puede obtener el resumen del reporte en JSON dada la Campañ\
+        a _idC."
+      operationId: "get_reporter_json"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: "path"
-        name: "_idC"
-        type: integer
-        format: int32
+      - name: "_idC"
+        in: "path"
         required: true
-      
+        type: "integer"
+        format: "int32"
       responses:
         200:
-          description: OK - Reporte retornado.
+          description: "OK - Reporte retornado."
           schema:
-            type: array
+            type: "array"
             items:
-              $ref: '#/definitions/Reporter'
+              $ref: "#/definitions/Reporter"
         404:
-          description: Not Found - La Campaña no existe o el _idc no fue especificado o no terminó la campaña.
-  
+          description: "Not Found - La Campaña no existe o el _idc no fue especificado\
+            \ o no terminó la campaña."
+      x-swagger-router-controller: "swagger_server.controllers.public_api_controller"
   /Fetcher:
-     get:
+    get:
       tags:
-        - PrivateAPI
-      summary: Obtención de los Tweets en formato JSON para ser usados por Manager.
-      operationId: getTweets
-      description: Parte INTERNA de la API. REcibe una Campaña como JSON en el request y devuelve al Manager en el response una lista de Tweets en formato JSON.
+      - "PrivateAPI"
+      summary: "Obtención de los Tweets en formato JSON para ser usados por Manager."
+      description: "Parte INTERNA de la API. REcibe una Campaña como JSON en el request\
+        \ y devuelve al Manager en el response una lista de Tweets en formato JSON."
+      operationId: "get_tweets"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
-    
+      - "application/json"
+      parameters: []
       responses:
-        '200':
-          description: Devuelve una lista de Tweets en formato JSON.
+        200:
+          description: "Devuelve una lista de Tweets en formato JSON."
           schema:
-              $ref: '#/definitions/Tweet'
-
+            $ref: "#/definitions/Tweet"
+      x-swagger-router-controller: "swagger_server.controllers.private_api_controller"
 definitions:
   Campaign:
-    type: object
+    type: "object"
     required:
-    - idC
-    - fechaInicio
-    - fechaFin
-    - email
-    - mentions
-    - hashtags
+    - "email"
+    - "hashtags"
+    - "mentions"
     properties:
-      idC:
-        type: integer
-        format: int32
-        example: 2
-      fechaInicio:
-        type: string
-        format: date-time
-        example: 2018 30 05 23:55:00 
-      fechaFin:
-        type: string
-        format: date-time
-        example: 2018 30 06 00:00:00 
+      startDate:
+        type: "string"
+        format: "date-time"
+        example: "28 11 2018 18:02:00"
+      endDate:
+        type: "string"
+        format: "date-time"
+        example: "28 12 2018 18:22:00"
       email:
-        type: string
-        format: email
+        type: "string"
+        format: "email"
         example: "calongefederico@gmail.com"
       mentions:
-        type: array
-        items: 
-           type: string
-        example: "@fedecalongeOK, @mauriciomacriOK"
-      hashtags:
-        type: array
+        type: "array"
+        example:
+        - "@fedecalongeOK"
+        - "@mauriciomacriOK"
         items:
-          type: string
-        example: "#bocaXFox, #riverXFox"
-  
+          type: "string"
+      hashtags:
+        type: "array"
+        example:
+        - "#bocaXFox"
+        - "#riverXFox"
+        items:
+          type: "string"
+    example:
+      hashtags:
+      - "#bocaXFox"
+      - "#riverXFox"
+      endDate: "28 12 2018 18:22:00"
+      mentions:
+      - "@fedecalongeOK"
+      - "@mauriciomacriOK"
+      startDate: "28 11 2018 18:02:00"
+      email: "calongefederico@gmail.com"
   Tweet:
-    type: object
+    type: "object"
     required:
-    - idT
-    - fechaInicio
-    - fechaFin
-    - mentions
-    - hashtags
+    - "fechaFin"
+    - "fechaInicio"
+    - "hashtags"
+    - "idT"
+    - "mentions"
     properties:
       idT:
-        type: integer
-        format: int32
+        type: "integer"
+        format: "int32"
         example: 2
       fechaInicio:
-        type: string
-        format: date-time
-        example: 2018 30 05 23:55:00 
+        type: "string"
+        format: "date-time"
+        example: "2018 30 05 23:55:00"
       fechaFin:
-        type: string
-        format: date-time
-        example: 2018 30 06 00:00:00 
+        type: "string"
+        format: "date-time"
+        example: "2018 30 06 00:00:00"
       mentions:
-        type: array
-        items: 
-           type: string
-        example: "@fedecalongeOK, @mauriciomacriOK"
-      hashtags:
-        type: array
+        type: "array"
+        example:
+        - "@fedecalongeOK"
+        - "@mauriciomacriOK"
         items:
-          type: string
-        example: "#bocaXFox, #riverXFox"
-  
+          type: "string"
+      hashtags:
+        type: "array"
+        example:
+        - "#bocaXFox"
+        - "#riverXFox"
+        items:
+          type: "string"
+    example:
+      hashtags:
+      - "#bocaXFox"
+      - "#riverXFox"
+      fechaInicio: "2018 30 05 23:55:00"
+      mentions:
+      - "@fedecalongeOK"
+      - "@mauriciomacriOK"
+      idT: 2
+      fechaFin: "2018 30 06 00:00:00"
   Reporter:
-    type: object
+    type: "object"
     required:
-    - idC
-    - fechaInicio
-    - fechaFin
-    - email
-    - mentions
-    - hashtags
-    - cant_tweets
-    - moreTwUser
-    - userQuantity
+    - "cant_tweets"
+    - "email"
+    - "fechaFin"
+    - "fechaInicio"
+    - "hashtags"
+    - "idC"
+    - "mentions"
+    - "moreTwUser"
+    - "userQuantity"
     properties:
       idC:
-        type: integer
-        format: int32
+        type: "integer"
+        format: "int32"
         example: 2
       fechaInicio:
-        type: string
-        format: date-time
-        example: 2018 30 05 23:55:00 
+        type: "string"
+        format: "date-time"
+        example: "2018 30 05 23:55:00"
       fechaFin:
-        type: string
-        format: date-time
-        example: 2018 30 06 00:00:00 
+        type: "string"
+        format: "date-time"
+        example: "2018 30 06 00:00:00"
       email:
-        type: string
-        format: email
+        type: "string"
+        format: "email"
         example: "calongefederico@gmail.com"
       mentions:
-        type: array
-        items: 
-           type: string
+        type: "array"
         example: "@fedecalongeOK, @mauriciomacriOK"
-      hashtags:
-        type: array
         items:
-          type: string
+          type: "string"
+      hashtags:
+        type: "array"
         example: "#bocaXFox, #riverXFox"
+        items:
+          type: "string"
       cant_tweets:
-        type: integer
-        format: int32
+        type: "integer"
+        format: "int32"
         example: 300
       moreTwUser:
-        type: string
+        type: "string"
         example: "juandavid"
       userQuantity:
-        type: string
-        format: int32
-        example: 200
+        type: "string"
+        format: "int32"
+        example: "200"
+    example:
+      hashtags: "#bocaXFox, #riverXFox"
+      userQuantity: "200"
+      fechaInicio: "2018 30 05 23:55:00"
+      mentions: "@fedecalongeOK, @mauriciomacriOK"
+      idC: 2
+      moreTwUser: "juandavid"
+      fechaFin: "2018 30 06 00:00:00"
+      email: "calongefederico@gmail.com"
+      cant_tweets: 300
