@@ -15,9 +15,7 @@ app = Flask(__name__)
 def api_report_json(idC):
     if True: # Aca se fija si existe el recurso
         summary = Reporter().reportSummary(idC)
-        if summary == []:
-            return Response(status = 404)
-        return jsonify(summary)
+        return (Response(status = 404) if summary == [] else jsonify(summary))
             
     else:
         return Response(status = 404)
@@ -27,9 +25,7 @@ def api_report_raw(idC):
     
     if True:
         data = Reporter().reportRawData(idC)
-        if data == []:
-            return Response(status = 404)
-        return jsonify(data)
+        return (Response(status = 404) if data == [] else jsonify(data))
     else:
         return Response(status = 404)
 

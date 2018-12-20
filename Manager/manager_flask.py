@@ -53,10 +53,7 @@ def api_manager_id(idC):
     
     if request.method == 'GET':
         campaign = Manager().returnCampaign(idC)
-        if campaign == []:
-            return Response(status = 404)
-        dataCampaing = fixCampaing(campaign).to_json()
-        return jsonify(dataCampaing)
+        return (Response(status = 404) if campaign == [] else jsonify(fixCampaing(campaign).to_json()))
 
         
     elif request.method == 'PATCH':

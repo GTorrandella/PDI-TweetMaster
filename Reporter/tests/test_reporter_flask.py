@@ -12,7 +12,6 @@ from Reporter import reporter_flask
 from Reporter.tests.test_reporter_base import test_reporter_base
 
 from datetime import datetime
-from flask import jsonify
 
 class test_reporter_flask(test_reporter_base):
 
