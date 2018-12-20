@@ -8,7 +8,7 @@ class Reporter():
 		campaign = Connector.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
 		tweets = Connector.returnTweetsByIDC(idC) #Busca tweets de determinada campaña
 		rawData = {"campaign" : campaign.to_dict(), "tweets" : tweets}
-		return (json.dumps(rawData))
+		return (rawData)
 
 	def reportSummary(self, idC): #OK
 		campaign = Connector.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
@@ -20,7 +20,7 @@ class Reporter():
 			"moreTwUser" : self.getUserWithMoreTw(tweets), #Autor con mas tweets
 			"userQuantity": self.getUserQuantity(tweets), #Cantidad diferente de usuarios
 		}
-		return (json.dumps(summary))
+		return (summary)
 
 	def getUserWithMoreTw(self,tweets): #OK (falta el caso en que sean varios users en el 1er puesto)
 		users=[]

@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 @app.route('/Reporter/ReporterJSON/<int:idC> ', methods = ['GET'])
 def api_report_json(idC):
-    
+
     if True: # Aca se fija si existe el recurso
         json = Reporter().reportSummary(idC)
         return Response(json, status = 200, mimetype='aplication/json')
