@@ -73,7 +73,6 @@ class test_reporter_flask(test_reporter_base):
         afterTweetNumber = len(configTables.session.query(configTables.Tweet).all())
         self.assertEqual(afterTweetNumber, 16)
 
-    @unittest.expectedFailure
     def test_GET_json_404(self):
         initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
@@ -120,7 +119,6 @@ class test_reporter_flask(test_reporter_base):
         afterTweetNumber = len(configTables.session.query(configTables.Tweet).all())
         self.assertEqual(afterTweetNumber, 16) 
     
-    @unittest.expectedFailure
     def test_GET_raw_404(self):
         initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
