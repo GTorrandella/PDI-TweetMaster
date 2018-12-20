@@ -33,10 +33,6 @@ def api_fetcher():
             if check(request.json):
                        
                 cJson = request.json
-                 
-                f = open("log", 'a')
-                f.write(str(cJson))
-                f.close
                 sd = fixDate(cJson["startDate"]) 
                 ed = fixDate(cJson["finDate"])
                 
