@@ -92,11 +92,10 @@ class test_manager(unittest.TestCase):
         #Retornamos los tuits con IDC 3 (de la 3ra campaña)
         tweets = Connector.returnTweetsByIDC(3)
         print(tweets)
-        #Esto me devuelve, una lista de diccionarios tweets. La clave es tweetN y el valor es otro diccionario con los atributos del tweet:
-        #{'tweet0': [{'id_str': 112112, 'user': {'name': 'MiauricioOK', 'id_str': '451325'}, 'entities': {'hashtags': '#DonaldNoMeDejes',
-        # 'user_mentions': '@donaldTrump-@G20'}, 'created_at': '2018-03-20 21:08:01'}], 
-        #'tweet1': [{'id_str': 123456, 'user': {'name': 'NASAOk', 'id_str': '789456'}, 'entities': {'hashtags': '#mars-#venus-#earth', 
-        #'user_mentions': '@NASA-@planets'}, 'created_at': '2018-03-20 15:11:01'}]}
+        #Esto me devuelve, una lista de tweets en formato diccionario con sus atributos.
+        #[{'id_str': 112112, 'user': {'name': 'MauricioOK', 'id_str': '451325'}, 'entities': {'hashtags': '#DonaldNoMeDejes', 'user_mentions': '@donaldTrump-@G20'}, 'created_at': '2018-03-20 21:08:01'},
+        # {'id_str': 123456, 'user': {'name': 'NASAOk', 'id_str': '789456'}, 'entities': {'hashtags': '#mars-#venus-#earth', 'user_mentions': '@NASA-@planets'}, 'created_at': '2018-03-20 15:11:01'}]
+
 
     def test_fechaMayor(self):
         fecha1 = datetime(2018, 12, 19, 19, 49)
