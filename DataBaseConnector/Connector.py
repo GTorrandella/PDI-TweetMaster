@@ -70,11 +70,11 @@ def modificarCampaignBD(idC, inputColumn, inputUser):
 		configTables.session.commit()
 	
 	if (inputColumn=="hashtags"):
-		campaignespecifica.hashtags = inputUser
+		campaignespecifica.hashtags = listaAString(inputUser)
 		configTables.session.commit()
 	
 	if (inputColumn=="mentions"):
-		campaignespecifica.mentions = inputUser
+		campaignespecifica.mentions = listaAString(inputUser)
 		configTables.session.commit()
 	
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 

@@ -17,10 +17,12 @@ def checkForm(json):
     keys = json.keys()
     return ('email' in keys and "hashtags" in keys and "mentions" in keys and "startDate" in keys and "endDate" in keys)
 
+#Goes from guinated string to list
 def fixCampaing(c):
     c.hashtags = c.hashtags.split("-")
     c.mentions = c.mentions.split("-")
     return c
+
 
 @app.route('/Campaing', methods = ['POST', 'DELETE'])
 def api_manager():

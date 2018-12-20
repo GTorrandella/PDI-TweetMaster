@@ -27,12 +27,12 @@ class test_manager_base(unittest.TestCase):
     campaignDeleteDataError = {'hype':"JOKER_IN_SMASH"}
     
     campaignPatchHashtagsData = {'columnaAModif':'hashtags',
-                                'campoColumna':'#qatherine-#katherine-#catherine'}
+                                'campoColumna':['#qatherine','#katherine','#catherine']}
     
     campaignPatchMentionsData = {'columnaAModif':'mentions',
-                                'campoColumna':'@atlususa-@stud_zero'}
+                                'campoColumna':['@atlususa','@stud_zero']}
     
-    campaignPatchErrorData = {'campoColumna':'@atlususa-@stud_zero'}
+    campaignPatchErrorData = {'campoColumna':['@atlususa','@stud_zero']}
 
 
     initialCampaigns = [Campaign(1, "a@example.com", '#NothingBreaksLikeAHeart', "", "31 12 2050 23:20:00", "01 01 2051 00:30:00"),
