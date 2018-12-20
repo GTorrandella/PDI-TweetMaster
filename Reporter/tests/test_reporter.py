@@ -29,7 +29,7 @@ class test_reporter(unittest.TestCase):
 		print(summary)
 		#Devuelve esto: 
 		#
-		
+
 	#Dada la campaña y tweets testeamos si los datos raw son retornados correctamente:
 	def test_reportRawData(self):
 		#Precondicion: necesitamos una campaña con tweets asociados:
