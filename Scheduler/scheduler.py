@@ -8,6 +8,6 @@ from Manager.manager import Manager
 class Scheduler():
         
     def keepSchedule(self):
-        Manager.fetchCampaings()
+        Manager().fetchCampaings()
 
-Scheduler.keepSchedule()
+Scheduler().keepSchedule()
