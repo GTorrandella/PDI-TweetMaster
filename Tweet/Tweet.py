@@ -10,14 +10,14 @@ class Tweet(object):
         self.userName = user['name']
         self.userID = user['id_str']
         
-        if type(entities['hashtags'] == dict):
+        if type(entities['hashtags']) == dict:
             self.hashtags = []
             for d in entities['hashtags']:
                 self.hashtags.append('#'+d['text'])
         else:
             self.hashtags = entities['hashtags']
             
-        if type(entities['user_mentions'] == dict):
+        if type(entities['user_mentions']) == dict:
             self.mentions = []
             for d in entities['user_mentions']:
                 self.mentions.append('@'+d['screen_name'])

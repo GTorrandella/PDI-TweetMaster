@@ -110,5 +110,3 @@ class Manager():
 			response = requests.get(url, json=jsonCampaign, headers=headers)
 			self.insertTweets(response.json()["Tweets"],c.idC)
 			
-			
-		
