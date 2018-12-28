@@ -29,13 +29,9 @@ def check(json):
 def api_fetcher():
     if 'Content-Type' in request.headers.keys():
         if request.headers['Content-Type'] == 'application/json':
-            if check(request.json):
-                       
-                cJson = request.json
-                sd = fixDate(cJson["startDate"]) 
-                ed = fixDate(cJson["finDate"])
-                
-                campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],sd,ed)
+            cJson = json.loads(request.json)
+            if check(cJson):
+                campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],cJson["startDate"],cJson["finDate"])
                                         
                 tweets = jsonify(fetcher.Fetcher().fetchTweets(campaign))
 
