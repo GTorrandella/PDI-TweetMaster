@@ -1,5 +1,4 @@
 import json
-from datetime import datetime
 
 class Tweet(object):
     '''classdocs'''
@@ -10,8 +9,12 @@ class Tweet(object):
         entities = tweet['entities'] #diccionario con 2 listas (hashtags y mentions)
         self.userName = user['name']
         self.userID = user['id_str']
-        self.hashtags = entities['hashtags']
-        self.mentions = entities['user_mentions']
+        self.hashtags = []
+        for d in entities['hashtags']:
+            self.hashtags.append('#'+d['text'])
+        self.mentions = []
+        for d in entities['user_mentions']:
+            self.mentions.append('@'+d['screen_name'])
         self.date = tweet['created_at']
         #Sun Mar 20 21:08:01 2018"
 
