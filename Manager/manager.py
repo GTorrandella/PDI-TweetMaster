@@ -103,8 +103,8 @@ class Manager():
 	#Comunicacion entre Fetcher y Manager. Cada campaña se codifica a json:
 	def fetchCampaings(self):
 		campaignsToFetch = self.returnCampaignsInProgress()
-		for C in campaignsToFetch:
-			c = self._campaignStringToList(self._dbCampaignToCampaig(C))
+		for idC in campaignsToFetch:
+			c = self._campaignStringToList(self._dbCampaignToCampaig(idC))
 			jsonCampaign = c.to_json()
 			url = "http://127.0.0.1:5001/fetcher"
 			headers = {"Content-Type":"application/json"}			
