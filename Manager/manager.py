@@ -109,7 +109,7 @@ class Manager():
 			url = "http://127.0.0.1:5001/fetcher"
 			headers = {"Content-Type":"application/json"}			
 			response = requests.get(url, json=jsonCampaign, headers=headers)
-			self.insertTweets(response.json()["Tweets"],idC)
+			self.insertTweets(json.loads(response.json)["Tweets"],idC)
 			
 			
 			
