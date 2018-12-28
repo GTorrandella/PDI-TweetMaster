@@ -32,11 +32,11 @@ class Campaign(BD):
 class Tweet(BD):
 	__tablename__ = 'tweets'
 	
-	ID = Column(Integer, primary_key=True)
+	ID = Column(String(50), primary_key=True)
 	userName = Column(String(50))
 	userid = Column(String(30))
-	hashtags = Column(String(50))
-	mentions = Column(String(50))
+	hashtags = Column(String(150))
+	mentions = Column(String(150))
 	date = Column(String(30))
 	idCampaign = Column(Integer, ForeignKey('campaign.id'))
 
