@@ -9,12 +9,21 @@ class Tweet(object):
         entities = tweet['entities'] #diccionario con 2 listas (hashtags y mentions)
         self.userName = user['name']
         self.userID = user['id_str']
-        self.hashtags = []
-        for d in entities['hashtags']:
-            self.hashtags.append('#'+d['text'])
-        self.mentions = []
-        for d in entities['user_mentions']:
-            self.mentions.append('@'+d['screen_name'])
+        
+        if type(entities['hashtags'] == dict):
+            self.hashtags = []
+            for d in entities['hashtags']:
+                self.hashtags.append('#'+d['text'])
+        else:
+            self.hashtags = entities['hashtags']
+            
+        if type(entities['user_mentions'] == dict):
+            self.mentions = []
+            for d in entities['user_mentions']:
+                self.mentions.append('@'+d['screen_name'])
+        else:
+            self.mentions = entities['user_mentions']
+                
         self.date = tweet['created_at']
         #Sun Mar 20 21:08:01 2018"
 
