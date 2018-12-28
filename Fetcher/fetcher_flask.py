@@ -9,7 +9,6 @@ from flask.wrappers import Response
 
 import Fetcher.fetcher as fetcher
 from Campaign.Campaign import Campaign
-from Manager.manager_flask import checkForm
 
 
 def fixDate(stringDate):
@@ -23,7 +22,7 @@ def fixDate(stringDate):
 app = Flask(__name__)
 
 def check(json):
-    k = request.json.keys()
+    k = json.keys()
     return ('id' in k and 'email' in k and "hashtags" in k and "mentions" in k and "startDate" in k and "finDate" in k) 
 
 @app.route('/fetcher', methods = ['GET', 'POST'])
