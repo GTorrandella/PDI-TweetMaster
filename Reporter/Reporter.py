@@ -10,9 +10,9 @@ class Reporter():
 		tweets = Connector.returnTweetsByIDC(idC) #Busca tweets de determinada campaña
 		
 		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
-			return []
+			return 404
 		if (campaign.finDate > datetime.now()):		#la campana no finalizo aun
-			return []
+			return 412
 		
 		rawData = {"campaign" : campaign.to_dict(), "tweets" : tweets}
 		return (rawData)
@@ -22,9 +22,9 @@ class Reporter():
 		tweets = Connector.returnTweetsByIDC(idC) #Lista de diccionarios tweet
 		
 		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
-			return []
+			return 404
 		if (campaign.finDate > datetime.now()):		#la campana no finalizo aun
-			return []
+			return 412
 		
 		summary = {
 			"campaign" : campaign.to_dict(), #como diccionario para que se pueda acceder a los campos mas facil

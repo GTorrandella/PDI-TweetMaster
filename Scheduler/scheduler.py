@@ -15,7 +15,7 @@ class Scheduler():
     
     def keepSchedule(self):
         Manager().fetchCampaings()
-
+        
 Scheduler().keepSchedule()
 
 
