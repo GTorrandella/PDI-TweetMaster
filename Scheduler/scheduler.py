@@ -1,15 +1,17 @@
 
+import sys
+from os import path
+
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+
 from Manager.manager import Manager
-from _datetime import datetime
+
 
 class Scheduler():
     
-    def wakeManager(self, campaigns):
-        Manager.fetchCampaings(campaigns)
-        
     def keepSchedule(self):
-        camps = self.returnCampaignsInProgress()
-        if not len(camps) == 0:
-            self.wakeManager(camps)
+        Manager().fetchCampaings()
+        
+Scheduler().keepSchedule()
 
-Scheduler.keepSchedule()
+

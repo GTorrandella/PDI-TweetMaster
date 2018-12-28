@@ -40,17 +40,20 @@ The servers will live in:
 The Scheduler is a small Python module accessed once every 5 minutes.  
 To do that, it is necesary to create a _cron job_ that executes the module every 5 minutes.
 
-First, look up the Python 3 path using **which**. If you are using a virtual enviroment, executute this command while working on it.  
+To add a _cron job_ first execute **crontab -e**. This will open a text editor.
+Append at the end the following line:
 ```
-which python3
+*/5 * * * * cd {path to TweetMaster root} && PYTHONPATH Scheduler/scheduler.py
 ```
-This will return your Python 3 path.
 
-Now add a the next cron job. (To add a cron job, use **crontab -e**):  
-```
-*/5 * * * * PYTHONPATH {path to scheduler.py}/scheduler.py
-```
 */5 * * * * /usr/bin/python3 /Scheduler/scheduler.py 
+
+Where:
+ * "path to TweetMaster root" is the path from root to the TweetMaster's root directory
+   * /dir1/dir2/dir3/TweetMaster
+ * PYTHONPATH is the Python 3 interpreter's path
+   * If you are _not_ using a virtual enviroment, replace this with _python3_
+   * If you _are_ using a virtual enviroment, get the path executing **which python3** when working on the enviroment.
 
 ### Optional: Setting up the Swagger tool
 
