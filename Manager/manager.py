@@ -81,10 +81,9 @@ class Manager():
 
 	#Fijarse en test_manager que sería este tweetsJson que recibe.
 	def insertTweets(self, tweetsJson, idC):
-		tweets = json.loads(tweetsJson)
 		#Los separamos en tweets separados y llamamos a insertTweet para agregarlo uno por uno:
-		for i in range(len(tweets)):
-			t = Tweet(tweets[i])
+		for tweet in tweetsJson:
+			t = Tweet(json.loads(tweet))
 			self.insertTweet(t,idC) #Le pasamos el objeto Tweet instanciado.
 
 	def insertTweet(self, TweetInput, idC):
@@ -110,7 +109,18 @@ class Manager():
 			headers = {"Content-Type":"application/json"}			
 			response = requests.get(url, json=jsonCampaign, headers=headers)
 			self.insertTweets(response.json()["Tweets"],c.idC)
+			
+	def test(self):
+		c = Campaign("idC", "emailDueño", ["#mars"], ["@mars"], "06 12 2018 23:20:00", "07 12 2018 00:00:30")
+		jsonCampaign = c.to_json()
+		url = "http://127.0.0.1:5001/fetcher"
+		headers = {"Content-Type":"application/json"}			
+		response = requests.get(url, json=jsonCampaign, headers=headers)
+		self.insertTweets(response.json()["Tweets"],c.idC)
+			
+Manager().test()
 
+			
 			
 
 			
