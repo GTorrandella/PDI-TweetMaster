@@ -12,8 +12,14 @@ class Tweet(object):
         self.userID = user['id_str']
         self.hashtags = entities['hashtags']
         self.mentions = entities['user_mentions']
-        self.date = datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y")
+        Ymd, Xz = tweet['created_at'].split(' ')
+        Y,m,d = Ymd.split('-')
+        X = Xz[:8]
+        z = Xz[8:].replace(':','')
+        self.date = datetime.strptime(Y+" "+m+" "+d+" "+X+" "+z, "%Y %m %d %X %z")
         #Sun Mar 20 21:08:01 2018"
+        '2018-12-28 22:07:42+00:00'
+
 
     def to_json(self):
         dictionary = {
