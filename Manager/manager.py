@@ -109,16 +109,6 @@ class Manager():
 			headers = {"Content-Type":"application/json"}			
 			response = requests.get(url, json=jsonCampaign, headers=headers)
 			self.insertTweets(response.json()["Tweets"],c.idC)
-			
-	def test(self):
-		c = Campaign("idC", "emailDueño", ["#mars"], ["@mars"], "06 12 2018 23:20:00", "07 12 2018 00:00:30")
-		jsonCampaign = c.to_json()
-		url = "http://127.0.0.1:5001/fetcher"
-		headers = {"Content-Type":"application/json"}			
-		response = requests.get(url, json=jsonCampaign, headers=headers)
-		self.insertTweets(response.json()["Tweets"],c.idC)
-			
-Manager().test()
 
 			
 			
