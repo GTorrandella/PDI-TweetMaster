@@ -50,6 +50,7 @@ Now add a the next cron job. (To add a cron job, use **crontab -e**):
 ```
 */5 * * * * PYTHONPATH {path to scheduler.py}/scheduler.py
 ```
+*/5 * * * * /usr/bin/python3 /Scheduler/scheduler.py 
 
 ### Optional: Setting up the Swagger tool
 
