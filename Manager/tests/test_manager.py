@@ -22,15 +22,16 @@ class test_manager(unittest.TestCase):
             "id_str" : "123",
             "user" : {"name" : "NASAOk", "id_str" : "789456"},
             "entities" : {"hashtags" : ["#mars","#venus","#earth"],"user_mentions" : ["@NASA", "@planets"]},
-            "created_at" : "Sun Mar 20 15:11:01 +0000 2018",
+            "created_at" : "Sun Mar 20 15:11:01 +0000 2018"
         }
         self.tweet2 = {
             "id_str" : "124",
             "user" : {"name" : "MiauricioOK", "id_str" : "451325"},
             "entities" : {"hashtags" : ["#DonaldNoMeDejes"], "user_mentions" : ["@donaldTrump", "@G20"]},
-            "created_at" : "Sun Mar 20 21:08:01 +0000 2018",
+            "created_at" : "Sun Mar 20 21:08:01 +0000 2018"
         }
-        tweetsJson = json.dumps([self.tweet1,self.tweet2])
+        tweetsJson = [json.dumps(self.tweet1),json.dumps(self.tweet2)]
+        print(tweetsJson)
         #Insertamos un tweet con ID campaign 3.
         manager.Manager().insertTweets(tweetsJson, 3)
         #Obtengo el 2do Tweet:
@@ -112,3 +113,5 @@ class test_manager(unittest.TestCase):
 
     def test_returnCampaignsInProgress(self):
         manager.Manager().returnCampaignsInProgress()
+
+  
