@@ -12,7 +12,7 @@ class Tweet(object):
         
         self.hashtags = []
         if type(entities['hashtags']) == dict:
-            self.mentions = entities['hashtags']
+            self.hashtags.append('#'+entities['hashtags']['text'])
         else:
             for d in entities['hashtags']:
                 if type(d) == dict:
@@ -22,7 +22,7 @@ class Tweet(object):
                 
         self.mentions = []
         if type(entities['user_mentions']) == dict:
-            self.mentions = entities['user_mentions']
+            self.mentions.append('@'+entities['user_mentions']['screen_name'])
         else:
             for d in entities['user_mentions']:
                 if type(entities['user_mentions']) == dict:
