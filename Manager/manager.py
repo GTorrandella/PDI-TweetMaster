@@ -87,8 +87,6 @@ class Manager():
 			self.insertTweet(t,idC) #Le pasamos el objeto Tweet instanciado.
 
 	def insertTweet(self, TweetInput, idC):
-		print(TweetInput.hashtags)
-		print(TweetInput.mentions)
 		Connector.insertTweet(TweetInput, idC)
 	
 	#Arregla el desastre de #-# y @-@
