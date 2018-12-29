@@ -18,7 +18,7 @@ class Tweet(object):
                 if type(d) == dict:
                     self.hashtags.append('#'+d['text'])
                 else:
-                    self.hashtags = d
+                    self.hashtags.append(d)
                 
         self.mentions = []
         if type(entities['user_mentions']) == dict:
@@ -28,7 +28,7 @@ class Tweet(object):
                 if type(entities['user_mentions']) == dict:
                     self.mentions.append('@'+d['screen_name'])
                 else:
-                    self.mentions = entities['user_mentions']
+                    self.mentions.append(d)
                 
         self.date = tweet['created_at']
         #Sun Mar 20 21:08:01 2018"
