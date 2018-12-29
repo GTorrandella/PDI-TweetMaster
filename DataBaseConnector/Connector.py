@@ -78,6 +78,8 @@ def modificarCampaignBD(idC, inputColumn, inputUser):
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
 
 def insertTweet(TweetInput, idC):
+	print (TweetInput.hashtags) 
+	print (TweetInput.mentions) 
 	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (o no, dependiendo si se ejecutó antes).
 	#Insertamos fecha publicacion, autor, mensaje y macheo en la tabla Tweet de la BD:
 	stringHashtag = listaAString(TweetInput.hashtags) # #donaldTrump-#G20

@@ -6,7 +6,7 @@ from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import relationship
 
 #Es nuestra abstraccion de la base de datos:
-engine = create_engine("mysql+pymysql://root:4236@localhost:3306/BDTweetMaster", echo=True)
+engine = create_engine("mysql+pymysql://root:4236@localhost:3306/BDTweetMaster?charset=utf8", encoding='utf8', convert_unicode=True, echo=True)
 if not database_exists(engine.url):
     create_database(engine.url)
 #Este objeto va a contener la meta-informacion de nuestros mapeos:
@@ -34,10 +34,10 @@ class Tweet(BD):
 	
 	ID = Column(String(50), primary_key=True)
 	userName = Column(String(50))
-	userid = Column(String(30))
-	hashtags = Column(String(150))
-	mentions = Column(String(150))
-	date = Column(String(30))
+	userid = Column(String(50))
+	hashtags = Column(String(1500))
+	mentions = Column(String(1500))
+	date = Column(String(50))
 	idCampaign = Column(Integer, ForeignKey('campaign.id'))
 
 	def __repr__(self):
