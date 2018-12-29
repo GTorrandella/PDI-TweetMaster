@@ -103,7 +103,8 @@ def insertTweet(TweetInput, idC):
 	if returnTweetByIDT(IDTweet):
 		print("Tweet ya ingresado")
 	else:
-		new_TweetBD=configTables.Tweet(idCampaign=(idC), ID=(IDTweet), userName=(TweetInput.userName), userid=(TweetInput.userID), hashtags=(stringHashtag),mentions=(stringMention), date=(TweetInput.date))
+		UserName=(TweetInput.userName).encode('ascii',errors='ignore') #Hacemos esto por si hay caracteres especiales o emoticonos en el nombre de usuario.
+		new_TweetBD=configTables.Tweet(idCampaign=(idC), ID=(IDTweet), userName=(UserName), userid=(TweetInput.userID), hashtags=(stringHashtag),mentions=(stringMention), date=(TweetInput.date))
 		configTables.session.add(new_TweetBD)
 		#Y finalmente las agregamos a la BD con estas 3 lineas:
 		configTables.session.new
