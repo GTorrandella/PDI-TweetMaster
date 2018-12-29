@@ -33,6 +33,20 @@ def eliminarCampaignBDxUser(email_user):
 		if not (fecha_inicio_campaign < fecha_actual):
 			eliminarCampaignBDxID(idCampaign)
 
+def retornarCampaignsBDxEmail(user_email):
+	campaignsBD = configTables.session.query(configTables.Campaign).filter_by(email=user_email).all()
+	campaigns = []
+	for cBD in campaignsBD:
+		c = Campaign(cBD.id, cBD.email, cBD.hashtags, cBD.mentions, cBD.startDate, cBD.finDate)
+		campaigns.append(c)
+	return campaigns
+
+def eliminarTweetsxIDC(idC):
+	tweets = configTables.session.query(configTables.Tweet).filter_by(idCampaign=idC).all()
+	for t in tweets:
+		configTables.session.delete(t)
+	configTables.session.commit()
+
 def eliminarCampaignBDxID(idC):
 	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC) #Obtengo al campaña con id especifico idC.
 	configTables.session.delete(campaignespecifica)

@@ -22,23 +22,36 @@ class Manager():
 		return string
 	
 	def deleteCampaignporuser(self, email_user):
-		#Se puede eliminar la campaña sólo si esta NO está iniciada (esta logica la aplicamos en 
-		#eliminarCampaignBDxUser)
-		Connector.eliminarCampaignBDxUser(email_user)
+		campaigns = Connector.retornarCampaignsBDxEmail(email_user)
+
+		if campaigns == []:	#No hubo campaigns con ese e-mail
+			return 404
+
+		haveDeleted = False		#flag
+		for c in campaigns:
+			if not c.isActive():
+				Connector.eliminarTweetsxIDC(c.idC)
+				Connector.eliminarCampaignBDxID(c.idC)
+				haveDeleted = True
+
+		if haveDeleted: #Borro una o mas campaigns
+			return 200
+		else:
+			return 412	#No borro nada porque todas estaban activas
 
 	def deleteCampaignporid(self, idCampaign):
 		#Se puede eliminar la campaña sólo si esta NO está iniciada:
 		campaignRetornada = Connector.retornarCampaignBD(idCampaign)
-		fecha_inicio_campaign = campaignRetornada.startDate
-		fecha_actual = datetime.now()
-		#La campaña inició (fecha de inicio de campaign es MENOR a fecha actual), no hacemos nada:
-		if not (fecha_inicio_campaign < fecha_actual):
-		#La campaña NO inició, eliminamos la campaña:
+
+		if campaignRetornada == []: 
+			return 404
+		if campaignRetornada.isActive(): 
+			return 412
+		else: 
+			Connector.eliminarTweetsxIDC(idCampaign)
 			Connector.eliminarCampaignBDxID(idCampaign)
-			return True
-		else:
-			return False
-			
+			return 200
+				
 	def returnCampaign(self, idCampaign):
 		return Connector.retornarCampaignBD(idCampaign)
 	
@@ -87,8 +100,6 @@ class Manager():
 			self.insertTweet(t,idC) #Le pasamos el objeto Tweet instanciado.
 
 	def insertTweet(self, TweetInput, idC):
-		print(TweetInput.hashtags)
-		print(TweetInput.mentions)
 		Connector.insertTweet(TweetInput, idC)
 	
 	#Arregla el desastre de #-# y @-@

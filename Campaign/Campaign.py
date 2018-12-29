@@ -29,6 +29,16 @@ class Campaign(object):
         }
         return dictionary
 
+    def isActive(self): #OK
+        if ((datetime.now() > self.startDate) and (datetime.now() < self.finDate)):
+            return True
+        return False
+
+    def isFinished(self):   #OK
+        if (datetime.now() > self.finDate):
+            return True
+        return False
+    
     def __repr__(self):
         return "<idC:%s emailDueño:%s hashtags:%s mentions:%s startDate:%s finDate:%s> " % (self.idC, self.emailDueño, self.hashtags, self.mentions, self.startDate, self.finDate)
     
