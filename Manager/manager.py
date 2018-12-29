@@ -94,13 +94,14 @@ class Manager():
 
 	#Fijarse en test_manager que sería este tweetsJson que recibe.
 	def insertTweets(self, tweetsJson, idC):
-		tweets = json.loads(tweetsJson)
 		#Los separamos en tweets separados y llamamos a insertTweet para agregarlo uno por uno:
-		for i in range(len(tweets)):
-			t = Tweet(tweets[i])
+		for tweet in tweetsJson:
+			t = Tweet(json.loads(tweet))
 			self.insertTweet(t,idC) #Le pasamos el objeto Tweet instanciado.
 
 	def insertTweet(self, TweetInput, idC):
+		print(TweetInput.hashtags)
+		print(TweetInput.mentions)
 		Connector.insertTweet(TweetInput, idC)
 	
 	#Arregla el desastre de #-# y @-@
@@ -110,25 +111,16 @@ class Manager():
 		return c
 	
 	#POR QUË NO LO HACE EL CONECTOR
-	def _dbCampaignToCampaig(self, dbC):
+	def _dbCampaignToCampaign(self, dbC):
 		return Campaign(dbC.id, dbC.email, dbC.hashtags, dbC.mentions, dbC.startDate, dbC.finDate)
 		
 	#Comunicacion entre Fetcher y Manager. Cada campaña se codifica a json:
 	def fetchCampaings(self):
 		campaignsToFetch = self.returnCampaignsInProgress()
-		for idC in campaignsToFetch:
-			c = self._campaignStringToList(self._dbCampaignToCampaig(idC))
+		for campaign in campaignsToFetch:
+			c = self._campaignStringToList(self._dbCampaignToCampaign(campaign))
 			jsonCampaign = c.to_json()
 			url = "http://127.0.0.1:5001/fetcher"
 			headers = {"Content-Type":"application/json"}			
 			response = requests.get(url, json=jsonCampaign, headers=headers)
-			self.insertTweets(response.json()["Tweets"],idC)
-			
-			
-			
-			
-			
-			
-			
-			
-		
+			self.insertTweets(response.json()["Tweets"],c.idC)

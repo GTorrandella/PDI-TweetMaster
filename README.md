@@ -45,6 +45,7 @@ Append at the end the following line:
 ```
 */5 * * * * cd {path to TweetMaster root} && PYTHONPATH Scheduler/scheduler.py
 ```
+
 Where:
  * "path to TweetMaster root" is the path from root to the TweetMaster's root directory
    * /dir1/dir2/dir3/TweetMaster

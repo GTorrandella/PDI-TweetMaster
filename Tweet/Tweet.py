@@ -1,5 +1,4 @@
 import json
-from datetime import datetime
 
 class Tweet(object):
     '''classdocs'''
@@ -10,10 +9,36 @@ class Tweet(object):
         entities = tweet['entities'] #diccionario con 2 listas (hashtags y mentions)
         self.userName = user['name']
         self.userID = user['id_str']
-        self.hashtags = entities['hashtags']
-        self.mentions = entities['user_mentions']
-        self.date = datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y")
+        
+        self.hashtags = []
+        if type(entities['hashtags']) == dict:
+            self.hashtags.append('#'+entities['hashtags']['text'])
+        else:
+            for d in entities['hashtags']:
+                if type(d) == dict:
+                    self.hashtags.append('#'+d['text'])
+                else:
+                    self.hashtags.append(d)
+        
+        self.mentions = []
+        if type(entities['user_mentions']) == dict:
+            self.mentions.append('@'+entities['user_mentions']['screen_name'])
+        else:
+            if type(entities['user_mentions']) == list:
+                for d in entities['user_mentions']:
+                    if type(d) == dict:
+                        self.mentions.append('@'+d['screen_name'])
+                    else:
+                        self.mentions.append(d)
+            for d in entities['user_mentions']:
+                if type(d) == dict:
+                    self.mentions.append('@'+d['screen_name'])
+                else:
+                    self.mentions.append(d)
+                
+        self.date = tweet['created_at']
         #Sun Mar 20 21:08:01 2018"
+
 
     def to_json(self):
         dictionary = {

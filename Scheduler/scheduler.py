@@ -1,8 +1,4 @@
-'''
-Created on Dec 10, 2018
 
-@author: Gabriel Torrandella
-'''
 import sys
 from os import path
 
