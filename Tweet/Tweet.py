@@ -24,6 +24,12 @@ class Tweet(object):
         if type(entities['user_mentions']) == dict:
             self.mentions.append('@'+entities['user_mentions']['screen_name'])
         else:
+            if type(d) == list:
+                for d in entities['user_mentions']:
+                    if type(entities['user_mentions']) == dict:
+                        self.mentions.append('@'+d['screen_name'])
+                    else:
+                        self.mentions.append(d)
             for d in entities['user_mentions']:
                 if type(entities['user_mentions']) == dict:
                     self.mentions.append('@'+d['screen_name'])
