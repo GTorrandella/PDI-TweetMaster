@@ -12,7 +12,6 @@ class Scheduler():
     def keepSchedule(self):
         Manager().fetchCampaings()
         
-if __name__ == '__main__':
-    Scheduler().keepSchedule()
+Scheduler().keepSchedule()
 
 

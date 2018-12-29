@@ -1,17 +1,11 @@
-'''
-Created on Dec 29, 2018
-
-@author: Gabriel Torrandella
-'''
+import time
 import sys
 from os import path
-from time import sleep 
-
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
-
 from Manager.manager import Manager
 
-if __name__ == '__main__':
-    while True:
-        Manager().fetchCampaings()
-        sleep(270)
+while True:
+	print("Llamada a Manager")
+	Manager().fetchCampaings()
+	#schedule.run_all(delay_seconds=5)
+	time.sleep(120) #Cada 2 minutos llama al manager.
