@@ -99,13 +99,16 @@ def insertTweet(TweetInput, idC):
 	stringHashtag = listaAString(TweetInput.hashtags) # #donaldTrump-#G20
 	stringMention = listaAString(TweetInput.mentions) # @donaldTrump-@miauricioOK
 	#print(TweetInput.ID, TweetInput.userName, TweetInput.userID, TweetInput.hashtags ,TweetInput.mentions, TweetInput.date)
-	new_TweetBD=configTables.Tweet(idCampaign=(idC), ID=(TweetInput.ID), userName=(TweetInput.userName), userid=(TweetInput.userID), hashtags=(stringHashtag),mentions=(stringMention), date=(TweetInput.date))
-	configTables.session.add(new_TweetBD)
-
-	#Y finalmente las agregamos a la BD con estas 3 lineas:
-	configTables.session.new
-	configTables.session.dirty
-	configTables.session.commit()
+	IDTweet=(TweetInput.ID)
+	if returnTweetByIDT(IDTweet):
+		print("Tweet ya ingresado")
+	else:
+		new_TweetBD=configTables.Tweet(idCampaign=(idC), ID=(IDTweet), userName=(TweetInput.userName), userid=(TweetInput.userID), hashtags=(stringHashtag),mentions=(stringMention), date=(TweetInput.date))
+		configTables.session.add(new_TweetBD)
+		#Y finalmente las agregamos a la BD con estas 3 lineas:
+		configTables.session.new
+		configTables.session.dirty
+		configTables.session.commit()
 
 def returnTweetByIDT(idT):
 	tweetEspecifico = configTables.session.query(configTables.Tweet).get(idT)
