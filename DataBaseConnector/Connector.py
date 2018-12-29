@@ -69,26 +69,33 @@ def modificarCampaignBD(idC, inputColumn, inputUser):
 	#Lenguaje MYSQL: UPDATE Campaign SET columna = "inputuser" WHERE id = "idC".
 	campaignespecifica = configTables.session.query(configTables.Campaign).get(idC)
 	#Hice esto de abajo porque no podía poner campaignespecifica.inputColumn = inputUser, no me toma inputColumn.
+	wasModified = False 	#Flag que indica si fue modificado
 	if (inputColumn=="email"):
 		campaignespecifica.email = inputUser
 		configTables.session.commit()
+		wasModified = True
 	
 	if (inputColumn=="startDate"):
 		campaignespecifica.startDate = inputUser
 		configTables.session.commit()
-	
+		wasModified = True
+
 	if (inputColumn=="finDate"):
 		campaignespecifica.finDate = inputUser
 		configTables.session.commit()
-	
+		wasModified = True
+
 	if (inputColumn=="hashtags"):
 		campaignespecifica.hashtags = listaAString(inputUser)
 		configTables.session.commit()
-	
+		wasModified = True
+
 	if (inputColumn=="mentions"):
 		campaignespecifica.mentions = listaAString(inputUser)
 		configTables.session.commit()
-	
+		wasModified = True
+		
+	return wasModified
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
 
 def insertTweet(TweetInput, idC):

@@ -56,17 +56,16 @@ class Manager():
 		return Connector.retornarCampaignBD(idCampaign)
 	
 	def modifyCampaign(self, idCampaign, columna, inputUser):
-		#Se puede modificar la campaña sólo si esta NO está iniciada:
-		campaignRetornada = Connector.retornarCampaignBD(idCampaign)
-		if campaignRetornada == []:
-			return False
-		fecha_inicio_campaign = campaignRetornada.startDate
-		fecha_actual = datetime.now()
-		#La campaña inició (fecha de inicio de campaign es MENOR a fecha actual), no hacemos nada:
-		if not (fecha_inicio_campaign < fecha_actual):
-		#La campaña NO inició, modificamos la campaña:
-			Connector.modificarCampaignBD(idCampaign, columna, inputUser)
-		return True
+		c = Connector.retornarCampaignBD(idCampaign)
+		if c == []:
+			return 404		#No existe
+		if c.isActive():	
+			return 412		#Campaign activa
+		#Campaign NO esta activa:
+		wasModified = Connector.modificarCampaignBD(idCampaign, columna, inputUser)
+		if wasModified: 
+			return 200	#OK
+		return 400		#Columna inexistente
 		
 	def returnCampaignsInProgress(self):
 		#Obtenemos TODAS las Campañas y vemos una por una si la fecha de inicio de campaign es MENOR a

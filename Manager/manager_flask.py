@@ -55,13 +55,9 @@ def api_manager_id(idC):
 
     elif request.method == 'PATCH':
         if ('columnaAModif' in request.json.keys()) and ('campoColumna' in request.json.keys()):
-            if(Manager().modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])):
-                return Response(status = 202)
-            else:
-                return Response(status = 404)
-        else:
-            return Response(status = 412)
-        
+            res = Manager().modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])
+            return Response(status = res)  
+        else: return Response(status = 400)   
     else:
         return Response(status = 404)
 
