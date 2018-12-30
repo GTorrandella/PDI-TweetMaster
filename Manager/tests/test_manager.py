@@ -31,12 +31,13 @@ class test_manager(unittest.TestCase):
             "created_at" : "Sun Mar 20 21:08:01 +0000 2018"
         }
         tweetsJson = [json.dumps(self.tweet1),json.dumps(self.tweet2)]
-        #Insertamos un tweet con ID campaign 3.
+        #Insertamos 2 tweets con ID campaign 3.
         manager.Manager().insertTweets(tweetsJson, 3)
         #Obtengo el 2do Tweet:
         tweetRetornado = Connector.returnTweetByIDT("124")
         #Asserto los datos del 2do Tweet:
-        self.assertEqual(tweetRetornado.ID,124)
+        print(tweetRetornado.ID)
+        self.assertEqual(tweetRetornado.ID,"124")
         self.assertEqual(tweetRetornado.userName, "MiauricioOK")
         self.assertEqual(tweetRetornado.userid, "451325")
         self.assertEqual(tweetRetornado.hashtags, "#DonaldNoMeDejes")

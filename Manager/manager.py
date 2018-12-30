@@ -96,6 +96,9 @@ class Manager():
 		#Los separamos en tweets separados y llamamos a insertTweet para agregarlo uno por uno:
 		for tweet in tweetsJson:
 			t = Tweet(json.loads(tweet))
+			print ("Tweet en manager")
+			print (tweet)
+			print (t)
 			self.insertTweet(t,idC) #Le pasamos el objeto Tweet instanciado.
 
 	def insertTweet(self, TweetInput, idC):
