@@ -31,18 +31,17 @@ class test_manager(unittest.TestCase):
             "created_at" : "Sun Mar 20 21:08:01 +0000 2018"
         }
         tweetsJson = [json.dumps(self.tweet1),json.dumps(self.tweet2)]
-        print(tweetsJson)
         #Insertamos un tweet con ID campaign 3.
         manager.Manager().insertTweets(tweetsJson, 3)
         #Obtengo el 2do Tweet:
-        tweetRetornado = Connector.returnTweetByIDT("112112")
+        tweetRetornado = Connector.returnTweetByIDT("124")
         #Asserto los datos del 2do Tweet:
-        assert tweetRetornado.ID == 112112
-        assert tweetRetornado.userName == "MiauricioOK"
-        assert tweetRetornado.userid ==  "451325"
-        assert tweetRetornado.hashtags ==  "#DonaldNoMeDejes"
-        assert tweetRetornado.mentions == "@donaldTrump-@G20"
-        assert tweetRetornado.date == "2018-03-20 21:08:01"
+        self.assertEqual(tweetRetornado.ID,124)
+        self.assertEqual(tweetRetornado.userName, "MiauricioOK")
+        self.assertEqual(tweetRetornado.userid, "451325")
+        self.assertEqual(tweetRetornado.hashtags, "#DonaldNoMeDejes")
+        self.assertEqual(tweetRetornado.mentions, "@donaldTrump-@G20-@donaldTrump-@G20")
+        self.assertEqual(tweetRetornado.date, "Sun Mar 20 21:08:01 +0000 2018")
 
     #Testeamos que se cree la campaña correctamente en la BD y que sea retornada sin modificaciones.
     def test_InsertCampaign(self):
@@ -53,11 +52,11 @@ class test_manager(unittest.TestCase):
         campaignRetornada = Connector.retornarCampaignBD(idCampaign)
 
         #Asserto todos los atributos del objeto Campaign:
-        assert campaignRetornada.emailDueño == "test@gmail.com"
-        assert campaignRetornada.hashtags == "#test-#mock"
-        assert campaignRetornada.mentions == "@testCampaign-@mockOK"
-        assert campaignRetornada.startDate == datetime(2018, 11, 28, 18, 2)
-        assert campaignRetornada.finDate == datetime(2018, 12, 25, 19, 26, 22)
+        self.assertEqual(campaignRetornada.emailDueño, "test@gmail.com")
+        self.assertEqual(campaignRetornada.hashtags, "#test-#mock")
+        self.assertEqual(campaignRetornada.mentions, "@testCampaign-@mockOK")
+        self.assertEqual(campaignRetornada.startDate , datetime(2018, 11, 28, 18, 2))
+        self.assertEqual(campaignRetornada.finDate , datetime(2018, 12, 25, 19, 26, 22))
 
     #Testeamos que se pueda modificar una campaña (siempre y cuando la campaña NO haya iniciado: 
     #la fecha de inicio de campaign debe ser MENOR a la fecha actual) 
@@ -79,7 +78,7 @@ class test_manager(unittest.TestCase):
         campaignRetornada = Connector.retornarCampaignBD(idCampaign)
         #Si imprimo (campaignRetornada.startDate) me imprime: 2018-11-28 18:02:00.
         #Pero si lo retorno es este tipo de dato--> datetime.datetime(2018, 11, 28, 18, 2)
-        assert campaignRetornada.emailDueño == "pepito@gmail.com"
+        self.assertEqual(campaignRetornada.emailDueño, "pepito@gmail.com")
  
     #Pruebas en los metodos de manager:
     def test_ReturnCampaignBD(self):
