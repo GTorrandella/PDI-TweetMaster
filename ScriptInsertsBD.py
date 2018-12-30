@@ -1,6 +1,7 @@
 #Script para insertar Campaigns y Tweets de prueba:
 import json
 from Manager import manager
+from DataBaseConnector import configTables
 
 #Insercion de 10 Campaigns:
 userCampaignInput1= '{"email":"activa@gmail.com","hashtags": ["#noBorrrar", "#412"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"16 12 2018 18:22:00", "endDate":"10 01 2019 18:22:00"}'

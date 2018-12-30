@@ -8,6 +8,7 @@ import requests
 
 class Manager():
 	def insertCampaign(self, userInputs):
+		configTables.BD.metadata.create_all(configTables.engine)
 		#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña.
 		#Pero antes de esto como fields["hashtags"] y fields["mentions"] son LISTAS, tenemos que pasarlas a un string para poder añadirlo a la BD como un varchar: 
 		stringHashtag = self.listaAString(userInputs["hashtags"]) # #donaldTrump-#G20
@@ -93,6 +94,7 @@ class Manager():
 
 	#Fijarse en test_manager que sería este tweetsJson que recibe.
 	def insertTweets(self, tweetsJson, idC):
+		configTables.BD.metadata.create_all(configTables.engine)
 		#Los separamos en tweets separados y llamamos a insertTweet para agregarlo uno por uno:
 		for tweet in tweetsJson:
 			t = Tweet(json.loads(tweet))
