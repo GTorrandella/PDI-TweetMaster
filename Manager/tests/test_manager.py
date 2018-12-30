@@ -41,7 +41,7 @@ class test_manager(unittest.TestCase):
         self.assertEqual(tweetRetornado.userName, "MiauricioOK")
         self.assertEqual(tweetRetornado.userid, "451325")
         self.assertEqual(tweetRetornado.hashtags, "#DonaldNoMeDejes")
-        self.assertEqual(tweetRetornado.mentions, "@donaldTrump-@G20-@donaldTrump-@G20")
+        self.assertEqual(tweetRetornado.mentions, "@donaldTrump-@G20")
         self.assertEqual(tweetRetornado.date, "Sun Mar 20 21:08:01 +0000 2018")
 
     #Testeamos que se cree la campaña correctamente en la BD y que sea retornada sin modificaciones.

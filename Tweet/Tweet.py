@@ -30,12 +30,7 @@ class Tweet(object):
                         self.mentions.append('@'+d['screen_name'])
                     else:
                         self.mentions.append(d)
-            for d in entities['user_mentions']:
-                if type(d) == dict:
-                    self.mentions.append('@'+d['screen_name'])
-                else:
-                    self.mentions.append(d)
-                
+                        
         self.date = tweet['created_at']
         #Sun Mar 20 21:08:01 2018"
 
