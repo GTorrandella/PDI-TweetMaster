@@ -6,8 +6,6 @@ from Campaign.Campaign import Campaign as Campaign
 from _pytest.compat import NoneType
 
 def insertarCampaignBD(CampaignReceived):
-	#Insertamos la campaña
-	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (o no, dependiendo si se ejecutó antes).
 	#Insertamos fecha inicio, fecha fin, email dueño, hashtags y mentions en la tabla Campaign de la BD:
 	new_campaignBD=configTables.Campaign(startDate=(datetime.strftime((CampaignReceived.startDate),"%d %m %Y %X")), finDate=(datetime.strftime((CampaignReceived.finDate),"%d %m %Y %X")), email=(CampaignReceived.emailDueño), hashtags=(CampaignReceived.hashtags), mentions=(CampaignReceived.mentions))
 	configTables.session.add(new_campaignBD)
@@ -101,7 +99,6 @@ def modificarCampaignBD(idC, inputColumn, inputUser):
 def insertTweet(TweetInput, idC):
 	print (TweetInput.hashtags) 
 	print (TweetInput.mentions) 
-	configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (o no, dependiendo si se ejecutó antes).
 	#Insertamos fecha publicacion, autor, mensaje y macheo en la tabla Tweet de la BD:
 	stringHashtag = listaAString(TweetInput.hashtags) # #donaldTrump-#G20
 	stringMention = listaAString(TweetInput.mentions) # @donaldTrump-@miauricioOK
