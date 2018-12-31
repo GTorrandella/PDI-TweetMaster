@@ -1,0 +1,724 @@
+{
+	"info": {
+		"_postman_id": "7c16ff88-afa7-4911-89dd-0744dcd5d53d",
+		"name": "RequestAPITWEETMASTER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1-POST Campaign NO esta en curso",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"startDate\": \"24 12 2018 18:22:00\",\n  \"endDate\": \"28 12 2018 18:22:00\",\n  \"email\": \"calongefederico@gmail.com\",\n  \"mentions\": [\"@fedecalongeOK\", \"@mauriciomacriOKkk\"],\n  \"hashtags\": [\"#bocaXFox\", \"#riverXFox\"]\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2-POST Campaign EN curso",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"startDate\": \"24 12 2018 18:22:00\",\n  \"endDate\": \"10 01 2019 18:22:00\",\n  \"email\": \"curso@gmail.com\",\n  \"mentions\": [\"@rmrcar\"],\n  \"hashtags\": [\"#bocaXFox\", \"#riverXFox\"]\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3-POST Campaign sin StartDate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"endDate\": \"28 12 2018 18:22:00\",\n  \"email\": \"calongefederico@gmail.com\",\n  \"mentions\": [\"@fedecalongeOK\", \"@mauriciomacriOKkk\"],\n  \"hashtags\": [\"#bocaXFox\", \"#riverXFox\"]\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4-PATCH Campaign 3 Activa",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"columnaAModif\":\"email\",\n\t\"campoColumna\":\"chapu@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5-PATCH Campaign 6 NO Activa Email",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"columnaAModif\":\"email\",\n\t\"campoColumna\":\"chapu@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing/6",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6-PATCH Campaign 30 NO existente",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"columnaAModif\":\"email\",\n\t\"campoColumna\":\"chapu@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing/30",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing",
+						"30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.1-DELETE Campaign por idC",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idC\": 1\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.2-DELETE Campaign por idC",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idC\": 3\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8-DELETE Campaign por email",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"finalizada@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9-DELETE Campaign en curso por email",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"activa@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10-DELETE Campaign multiple por email",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"finalizadaConTw@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11-DELETE Campaign multiple activas",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"activaConTw@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12-DELETE Campaign multiple mezclado",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"mezclada@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing"
+					]
+				},
+				"description": "Una campaign activa y la otra finalizada"
+			},
+			"response": []
+		},
+		{
+			"name": "13-GET Campaign 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14-GET Campaign 30 NO existente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing/30",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing",
+						"30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15-GET Campaigns ID no especificado",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/Campaing/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"Campaing",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16.1-Reporter RAW Campaign 30 NO existente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5002/Reporter/ReporterRAW/30",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5002",
+					"path": [
+						"Reporter",
+						"ReporterRAW",
+						"30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16.2-Reporter RAW Campaign 9 En curso",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5002/Reporter/ReporterRAW/9",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5002",
+					"path": [
+						"Reporter",
+						"ReporterRAW",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16.3-Reporter RAW Campaign 5 Finalizada y Con Tweets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5002/Reporter/ReporterRAW/5",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5002",
+					"path": [
+						"Reporter",
+						"ReporterRAW",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17.1-Reporter JSON Campaign 30 no existente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5002/Reporter/ReporterJSON/30",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5002",
+					"path": [
+						"Reporter",
+						"ReporterJSON",
+						"30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17.2-Reporter JSON Campaign 9 Existente y en curso",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5002/Reporter/ReporterJSON/9",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5002",
+					"path": [
+						"Reporter",
+						"ReporterJSON",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17.3-Reporter JSON Campaign 5 Finalizada y Con Tweets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5002/Reporter/ReporterJSON/5",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5002",
+					"path": [
+						"Reporter",
+						"ReporterJSON",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "18-GET Fetcher (sin andar)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"28\",\n  \"startDate\": \"28 11 2018 18:02:00\",\n  \"finDate\": \"28 12 2018 18:22:00\",\n  \"email\": \"calongefederico@gmail.com\",\n  \"mentions\": [\n    \"@fedecalongeOK\",\n    \"@mauriciomacriOK\"\n  ],\n  \"hashtags\": [\n    \"#bocaXFox\",\n    \"#riverXFox\"\n  ]\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5001/fetcher",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"fetcher"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

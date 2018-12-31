@@ -32,7 +32,7 @@ def api_fetcher():
             cJson = json.loads(request.json)
             if check(cJson):
                 campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],cJson["startDate"],cJson["finDate"])
-                                        
+
                 tweets = jsonify(fetcher.Fetcher().fetchTweets(campaign))
 
                 return tweets

@@ -46,7 +46,7 @@ manager.Manager().insertCampaign(campaignFields10)
 
 #Insercion de 10 Tweets:
 
-#Inserción de Tweets en campaña 2:
+#Inserción de Tweets en campaña 4:
 tweet1 = {
     "id_str" : "223",
     "user" : {"name" : "NASAOk", "id_str" : "789456"},
@@ -62,9 +62,9 @@ tweet2 = {
 }
 
 tweetsJson = [json.dumps(tweet1),json.dumps(tweet2)]
-manager.Manager().insertTweets(tweetsJson, 2)
+manager.Manager().insertTweets(tweetsJson, 4)
 
-#Inserción de Tweets en campaña 3:
+#Inserción de Tweets en campaña 5:
 tweet3 = {
     "id_str" : "323",
     "user" : {"name" : "NASAOk", "id_str" : "789456"},
@@ -80,9 +80,9 @@ tweet4 = {
 }
 
 tweetsJson = [json.dumps(tweet3),json.dumps(tweet4)]
-manager.Manager().insertTweets(tweetsJson, 3)
+manager.Manager().insertTweets(tweetsJson, 5)
 
-#INserción de Tweets en campaña 6:
+#INserción de Tweets en campaña 8:
 tweet5 = {
     "id_str" : "623",
     "user" : {"name" : "NASAOk", "id_str" : "789456"},
@@ -98,9 +98,9 @@ tweet6 = {
 }
 
 tweetsJson = [json.dumps(tweet5),json.dumps(tweet6)]
-manager.Manager().insertTweets(tweetsJson, 6)
+manager.Manager().insertTweets(tweetsJson, 8)
 
-#Inserción de Tweets en campaña 7:
+#Inserción de Tweets en campaña 9:
 tweet7 = {
     "id_str" : "724",
     "user" : {"name" : "MiauricioOK", "id_str" : "451325"},
@@ -116,9 +116,9 @@ tweet8 = {
 }
 
 tweetsJson = [json.dumps(tweet7),json.dumps(tweet8)]
-manager.Manager().insertTweets(tweetsJson, 7)
+manager.Manager().insertTweets(tweetsJson, 9)
 
-#INserción de Tweets en campaña 8:
+#INserción de Tweets en campaña 10:
 tweet9 = {
     "id_str" : "845",
     "user" : {"name" : "NASAOk", "id_str" : "451325"},
@@ -134,4 +134,4 @@ tweet10 = {
 }
 
 tweetsJson = [json.dumps(tweet9),json.dumps(tweet10)]
-manager.Manager().insertTweets(tweetsJson, 8)
+manager.Manager().insertTweets(tweetsJson, 10)
