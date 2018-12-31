@@ -47,7 +47,7 @@ def get_campaign(_idC):  # noqa: E501
     :param _idC: 
     :type _idC: int
 
-    :rtype: List[Campaign]
+    :rtype: ERRORUNKNOWN
     """
     return 'do some magic!'
 

@@ -132,9 +132,6 @@ paths:
       responses:
         200:
           description: "OK - Campaña eliminada."
-        404:
-          description: "Not Found - El usuario no tiene ninguna campaña registrada\
-            \ con su email."
         412:
           description: "Precondition Failed - La Campaña ya empezó o no se indicaron\
             \ los parametros _email ni _idC."

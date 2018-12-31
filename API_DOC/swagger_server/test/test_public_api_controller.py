@@ -7,6 +7,7 @@ from six import BytesIO
 
 from swagger_server.models.campaign import Campaign  # noqa: E501
 from swagger_server.models.delete import Delete  # noqa: E501
+from swagger_server.models.errorunknown import ERRORUNKNOWN  # noqa: E501
 from swagger_server.models.patch import Patch  # noqa: E501
 from swagger_server.models.reporter import Reporter  # noqa: E501
 from swagger_server.models.tweet import Tweet  # noqa: E501
