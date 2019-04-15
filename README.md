@@ -1,10 +1,11 @@
 # PDI-TweetMaster
 
->Thanks thanking your time in finding TweetMaster!
+>Thanks taking your time in finding TweetMaster!
 >
 >This RESTful API is a college's project, so expect mediocre code and a lot of to-do's.
 >
 >Autors: Federico Calonge, Juan David, Gabriel Torrandella
+>
 >Professor: Juan Lagostena
 
 ## Setting Up TweetMaster
