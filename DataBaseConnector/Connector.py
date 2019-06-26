@@ -3,7 +3,6 @@ from datetime import datetime
 import json
 from DataBaseConnector import configTables
 from Campaign.Campaign import Campaign as Campaign
-from _pytest.compat import NoneType
 
 def insertarCampaignBD(CampaignReceived):
 	#Insertamos fecha inicio, fecha fin, email dueño, hashtags y mentions en la tabla Campaign de la BD:
@@ -55,7 +54,7 @@ def retornarCampaignBD(idC):
 	#Con la campaignespecifica de arriba accedemos a los atributos así: (ya que es el objeto Campaign de configTables.py)
 	#print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate) 
     #Devuelve esto: 2 donaldTrump@gmail.com #federicio-#federicio2 @hola-@hola2 2018-11-28 2018-12-02 --> con print envés de return se ve.
-	if type(campaignespecifica) == NoneType:
+	if type(campaignespecifica) == None:
 		return []
 	return Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
 	#Con el objetoCampaign de arriba accedemos a los atributos así: (ya que es el objeto Campaign de Campaign.py)
