@@ -103,6 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# Eclipse proyects
+# Eclipse project settings
 .project
 .pydevproject
