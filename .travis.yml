@@ -4,6 +4,8 @@ python:
 
 services:
  - redis-server
+ - mysql
+
 
 install:
  - pip3 install -r requirements.txt
