@@ -1,4 +1,5 @@
 SQLAlchemy
+redis
 PyMySQL
 flask
 flask-SQLAlchemy

@@ -7,9 +7,8 @@ from flask import Flask, json, jsonify
 from flask.globals import request
 from flask.wrappers import Response
 
-import Fetcher.fetcher as fetcher
+from Fetcher.fetcher import Fetcher
 from Campaign.Campaign import Campaign
-
 
 def fixDate(stringDate):
     dateList = []
@@ -20,6 +19,8 @@ def fixDate(stringDate):
     return date
 
 app = Flask(__name__)
+
+fetcher = Fetcher()
 
 def check(json):
     k = json.keys()
@@ -32,10 +33,10 @@ def api_fetcher():
             cJson = json.loads(request.json)
             if check(cJson):
                 campaign = Campaign(cJson["id"],cJson["email"],cJson["hashtags"],cJson["mentions"],cJson["startDate"],cJson["finDate"])
+                                        
+                fetcher.fetchTweets(campaign)
 
-                tweets = jsonify(fetcher.Fetcher().fetchTweets(campaign))
-
-                return tweets
+                return Response(status = 200)
             else:
                 return Response(status = 400)
         else:
@@ -46,4 +47,4 @@ def api_fetcher():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
