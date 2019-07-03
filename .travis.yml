@@ -19,8 +19,6 @@ sudo: required
 
 install:
  - pip3 install -r requirements.txt
- - mysql_upgrade -u root -p --force
- - systemctl restart mysqld
  
 script:
  - pytest --ignore=API_DOC/
