@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  fetcher:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Fetcher.Dockerfile
+    networks:
+      tweet-master:
+        aliases:
+         - fetcher
+
+  redis:
+    image: redis:5-alpine
+    networks:
+      tweet-master:
+        aliases:
+         - redisfetcher
+
+networks:
+  tweet-master:
+    external: true
