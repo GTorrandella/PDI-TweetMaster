@@ -107,5 +107,6 @@ venv.bak/
 .project
 .pydevproject
 
-# Travis configuratio
-*travis*
+# Travis configuration
+.travis.yml
+~travis/
