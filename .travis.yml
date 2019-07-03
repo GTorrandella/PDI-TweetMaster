@@ -5,7 +5,17 @@ python:
 services:
  - redis-server
  - mysql
+ 
+addons:
+ apt:
+   sources:
+     - mysql-5.7-trusty
+   packages:
+     - mysql-server
 
+dist: trusty
+
+sudo: required
 
 install:
  - pip3 install -r requirements.txt
