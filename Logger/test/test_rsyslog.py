@@ -5,7 +5,7 @@ Created on Jul 4, 2019
 '''
 import unittest
 from os import remove
-import Logger.RSyslog
+import Logger.Rsyslog
 
 class Test(unittest.TestCase):
 
@@ -16,7 +16,7 @@ class Test(unittest.TestCase):
         remove('test.log')
 
     def test_BaseLoggin(self):
-        log = Logger.RSyslog.createLogger(context='test')
+        log = Logger.Rsyslog.createLogger(context='test')
         log.debug('1st')
         log.info('2nd')
         log.warn('3rd')
@@ -25,15 +25,15 @@ class Test(unittest.TestCase):
         
         log_file = open('test.log')
         
-        self.assertEqual(log_file.readline(), "Logger.RSyslog - <FechaYHora>: INFO: 2nd, from test_BaseLoggin\n")
-        self.assertEqual(log_file.readline(), "Logger.RSyslog - <FechaYHora>: WARNING: 3rd, from test_BaseLoggin\n")
-        self.assertEqual(log_file.readline(), "Logger.RSyslog - <FechaYHora>: ERROR: 4th, from test_BaseLoggin\n")
-        self.assertEqual(log_file.readline(), "Logger.RSyslog - <FechaYHora>: CRITICAL: 5th, from test_BaseLoggin\n")
+        self.assertEqual(log_file.readline(), "Logger.Rsyslog - <FechaYHora>: INFO: 2nd, from test_BaseLoggin\n")
+        self.assertEqual(log_file.readline(), "Logger.Rsyslog - <FechaYHora>: WARNING: 3rd, from test_BaseLoggin\n")
+        self.assertEqual(log_file.readline(), "Logger.Rsyslog - <FechaYHora>: ERROR: 4th, from test_BaseLoggin\n")
+        self.assertEqual(log_file.readline(), "Logger.Rsyslog - <FechaYHora>: CRITICAL: 5th, from test_BaseLoggin\n")
         
         log_file.close()
         
     def test_DiferentLevelLoggin(self):
-        log = Logger.RSyslog.createLogger(level='ERROR', context='test')
+        log = Logger.Rsyslog.createLogger(level='ERROR', context='test')
         log.debug('1st')
         log.info('2nd')
         log.warn('3rd')
@@ -42,13 +42,13 @@ class Test(unittest.TestCase):
         
         log_file = open('test.log')
         
-        self.assertEqual(log_file.readline(), "Logger.RSyslog - <FechaYHora>: ERROR: 4th, from test_DiferentLevelLoggin\n")
-        self.assertEqual(log_file.readline(), "Logger.RSyslog - <FechaYHora>: CRITICAL: 5th, from test_DiferentLevelLoggin\n")
+        self.assertEqual(log_file.readline(), "Logger.Rsyslog - <FechaYHora>: ERROR: 4th, from test_DiferentLevelLoggin\n")
+        self.assertEqual(log_file.readline(), "Logger.Rsyslog - <FechaYHora>: CRITICAL: 5th, from test_DiferentLevelLoggin\n")
         
         log_file.close()
     
     def test_NoLoggin(self):
-        log = Logger.RSyslog.createLogger(context='test')
+        log = Logger.Rsyslog.createLogger(context='test')
         log.debug('1st')
         
         log_file = open('test.log')

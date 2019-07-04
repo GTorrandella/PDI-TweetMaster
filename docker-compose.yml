@@ -17,6 +17,15 @@ services:
         aliases:
          - redisfetcher
 
+  rsyslog:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Rsyslog.Dockerfile
+    networks:
+      tweet-master:
+        aliases:
+         - rsyslog
+
 networks:
   tweet-master:
     external: true
