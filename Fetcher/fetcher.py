@@ -24,7 +24,7 @@ class Fetcher():
     
     def __init__(self, context = "standar"):
         if context == "test":
-            self.log = createLogger(context='test', name=__name__)
+            self.log = createLogger(context='test_outside', name=__name__)
             self._db = redis.from_url("redis://localhost:6379", db = 1)
         else:
             self.log = createLogger(name=__name__)

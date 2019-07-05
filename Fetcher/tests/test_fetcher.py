@@ -24,9 +24,7 @@ class test_fetcher(test_fetcher_base):
 
     def tearDown(self):
         self.test._db.flushdb()
-        if os.path.exists("test.log"):
-            os.remove("test.log")
-        
+    
     
     def test_fetchByHashtag(self):
         result = self.test.fetchByHashtag("#mars")
