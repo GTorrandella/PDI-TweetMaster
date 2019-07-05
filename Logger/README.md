@@ -18,6 +18,12 @@ from Logger.Rsyslog import createLogger
  log.info('Mensaje')
  ```
  
+ 3. En test:
+ Agregar 'test' como argumento 'context'.
+ ```
+ log = createLogger(name=__name__, context='test')
+ ```
+ 
  ## Formato del mesaje final:
  ```
  <Module.Name> - <Time>: <LogLevel>: <msg>, from <Function>
