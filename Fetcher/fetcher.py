@@ -8,8 +8,6 @@ from twython import Twython
 from Tweet.Tweet import Tweet
 from Logger.Rsyslog import createLogger
 
-import logging
-
 import redis
 
 parentDir = path.dirname(path.abspath(__file__))
@@ -26,6 +24,7 @@ class Fetcher():
     
     def __init__(self, context = "standar"):
         if context == "test":
+            self.log = createLogger(context='test', name=__name__)
             self._db = redis.from_url("redis://localhost:6379", db = 1)
         else:
             self.log = createLogger(name=__name__)
@@ -48,6 +47,7 @@ class Fetcher():
         return tweets
             
     def fetchTweets(self, campaign):
+        self.log.info("Fetching for "+campaign.idC)
         rawTweets = []
         
         for hashtag in campaign.hashtags:
@@ -55,12 +55,14 @@ class Fetcher():
             
         for mention in campaign.mentions:
             rawTweets = rawTweets + self.fetchByMention(mention)
-        
+            
+        self.log.info("Finished fetching "+campaign.idC)
         tweets = self.makeTweet(rawTweets)
         
         self.saveTweets(campaign.idC, tweets)
     
     def saveTweets(self, idCampain, tweets):
+        self.log.info("Saving to DB "+idCampain)
         for tweet in tweets:
             tweet = tweet.to_dict()
             self._db.sadd(idCampain+":tweets", tweet['id_str'])           
