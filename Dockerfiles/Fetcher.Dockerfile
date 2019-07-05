@@ -6,6 +6,7 @@ COPY requirements.txt ./requirements.txt
 COPY /Fetcher ./Fetcher
 COPY /Tweet ./Tweet
 COPY /Campaign ./Campaign
+COPY /Logger ./Logger
 
 RUN pip3 install -r requirements.txt
 

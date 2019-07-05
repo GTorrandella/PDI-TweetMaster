@@ -6,6 +6,9 @@ Created on Nov 20, 2018
 from os import path
 from twython import Twython
 from Tweet.Tweet import Tweet
+from Logger.Rsyslog import createLogger
+
+import logging
 
 import redis
 
@@ -25,6 +28,8 @@ class Fetcher():
         if context == "test":
             self._db = redis.from_url("redis://localhost:6379", db = 1)
         else:
+            self.log = createLogger(name=__name__)
+            self.test_log()
             self._db = redis.from_url("redis://redisfetcher:6379", db = 0)
     
     
@@ -66,10 +71,7 @@ class Fetcher():
             for hashtag in tweet['hashtags']:
                 self._db.sadd(tweet['id_str']+":hastags", hashtag)
             for ment in tweet['user_mentions']:
-                self._db.sadd(tweet['id_str']+":mentions", ment) 
-            
-            
-            
+                self._db.sadd(tweet['id_str']+":mentions", ment)
                 
     
     
