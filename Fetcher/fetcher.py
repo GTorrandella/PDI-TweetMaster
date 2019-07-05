@@ -63,17 +63,21 @@ class Fetcher():
     
     def saveTweets(self, idCampain, tweets):
         self.log.info("Saving to DB "+idCampain)
-        for tweet in tweets:
-            tweet = tweet.to_dict()
-            self._db.sadd(idCampain+":tweets", tweet['id_str'])           
-            self._db.hset(tweet['id_str'], 'name', tweet['name'])         
-            self._db.hset(tweet['id_str'], 'user_id_str', tweet['user_id_str'])         
-            self._db.hset(tweet['id_str'], 'created_at', tweet['created_at'])
-            
-            for hashtag in tweet['hashtags']:
-                self._db.sadd(tweet['id_str']+":hastags", hashtag)
-            for ment in tweet['user_mentions']:
-                self._db.sadd(tweet['id_str']+":mentions", ment)
+        try:
+            for tweet in tweets:
+                tweet = tweet.to_dict()
+                self._db.sadd(idCampain+":tweets", tweet['id_str'])           
+                self._db.hset(tweet['id_str'], 'name', tweet['name'])         
+                self._db.hset(tweet['id_str'], 'user_id_str', tweet['user_id_str'])         
+                self._db.hset(tweet['id_str'], 'created_at', tweet['created_at'])
                 
+                for hashtag in tweet['hashtags']:
+                    self._db.sadd(tweet['id_str']+":hastags", hashtag)
+                for ment in tweet['user_mentions']:
+                    self._db.sadd(tweet['id_str']+":mentions", ment)
+        
+        except:
+            self.log.error("Failed save "+idCampain)
+            
     
     
