@@ -21,4 +21,4 @@ install:
  - pip3 install -r requirements.txt
  
 script:
- - pytest --ignore=API_DOC/
+ - pytest --ignore=API_DOC/ --ignore=Manager/ --ignore=Reporter/
