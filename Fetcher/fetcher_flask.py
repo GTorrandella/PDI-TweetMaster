@@ -20,7 +20,7 @@ def fixDate(stringDate):
 
 app = Flask(__name__)
 
-fetcher = Fetcher()
+fetcher = Fetcher(context='test')
 
 def check(json):
     k = json.keys()
