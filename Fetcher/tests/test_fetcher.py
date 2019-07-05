@@ -5,7 +5,7 @@ Created on Nov 20, 2018
 '''
 import unittest
 from unittest.mock import MagicMock
-from os import remove
+import os
 
 import Fetcher.fetcher as fetch
 from Fetcher.tests.test_fetcher_base import test_fetcher_base
@@ -24,7 +24,8 @@ class test_fetcher(test_fetcher_base):
 
     def tearDown(self):
         self.test._db.flushdb()
-        remove('test.log')
+        if os.path.exists("test.log"):
+            os.remove("test.log")
         
     
     def test_fetchByHashtag(self):
