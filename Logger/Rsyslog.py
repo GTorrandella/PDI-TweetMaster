@@ -9,7 +9,9 @@ import logging.handlers
 def createLogger(level='INFO', context='standar', name=__name__):
     """
     create logging object with logging to RSYSLOG
-    :param level Logging log level, default INFO
+    :param context Execution context. Default standar.
+    Accepted values: standar, test, test_outside
+    :param name Logger's name. Must be __name__
     :return: logging object
     """
     logger = logging.getLogger(name)
@@ -17,6 +19,9 @@ def createLogger(level='INFO', context='standar', name=__name__):
     
     if context == 'test':
         handler = logging.FileHandler('test.log')
+        formater = logging.Formatter(fmt='%(name)s - <FechaYHora>: %(levelname)s: %(message)s, from %(funcName)s')
+    elif context == 'test_outside':
+        handler = logging.FileHandler(name+'.test.log')
         formater = logging.Formatter(fmt='%(name)s - <FechaYHora>: %(levelname)s: %(message)s, from %(funcName)s')
     else:
         handler = logging.handlers.SysLogHandler(address=('rsyslog',514))

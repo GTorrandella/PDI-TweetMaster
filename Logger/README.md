@@ -19,9 +19,9 @@ from Logger.Rsyslog import createLogger
  ```
  
  3. En test:
- Agregar 'test' como argumento 'context'.
+ Agregar 'test_outside' como argumento 'context'.
  ```
- log = createLogger(name=__name__, context='test')
+ log = createLogger(name=__name__, context='test_outside')
  ```
  
  ## Formato del mesaje final:

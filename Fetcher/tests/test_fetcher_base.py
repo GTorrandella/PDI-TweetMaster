@@ -16,7 +16,7 @@ class test_fetcher_base(unittest.TestCase):
         
         self.tweetsId = ["967824267948773377", "967824267948773378", "123824267948773377", "123824267948773378"]
 
-        self.campaign = Campaign("idC", "emailDueño", ["#mars"], ["@mars"], "06 12 2018 23:20:00", "07 12 2018 00:00:30")
+        self.campaign = Campaign("idC", "emailDueño", ["#mars"], ["@mars"], "2018-12-6 23:20:00", "2018-12-7 00:00:30")
 
         self.hastag = {
                 "statuses": [
