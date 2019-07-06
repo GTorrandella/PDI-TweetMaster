@@ -9,9 +9,9 @@ class Campaign(object):
         self.idC=idC
         self.emailDueño = emailDueño
         self.hashtags = hashtags  
-        self.mentions = mentions  
-        self.startDate = datetime.strptime(startDate, "%d %m %Y %X") #dd mm yyyy hh:mm:ss
-        self.finDate = datetime.strptime(finDate, "%d %m %Y %X") #dd mm yyyy hh:mm:ss
+        self.mentions = mentions
+        self.startDate = datetime.strptime(startDate, "%Y-%m-%d %X") #yyyy-mm-dd hh:mm:ss
+        self.finDate = datetime.strptime(finDate, "%Y-%m-%d %X") #yyyy-mm-dd hh:mm:ss
 
     def to_json(self):
         dictionary = self.to_dict() #Llamamos a la funcion de abajo

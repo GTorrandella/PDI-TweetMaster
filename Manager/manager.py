@@ -1,9 +1,8 @@
 import json
-from Tweet.Tweet import Tweet as Tweet
-from Campaign.Campaign import Campaign as Campaign
+from Campaign.Campaign import Campaign
 from DataBaseConnector import configTables 
 from datetime import datetime
-from DataBaseConnector import Connector as Connector
+from DataBaseConnector import Connector
 import requests
 
 class Manager():
@@ -14,9 +13,9 @@ class Manager():
 		stringHashtag = self.listaAString(userInputs["hashtags"]) # #donaldTrump-#G20
 		stringMention = self.listaAString(userInputs["mentions"]) # @donaldTrump-@miauricioOK
 	
-		ObjetoCampaign = Campaign(1, userInputs["email"], stringHashtag, stringMention, userInputs["startDate"], userInputs["endDate"])
+		campaign = Campaign(1, userInputs["email"], stringHashtag, stringMention, userInputs["startDate"], userInputs["endDate"])
 		#Llamamos a un metodo de Connector para agregar la campaña a la BD junto con las mentions y los hashtags:
-		return Connector.insertarCampaignBD(ObjetoCampaign)
+		return Connector.insertarCampaignBD(campaign)
 
 	def listaAString(self, lista):
 		string = "-".join(lista)
@@ -71,7 +70,7 @@ class Manager():
 	def returnCampaignsInProgress(self):
 		#Obtenemos TODAS las Campañas y vemos una por una si la fecha de inicio de campaign es MENOR a
 		#la fecha actual y la fecha de fin de la campaña es MAYOR a la fecha actual. Y si sucede esto la agregamos a una nueva lista.
-		listaCampaigns = configTables.session.query(configTables.Campaign).all()
+		listaCampaigns = configTables.session.query(configTables.Campaign).filter(configTables.Campaign)
 		print (listaCampaigns)
 		listaNuevaCampaigns=[]
 		for c in listaCampaigns:
@@ -85,11 +84,11 @@ class Manager():
 			fecha_actual=datetime.now()
 			if ((fecha_inicio_campaign < fecha_actual) and (fecha_fin_campaign > fecha_actual)):  #La campaña está en curso. Agrego la campaña a la nueva lista a devolver.
 				listaNuevaCampaigns.append(c)
-			#Si la campaña no inició no hago nada. 
-			
+			#Si la campaña no inició no hago nada.
+
 
 		return (listaNuevaCampaigns) #Devolvemos la lista de campañas en curso (que todavía no finalizaron)
-		#[<Campaign(idC='15', startDate='28 11 2018 18:02:00', finDate='25 12 2018 19:26:22', email='test@gmail.com', hashtags='#test-#mock', mentions='@testCampaign-@mockOK')>, 
+		#[<Campaign(idC='15', startDate='28 11 2018 18:02:00', finDate='25 12 2018 19:26:22', email='test@gmail.com', hashtags='#test-#mock', mentions='@testCampaign-@mockOK')>,
 		#<Campaign(idC='16', startDate='28 11 2018 18:02:00', finDate='25 12 2018 19:26:22', email='test@gmail.com', hashtags='#test-#mock', mentions='@testCampaign-@mockOK')>]
 
 	#Fijarse en test_manager que sería este tweetsJson que recibe.
