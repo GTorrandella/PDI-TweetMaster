@@ -18,9 +18,9 @@ class Tweet(object):
         self.text = tweet['text']
         self.hashtags = tweet['entities']['hashtags']
         self.mentions = tweet['entities']['user_mentions']
-        self.userID = datetime.strptime(tweet['user']['id_str'], DATE_FORMAT_TWITTER)
+        self.userID = tweet['user']['id_str']
         self.userName = tweet['user']['name']
-        self.date = tweet['created_at']
+        self.date = datetime.strptime(tweet['created_at'], DATE_FORMAT_TWITTER)
 
     def _nonRawConstrucctor(self, tweet):
         self.ID = tweet['id_str']
