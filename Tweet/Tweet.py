@@ -1,4 +1,8 @@
 import json
+from datetime import datetime
+
+DATE_FORMAT_STR = "%Y-%m-%d %X"
+DATE_FORMAT_TWITTER = "%a %b %d %X %z %Y"
 
 class Tweet(object):
     '''classdocs'''
@@ -14,7 +18,7 @@ class Tweet(object):
         self.text = tweet['text']
         self.hashtags = tweet['entities']['hashtags']
         self.mentions = tweet['entities']['user_mentions']
-        self.userID = tweet['user']['id_str']
+        self.userID = datetime.strptime(tweet['user']['id_str'], DATE_FORMAT_TWITTER)
         self.userName = tweet['user']['name']
         self.date = tweet['created_at']
 
@@ -61,7 +65,7 @@ class Tweet(object):
             "user_id_str" : self.userID,
             "hashtags" : self.hashtags,
             "user_mentions" : self.mentions,
-            "created_at" : str(self.date)
+            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR)
         }
         tweet_json = json.dumps(dictionary) 
         return tweet_json
@@ -73,6 +77,6 @@ class Tweet(object):
             "user_id_str" : self.userID,
             "hashtags" : self.hashtags,
             "user_mentions" : self.mentions,
-            "created_at" : str(self.date)
+            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR)
         }
         return dictionary
