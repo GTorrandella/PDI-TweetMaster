@@ -5,7 +5,6 @@ Created on Nov 20, 2018
 '''
 import unittest
 from unittest.mock import MagicMock
-import os
 
 import Fetcher.fetcher as fetch
 from Fetcher.tests.test_fetcher_base import test_fetcher_base
