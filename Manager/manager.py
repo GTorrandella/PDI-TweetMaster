@@ -3,6 +3,7 @@ from Campaign.Campaign import Campaign
 from DataBaseConnector import configTables 
 from datetime import datetime
 from DataBaseConnector import Connector
+from Tweet.Tweet import Tweet
 import requests
 
 class Manager():
@@ -54,44 +55,23 @@ class Manager():
 				
 	def returnCampaign(self, idCampaign):
 		return Connector.retornarCampaignBD(idCampaign)
-	
+
+	def returnCampaignsInProgress(self):
+		return Connector.returnCampaignsInProgress()
+
 	def modifyCampaign(self, idCampaign, columna, inputUser):
 		c = Connector.retornarCampaignBD(idCampaign)
 		if c == []:
-			return 404		#No existe
+			return 404		# No existe
 		if c.isActive():	
-			return 412		#Campaign activa
-		#Campaign NO esta activa:
+			return 412		# Campaign activa
+		# Campaign NO esta activa:
 		wasModified = Connector.modificarCampaignBD(idCampaign, columna, inputUser)
 		if wasModified: 
-			return 200	#OK
-		return 400		#Columna inexistente
-		
-	def returnCampaignsInProgress(self):
-		#Obtenemos TODAS las Campañas y vemos una por una si la fecha de inicio de campaign es MENOR a
-		#la fecha actual y la fecha de fin de la campaña es MAYOR a la fecha actual. Y si sucede esto la agregamos a una nueva lista.
-		listaCampaigns = configTables.session.query(configTables.Campaign).filter(configTables.Campaign)
-		print (listaCampaigns)
-		listaNuevaCampaigns=[]
-		for c in listaCampaigns:
-			#Cada c es un: <Campaign(idC='1', startDate='28 11 2018 18:02:00', finDate='02 12 2018 19:26:22', email='test@gmail.com', hashtags='#test-#mock', mentions='@testCampaign-@mockOK')>
-			#Y accedo a los atributos con c.atributo (el atributo está en la tabla Campaign dentro de configTables), osea asi: print (c.id)
-			idCampaign = c.id
-			print (idCampaign)
-			campaignRetornada = Connector.retornarCampaignBD(idCampaign)
-			fecha_inicio_campaign = campaignRetornada.startDate
-			fecha_fin_campaign = campaignRetornada.finDate
-			fecha_actual=datetime.now()
-			if ((fecha_inicio_campaign < fecha_actual) and (fecha_fin_campaign > fecha_actual)):  #La campaña está en curso. Agrego la campaña a la nueva lista a devolver.
-				listaNuevaCampaigns.append(c)
-			#Si la campaña no inició no hago nada.
+			return 200	# OK
+		return 400		# Columna inexistente
 
-
-		return (listaNuevaCampaigns) #Devolvemos la lista de campañas en curso (que todavía no finalizaron)
-		#[<Campaign(idC='15', startDate='28 11 2018 18:02:00', finDate='25 12 2018 19:26:22', email='test@gmail.com', hashtags='#test-#mock', mentions='@testCampaign-@mockOK')>,
-		#<Campaign(idC='16', startDate='28 11 2018 18:02:00', finDate='25 12 2018 19:26:22', email='test@gmail.com', hashtags='#test-#mock', mentions='@testCampaign-@mockOK')>]
-
-	#Fijarse en test_manager que sería este tweetsJson que recibe.
+	# Fijarse en test_manager que sería este tweetsJson que recibe.
 	def insertTweets(self, tweetsJson, idC):
 		configTables.BD.metadata.create_all(configTables.engine)
 		#Los separamos en tweets separados y llamamos a insertTweet para agregarlo uno por uno:
