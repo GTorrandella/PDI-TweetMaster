@@ -1,5 +1,5 @@
 from datetime import datetime
-from _datetime import datetime
+from dateutil import parser
 import json
 
 class Campaign(object):
@@ -10,8 +10,8 @@ class Campaign(object):
         self.emailDueño = emailDueño
         self.hashtags = hashtags  
         self.mentions = mentions  
-        self.startDate = datetime.strptime(startDate, "%d %m %Y %X") #dd mm yyyy hh:mm:ss
-        self.finDate = datetime.strptime(finDate, "%d %m %Y %X") #dd mm yyyy hh:mm:ss
+        self.startDate = datetime.strptime(parser(startDate), "%d %m %Y %X") #dd mm yyyy hh:mm:ss
+        self.finDate = datetime.strptime(parser(finDate), "%d %m %Y %X") #dd mm yyyy hh:mm:ss
 
     def to_json(self):
         dictionary = self.to_dict() #Llamamos a la funcion de abajo
