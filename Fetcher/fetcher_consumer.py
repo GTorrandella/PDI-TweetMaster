@@ -11,12 +11,10 @@ log = createLogger(context='test_outside', name="Fetcher.fetcher_consumer")
 fetcher = Fetcher(context='test')
 log.info('Fetcher service started')
     
-
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host='localhost', heartbeat=5))
 channel = connection.channel()
-channel.exchange_declare(exchange="fetcher", exchange_type="direct", durable=True)
-channel.queue_declare(queue="TweetQueue", durable=True)
+channel.queue_declare(queue="TweetQueue")
 log.info('Connection with queue ready')        
         
 def callback(channel, method, properties, body):
@@ -27,7 +25,7 @@ def callback(channel, method, properties, body):
             fetcher.fetchTweets(campaign)
         except:
             log.info('Falied fetch for '+campaign.idC)        
-    channel.basic_ack()
+    channel.basic_ack(delivery_tag = method.delivery_tag)
 
 
 def close_connection():
@@ -45,6 +43,8 @@ def stop_consuming():
     channel.stop_consuming()
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
+
+consume()
 
 try:
     channel.start_consuming()
