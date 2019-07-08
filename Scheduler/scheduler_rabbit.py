@@ -3,25 +3,38 @@ Created on Jul 6, 2019
 
 @author: Gabriel Torrandella
 '''
-#from DataBaseConnector import Connector
-from Campaign.Campaign import Campaign
+from DataBaseConnector import Connector
+from Logger.Rsyslog import createLogger
 import pika
 
 def start_connection(context='standar'):
+    
     if context == 'test':
+        log = createLogger(context='test_outside', name='Scheduler')
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host='localhost', heartbeat=5))
     else:
+        log = createLogger(name='Scheduler')
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host='rabbitTweetMaster', heartbeat=5))
+
     channel = connection.channel()
     channel.exchange_declare(exchange="fetcher", exchange_type="direct", durable=True)
+    log.info("Connection to RabbitMQ ready")
     
-    c = Campaign("idC", "emailDueño", ["#mars"], ["@mars"], "2018-12-6 23:20:00", "2018-12-7 00:00:30")
+    try:
+        campaignsOnProgress = Connector.returnCampaignsInProgress()
+        log.info("Recived Campaigns on progress")
+        
+        for campaign in campaignsOnProgress:
+            channel.basic_publish(exchange='fetcher', routing_key='fetcher.campaign', body=campaign.to_json())
+            
+    except:
+        log.error("Failed to get Campaigns on progress")
+
+    channel.close()
+    connection.close()
+    log.info("Exited successfully")
     
-    channel.basic_publish(exchange='fetcher', routing_key='fetcher.campaign', body=c.to_json())
-    print(" [x] Sent Campaign")
-
-
 if __name__ == '__main__':
-    start_connection(context='test')
+    start_connection()
