@@ -29,7 +29,6 @@ class fetcherConsumer():
         
     def callback(self, channel, method, properties, body):
         self.log.info('Message recived')
-        print(body.decode())
         
         campaignData = json.loads(body.decode())
         campaign = Campaign(dict=campaignData)
