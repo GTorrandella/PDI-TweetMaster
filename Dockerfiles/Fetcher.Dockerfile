@@ -10,5 +10,5 @@ COPY /Logger ./Logger
 
 RUN pip3 install -r requirements.txt
 
-ENTRYPOINT ["python3", "-m", "Fetcher.fetcher_flask"]
+ENTRYPOINT ["python3", "-m", "Fetcher.fetcher_consumer"]
 

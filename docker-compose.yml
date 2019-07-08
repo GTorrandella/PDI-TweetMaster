@@ -25,7 +25,21 @@ services:
       tweet-master:
         aliases:
          - rsyslog
+   
+  mysql:
+    image: mysql:8
+    networks:
+      tweet-master:
+        aliases:
+         - localhost
+  
+  rabbitmq:
+    image: rabbitmq:3-alpine
+    networks:
+      tweet-master:
+        aliases:
+         - rabbitTweetMaster
 
 networks:
   tweet-master:
-    external: true
+    external: false
