@@ -3,7 +3,7 @@ Created on Jul 6, 2019
 
 @author: Gabriel Torrandella
 '''
-from DataBaseConnector import Connector
+#from DataBaseConnector import Connector
 import pika
 
 def start_connection(context='standar'):
@@ -15,6 +15,12 @@ def start_connection(context='standar'):
             pika.ConnectionParameters(host='rabbitTweetMaster', heartbeat=5))
     channel = connection.channel()
     channel.exchange_declare(exchange="fetcher", exchange_type="direct", durable=True)
+    
+    channel.basic_publish(exchange='fetcher', routing_key='fetcher.campaign', body='Broken')
+    print(" [x] Sent BROKEN message")
+
+    channel.basic_publish(exchange='fetcher', routing_key='fetcher.campaign', body='Working')
+    print(" [x] Sent WORKING message")
 
 if __name__ == '__main__':
-    pass
+    start_connection(context='test')
