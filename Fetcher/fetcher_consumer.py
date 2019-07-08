@@ -5,7 +5,9 @@ Created on Jul 5, 2019
 '''
 from Fetcher.fetcher import Fetcher
 from Logger.Rsyslog import createLogger
+from Campaign.Campaign import Campaign
 import pika
+import json
 
 
 class fetcherConsumer():
@@ -27,15 +29,14 @@ class fetcherConsumer():
         
     def callback(self, channel, method, properties, body):
         self.log.info('Message recived')
-        print(body)
-        """
-        CampaignsInProgress = body
-        for campaign in CampaignsInProgress:
-            try:
-                self.fetcher.fetchTweets(campaign)
-            except:
-                self.log.info('Falied fetch for '+campaign.idC)
-        """
+        print(body.decode())
+        
+        campaignData = json.loads(body.decode())
+        campaign = Campaign(dict=campaignData)
+        try:
+            self.fetcher.fetchTweets(campaign)
+        except:
+            self.log.info('Falied fetch for '+campaign.idC)
         self.channel.basic_ack(delivery_tag = method.delivery_tag)
     
     
