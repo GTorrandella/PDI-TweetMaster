@@ -7,47 +7,55 @@ from Fetcher.fetcher import Fetcher
 from Logger.Rsyslog import createLogger
 import pika
 
-log = createLogger(context='test_outside', name="Fetcher.fetcher_consumer")
-fetcher = Fetcher(context='test')
-log.info('Fetcher service started')
+
+class fetcherConsumer():
     
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost', heartbeat=5))
-channel = connection.channel()
-channel.queue_declare(queue="TweetQueue")
-log.info('Connection with queue ready')        
+    def __init__(self, context='standar'):
+        self.log = createLogger(context='test_outside', name="Fetcher.fetcher_consumer")
+        self.fetcher = Fetcher(context='test')
+        self.log.info('Fetcher service started')
+        self.context = context
+
+    def open_connection(self):
+        self.connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host='localhost', heartbeat=5))
+        self.channel = self.connection.channel()
+        self.channel.queue_declare(queue="TweetQueue")
+        self.log.info('Connection with queue ready')        
         
-def callback(channel, method, properties, body):
-    log.info('Message recived')
-    CampaignsInProgress = body
-    for campaign in CampaignsInProgress:
-        try:
-            fetcher.fetchTweets(campaign)
-        except:
-            log.info('Falied fetch for '+campaign.idC)        
-    channel.basic_ack(delivery_tag = method.delivery_tag)
-
-
-def close_connection():
-    log.info('Exiting Fetcher service')
-    channel.close()
-    connection.close()
-    log.info('Fetcher service exited without problems')
-
-def consume():
-    log.info('Starting to consume')
-    channel.basic_consume(queue='TweetQueue', on_message_callback=callback)
+    def callback(self, channel, method, properties, body):
+        self.log.info('Message recived')
+        CampaignsInProgress = body
+        for campaign in CampaignsInProgress:
+            try:
+                self.fetcher.fetchTweets(campaign)
+            except:
+                self.log.info('Falied fetch for '+campaign.idC)        
+        self.channel.basic_ack(delivery_tag = method.delivery_tag)
     
-def stop_consuming():
-    log.info('Stoping the consuming')
-    channel.stop_consuming()
+    
+    def close_connection(self):
+        self.log.info('Exiting Fetcher service')
+        self.channel.close()
+        self.connection.close()
+        self.log.info('Fetcher service exited without problems')
+    
+    def consume(self):
+        self.log.info('Starting to consume')
+        self.channel.basic_consume(queue='TweetQueue', on_message_callback=self.callback)
+        self.channel.start_consuming()
+        
+    def stop_consuming(self):
+        self.log.info('Stoping the consuming')
+        self.channel.stop_consuming()
+
+consumer = fetcherConsumer()
+
+consumer.open_connection()
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
-
-consume()
-
 try:
-    channel.start_consuming()
+    consumer.consume()
 except KeyboardInterrupt:
-    channel.stop_consuming()
-connection.close()
+    consumer.stop_consuming()
+consumer.close_connection()
