@@ -28,7 +28,6 @@ class Fetcher():
             self._db = redis.from_url("redis://localhost:6379", db = 1)
         else:
             self.log = createLogger(name=__name__)
-            self.test_log()
             self._db = redis.from_url("redis://redisfetcher:6379", db = 0)
     
     
