@@ -14,8 +14,13 @@ from time import sleep
 class fetcherConsumer():
     
     def __init__(self, context='standar'):
-        self.log = createLogger(context='test_outside', name="Fetcher.fetcher_consumer")
-        self.fetcher = Fetcher(context='test')
+        if context=='test':
+            self.log = createLogger(context='test_outside', name="Fetcher.fetcher_consumer")
+            self.fetcher = Fetcher(context='test')
+        else:
+            self.log = createLogger(name="Fetcher.fetcher_consumer")
+            self.fetcher = Fetcher()
+        
         self.log.info('Fetcher service started')
         self.context = context
 
@@ -67,14 +72,16 @@ class fetcherConsumer():
         self.log.info('Stoping the consuming')
         self.channel.stop_consuming()
 
-consumer = fetcherConsumer()
 
-while(not consumer.open_connection()):
-    sleep(0.5)
-
-print(' [*] Waiting for messages. To exit press CTRL+C')
-try:
-    consumer.consume()
-except KeyboardInterrupt:
-    consumer.stop_consuming()
-consumer.close_connection()
+if __name__ == "__main__":
+    consumer = fetcherConsumer()
+    
+    while(not consumer.open_connection()):
+        sleep(0.5)
+    
+    print(' [*] Waiting for messages. To exit press CTRL+C')
+    try:
+        consumer.consume()
+    except KeyboardInterrupt:
+        consumer.stop_consuming()
+    consumer.close_connection()
