@@ -19,6 +19,9 @@ sudo: required
 
 install:
  - pip3 install -r requirements.txt
- 
+
+before_script:
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('4236') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+
 script:
  - pytest --ignore=API_DOC/ 
