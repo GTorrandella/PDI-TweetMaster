@@ -12,7 +12,7 @@ class Tweet(object):
             self._rawConstrucctor(tweet)
         else:
             self._nonRawConstrucctor(tweet)
-        
+    
     def _rawConstrucctor(self, tweet):
         self.ID = tweet['id_str']
         self.text = tweet['text']
