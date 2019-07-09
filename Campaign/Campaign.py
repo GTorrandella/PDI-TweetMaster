@@ -12,8 +12,14 @@ class Campaign(object):
             self.emailDueño = emailDueño
             self.hashtags = hashtags
             self.mentions = mentions
-            self.startDate = datetime.strptime(startDate, DATE_FORMAT_STR)
-            self.finDate = datetime.strptime(finDate, DATE_FORMAT_STR)
+            if type(startDate) == str:
+                self.startDate = datetime.strptime(startDate, DATE_FORMAT_STR)
+            else:
+                self.startDate = startDate
+            if type(finDate) == str:
+                self.finDate = datetime.strptime(finDate, DATE_FORMAT_STR)
+            else:
+                self.finDate = finDate
         else:
             self.idC = dict['id'] 
             self.emailDueño = dict['email']
