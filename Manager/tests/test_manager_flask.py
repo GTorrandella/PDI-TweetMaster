@@ -66,7 +66,7 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(newCampaign.email, 'hype@example.com')
         self.assertEqual(newCampaign.hashtags, '#JOKER-#SMASH')
         self.assertEqual(newCampaign.mentions, '@Sora_Sakurai')
-        self.assertEqual(newCampaign.startDate, "31 12 2050 23:20:00")
+        self.assertEqual(newCampaign.startDate, "2018-12-31 23:20:00")
         self.assertEqual(newCampaign.finDate, "01 01 2051 00:30:00")
                                  
     
@@ -128,8 +128,8 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(responseCampaign['email'], 'c@example.com')
         self.assertEqual(responseCampaign['hashtags'], ['#nintendo','#SMASH'])
         self.assertEqual(responseCampaign['mentions'], ['@Sora_Sakurai','@nintendo'])
-        self.assertEqual(responseCampaign['startDate'], "31 12 2050 23:20:00")
-        self.assertEqual(responseCampaign['finDate'], "01 01 2051 00:30:00")
+        self.assertEqual(responseCampaign['startDate'], "2018-12-31 23:20:00")
+        self.assertEqual(responseCampaign['finDate'], "2018-01-01 00:30:00")
         
         afterCampaigns = configTables.session.query(configTables.Campaign).all()
         self.assertEqual(len(afterCampaigns), 3)
@@ -150,8 +150,8 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(campaignToPatch.email, 'c@example.com')
         self.assertEqual(campaignToPatch.hashtags, '#nintendo-#SMASH')
         self.assertEqual(campaignToPatch.mentions, '@Sora_Sakurai-@nintendo')
-        self.assertEqual(campaignToPatch.startDate, "31 12 2050 23:20:00")
-        self.assertEqual(campaignToPatch.finDate, "01 01 2051 00:30:00")
+        self.assertEqual(campaignToPatch.startDate, "2018-12-31 23:20:00")
+        self.assertEqual(campaignToPatch.finDate, "2018-01-01 00:30:00")
         
         response = self.test_app.patch('/Campaing/3', json=self.campaignPatchHashtagsData, content_type='application/json')
         self.assertEqual(response.status, "202 ACCEPTED")
@@ -164,8 +164,8 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(patchedHashtagsCampaign.email, 'c@example.com')
         self.assertEqual(patchedHashtagsCampaign.hashtags, '#qatherine-#katherine-#catherine')
         self.assertEqual(patchedHashtagsCampaign.mentions, '@Sora_Sakurai-@nintendo')
-        self.assertEqual(patchedHashtagsCampaign.startDate, "31 12 2050 23:20:00")
-        self.assertEqual(patchedHashtagsCampaign.finDate, "01 01 2051 00:30:00")
+        self.assertEqual(patchedHashtagsCampaign.startDate, "2018-12-31 23:20:00")
+        self.assertEqual(patchedHashtagsCampaign.finDate, "2018-01-01 00:30:00")
         
         response = self.test_app.patch('/Campaing/3', json=self.campaignPatchMentionsData, content_type='application/json')
         self.assertEqual(response.status, "202 ACCEPTED")
@@ -178,8 +178,8 @@ class test_manager_flask(test_manager_base):
         self.assertEqual(patchedHashtagsCampaign.email, 'c@example.com')
         self.assertEqual(patchedHashtagsCampaign.hashtags, '#qatherine-#katherine-#catherine')
         self.assertEqual(patchedHashtagsCampaign.mentions, '@atlususa-@stud_zero')
-        self.assertEqual(patchedHashtagsCampaign.startDate, "31 12 2050 23:20:00")
-        self.assertEqual(patchedHashtagsCampaign.finDate, "01 01 2051 00:30:00")
+        self.assertEqual(patchedHashtagsCampaign.startDate, "2018-12-31 23:20:00")
+        self.assertEqual(patchedHashtagsCampaign.finDate, "2018-01-01 00:30:00")
         
     def test_PACTH_404(self):
         initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
