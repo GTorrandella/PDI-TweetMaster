@@ -1,22 +1,6 @@
 version: '3.7'
 
 services:
-  fetcher:
-    build:
-      context: .
-      dockerfile: Dockerfiles/Fetcher.Dockerfile
-    networks:
-      tweet-master:
-        aliases:
-         - fetcher
-
-  redis:
-    image: redis:5-alpine
-    networks:
-      tweet-master:
-        aliases:
-         - redisfetcher
-
   rsyslog:
     build:
       context: .
@@ -25,6 +9,13 @@ services:
       tweet-master:
         aliases:
          - rsyslog
+
+  redis:
+    image: redis:5-alpine
+    networks:
+      tweet-master:
+        aliases:
+         - redisfetcher
    
   mysql:
     image: mysql:8
@@ -32,6 +23,8 @@ services:
       tweet-master:
         aliases:
          - localhost
+    environment:
+      MYSQL_ROOT_PASSWORD: "4236"
   
   rabbitmq:
     image: rabbitmq:3-alpine
@@ -39,6 +32,20 @@ services:
       tweet-master:
         aliases:
          - rabbitTweetMaster
+         
+  fetcher:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Fetcher.Dockerfile
+    networks:
+      tweet-master:
+        aliases:
+         - fetcher
+    depends_on:
+     - rsyslog
+     - redis
+     - mysql
+     - rabbitmq
 
 networks:
   tweet-master:

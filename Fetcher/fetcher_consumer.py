@@ -8,6 +8,7 @@ from Logger.Rsyslog import createLogger
 from Campaign.Campaign import Campaign
 import pika
 import json
+from time import sleep
 
 
 class fetcherConsumer():
@@ -20,19 +21,24 @@ class fetcherConsumer():
 
     def open_connection(self):
         
-        if self.context == 'test':
-            self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host='localhost', heartbeat=5))
-            self.channel = self.connection.channel()
-        else:
-            self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host='rabbitTweetMaster', heartbeat=5))
-            self.channel = self.connection.channel()
-        
-        self.channel.exchange_declare(exchange="fetcher", exchange_type="direct", durable=True)
-        self.channel.queue_declare(queue="campaign")
-        self.channel.queue_bind(queue='campaign', exchange='fetcher', routing_key='fetcher.campaign')
-        self.log.info('Connection with queue ready')
+        try:
+            if self.context == 'test':
+                self.connection = pika.BlockingConnection(
+                    pika.ConnectionParameters(host='localhost', heartbeat=5))
+                self.channel = self.connection.channel()
+            else:
+                self.connection = pika.BlockingConnection(
+                    pika.ConnectionParameters(host='rabbitTweetMaster', heartbeat=5))
+                self.channel = self.connection.channel()
+            
+            self.channel.exchange_declare(exchange="fetcher", exchange_type="direct", durable=True)
+            self.channel.queue_declare(queue="campaign")
+            self.channel.queue_bind(queue='campaign', exchange='fetcher', routing_key='fetcher.campaign')
+            self.log.info('Connection with queue ready')
+            return True
+            
+        except:
+            return False
         
     def callback(self, channel, method, properties, body):
         self.log.info('Message recived')
@@ -63,7 +69,8 @@ class fetcherConsumer():
 
 consumer = fetcherConsumer()
 
-consumer.open_connection()
+while(not consumer.open_connection()):
+    sleep(0.5)
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
 try:
