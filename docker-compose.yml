@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfiles/Rsyslog.Dockerfile
+    image: tweet-master-rsyslog:latest
     networks:
       tweet-master:
         aliases:
@@ -22,7 +23,7 @@ services:
     networks:
       tweet-master:
         aliases:
-         - localhost
+         - mysqlTweetMaster
     environment:
       MYSQL_ROOT_PASSWORD: "4236"
   
@@ -37,10 +38,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfiles/Fetcher.Dockerfile
+    image: tweet-master-fetcher:latest
     networks:
       tweet-master:
         aliases:
          - fetcher
+    depends_on:
+     - rsyslog
+     - redis
+     - mysql
+     - rabbitmq
+  
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Scheduler.Dockerfile
+    image: tweet-master-scheduler:latest
+    networks:
+     - tweet-master
     depends_on:
      - rsyslog
      - redis
