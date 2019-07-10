@@ -11,5 +11,3 @@ COPY /Campaign ./Campaign
 COPY /Logger ./Logger
 COPY /DataBaseConnector ./DataBaseConnector
 COPY /Tweet ./Tweet
-
-ENTRYPOINT ["python3", "-m", "Scheduler.scheduler_rabbit"]

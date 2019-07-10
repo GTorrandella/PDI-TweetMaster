@@ -1,6 +1,25 @@
 version: '3.7'
 
 services:
+  tasker:
+    image: strm/tasker
+    volumes:
+     - "/var/run/docker.sock:/var/run/docker.sock"
+    networks: 
+     - tweet-master
+    environment:
+      configuration: |
+        schedule:
+         - cron: 00 */5 * * * *
+           task: scheduler
+        tasks:
+           docker:
+            - name: scheduler
+              image: tweet-master-scheduler:latest
+              network: tweet-master
+              script:
+               - python3 -m Scheduler.scheduler_rabbit
+
   rsyslog:
     build:
       context: .
@@ -64,4 +83,5 @@ services:
 
 networks:
   tweet-master:
+    name: tweet-master
     external: false
