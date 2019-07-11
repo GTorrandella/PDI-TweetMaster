@@ -16,3 +16,5 @@ requests
 pytest
 pika
 cryptography
+rdbtools
+python-lzf
