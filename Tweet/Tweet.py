@@ -50,7 +50,7 @@ class Tweet(object):
                     else:
                         self.mentions.append(d)
                         
-        self.date = tweet['created_at']
+        self.date = datetime.strptime(tweet['created_at'], DATE_FORMAT_STR)
         #Sun Mar 20 21:08:01 2018"
         
     def __eq__(self, other):

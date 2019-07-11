@@ -22,8 +22,8 @@ class test_fetcher(test_fetcher_base):
 
 
     def tearDown(self):
-        self.test._db.flushdb()
-    
+        #self.test._db.flushdb()
+        pass
     
     def test_fetchByHashtag(self):
         result = self.test.fetchByHashtag("#mars")

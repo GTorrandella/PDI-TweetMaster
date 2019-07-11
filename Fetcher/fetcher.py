@@ -25,7 +25,7 @@ class Fetcher():
     def __init__(self, context = "standar"):
         if context == "test":
             self.log = createLogger(context='test_outside', name=__name__)
-            self._db = redis.from_url("redis://localhost:6379", db = 1)
+            self._db = redis.from_url("redis://localhost:6379", db = 0)
         else:
             self.log = createLogger(name=__name__)
             self._db = redis.from_url("redis://redisfetcher:6379", db = 0)
@@ -69,6 +69,7 @@ class Fetcher():
                 self._db.hset(tweet['id_str'], 'name', tweet['name'])         
                 self._db.hset(tweet['id_str'], 'user_id_str', tweet['user_id_str'])         
                 self._db.hset(tweet['id_str'], 'created_at', tweet['created_at'])
+                self._db.hset(tweet['id_str'], 'text', tweet['text'])
                 
                 for hashtag in tweet['hashtags']:
                     self._db.sadd(tweet['id_str']+":hastags", hashtag)
