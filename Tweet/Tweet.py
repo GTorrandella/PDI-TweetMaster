@@ -65,7 +65,8 @@ class Tweet(object):
             "user_id_str" : self.userID,
             "hashtags" : self.hashtags,
             "user_mentions" : self.mentions,
-            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR)
+            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR),
+            "text": self.text
         }
         tweet_json = json.dumps(dictionary) 
         return tweet_json
@@ -77,6 +78,7 @@ class Tweet(object):
             "user_id_str" : self.userID,
             "hashtags" : self.hashtags,
             "user_mentions" : self.mentions,
-            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR)
+            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR),
+            "text" : self.text
         }
         return dictionary
