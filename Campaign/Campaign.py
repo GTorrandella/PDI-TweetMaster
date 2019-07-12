@@ -4,6 +4,7 @@ import json
 
 DATE_FORMAT_STR = "%Y-%m-%d %X"  # yyyy-mm-dd hh:mm:ss
 
+
 class Campaign(object):
 
     def __init__(self, idC, emailDueño, hashtags, mentions, startDate, finDate):
@@ -12,8 +13,16 @@ class Campaign(object):
         self.emailDueño = emailDueño
         self.hashtags = hashtags
         self.mentions = mentions
-        self.startDate = datetime.strptime(startDate, DATE_FORMAT_STR)
-        self.finDate = datetime.strptime(finDate, DATE_FORMAT_STR)
+
+        if type(startDate) == str:
+            self.startDate = datetime.strptime(startDate, DATE_FORMAT_STR)
+        else:
+            self.startDate = startDate
+
+        if type(finDate) == str:
+            self.finDate = datetime.strptime(finDate, DATE_FORMAT_STR)
+        else:
+            self.finDate = finDate
 
     def to_json(self):
         dictionary = self.to_dict()  # Llamamos a la funcion de abajo
@@ -43,4 +52,4 @@ class Campaign(object):
 
     def __repr__(self):
         return "<idC:%s emailDueño:%s hashtags:%s mentions:%s startDate:%s finDate:%s> " % (
-        self.idC, self.emailDueño, self.hashtags, self.mentions, self.startDate, self.finDate)
+            self.idC, self.emailDueño, self.hashtags, self.mentions, self.startDate, self.finDate)
