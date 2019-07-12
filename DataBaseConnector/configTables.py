@@ -28,32 +28,32 @@ class MySQLConfiguration():
         BD.metadata.create_all(self.engine)
 
 class Campaign(BD):
-	__tablename__ = 'campaign'
-
-	id = Column(Integer, primary_key=True)
-	startDate = Column(DateTime())
-	finDate = Column(DateTime())
-	email = Column(String(30))
-	hashtags = Column(String(50))
-	mentions = Column(String(50))
-	tuits = relationship("Tweet")
-
-	def __repr__(self):
-   	    return "<Campaign(idC='%s', startDate='%s', finDate='%s', email='%s', hashtags='%s', mentions='%s')>" % (self.id, self.startDate, self.finDate, self.email, self.hashtags, self.mentions)
+    __tablename__ = 'campaign'
+    
+    id = Column(Integer, primary_key=True)
+    startDate = Column(DateTime())
+    finDate = Column(DateTime())
+    email = Column(String(30))
+    hashtags = Column(String(50))
+    mentions = Column(String(50))
+    tuits = relationship("Tweet")
+    
+    def __repr__(self):
+        return "<Campaign(idC='%s', startDate='%s', finDate='%s', email='%s', hashtags='%s', mentions='%s')>" % (self.id, self.startDate, self.finDate, self.email, self.hashtags, self.mentions)
 
 class Tweet(BD):
-	__tablename__ = 'tweets'
-	
-	ID = Column(String(50), primary_key=True)
-	userName = Column(String(50))
-	userid = Column(String(50))
-	hashtags = Column(String(1500))
-	mentions = Column(String(1500))
-	date = Column(DateTime)
-	idCampaign = Column(Integer, ForeignKey('campaign.id'))
-
-	def __repr__(self):
-		return "<Tweets(ID='%s', userName='%s',userid='%s',hashtags='%s',mentions='%s',date='%s',idCampaign='%s')>" % (self.ID, self.userName, self.userid, self.hashtags, self.mentions, self.date, self.idCampaign)
+    __tablename__ = 'tweets'
+    
+    ID = Column(String(50), primary_key=True)
+    userName = Column(String(50))
+    userid = Column(String(50))
+    hashtags = Column(String(1500))
+    mentions = Column(String(1500))
+    date = Column(DateTime)
+    idCampaign = Column(Integer, ForeignKey('campaign.id'))
+    
+    def __repr__(self):
+        return "<Tweets(ID='%s', userName='%s',userid='%s',hashtags='%s',mentions='%s',date='%s',idCampaign='%s')>" % (self.ID, self.userName, self.userid, self.hashtags, self.mentions, self.date, self.idCampaign)
 
 
 
