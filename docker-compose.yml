@@ -12,6 +12,8 @@ services:
         schedule:
          - cron: 00 */5 * * * *
            task: scheduler
+         - cron: 00 */15 * * * *
+           task: parser
         tasks:
            docker:
             - name: scheduler
@@ -19,6 +21,11 @@ services:
               network: tweet-master
               script:
                - python3 -m Scheduler.scheduler_rabbit
+            - name: parser
+              image: tweet-master-redis-parser:latest
+              network: tweet-master
+              script:
+               - python3 -m RedisParser.parser
 
   rsyslog:
     build:
@@ -105,3 +112,7 @@ networks:
   tweet-master:
     name: tweet-master
     external: false
+    
+volumes:
+  redis-dump:
+    name: redis-dump
