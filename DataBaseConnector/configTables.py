@@ -13,13 +13,13 @@ class MySQLConfiguration():
     def __init__(self, context='standar'):
         if context=='test':
             #Es nuestra abstraccion de la base de datos:
-            self.engine = create_engine("mysql+pymysql://root:4236@localhost:3306/BDTweetMaster?charset=utf8",echo=True)
+            self.engine = create_engine("mysql+pymysql://root:4236@localhost:3306/BDTweetMaster?charset=utf8mb4",echo=True)
             if not database_exists(self.engine.url):
                 create_database(self.engine.url)
         
         else:
             #Es nuestra abstraccion de la base de datos:
-            self.engine = create_engine("mysql+pymysql://root:4236@mysqlTweetMaster:3306/BDTweetMaster?charset=utf8",echo=True)
+            self.engine = create_engine("mysql+pymysql://root:4236@mysqlTweetMaster:3306/BDTweetMaster?charset=utf8mb4",echo=True)
             if not database_exists(self.engine.url):
                 create_database(self.engine.url)
         #Este objeto session va a ser nuestro contrato con el ORM, va a ser el objeto por el cual nos vamos a comunicar:
@@ -54,7 +54,4 @@ class Tweet(BD):
     
     def __repr__(self):
         return "<Tweets(ID='%s', userName='%s',userid='%s',hashtags='%s',mentions='%s',date='%s',idCampaign='%s')>" % (self.ID, self.userName, self.userid, self.hashtags, self.mentions, self.date, self.idCampaign)
-
-
-
 
