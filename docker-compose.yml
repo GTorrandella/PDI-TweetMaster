@@ -59,7 +59,7 @@ services:
 
   redis:
     image: redis:5-alpine
-    networks:acdc
+    networks:
       tweet-master:
         aliases:
          - redisfetcher
