@@ -5,15 +5,27 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import relationship
 
-#Es nuestra abstraccion de la base de datos:
-engine = create_engine("mysql+pymysql://root:4236@mysqlTweetMaster:3306/BDTweetMaster?charset=utf8",echo=True)
-if not database_exists(engine.url):
-    create_database(engine.url)
 #Este objeto va a contener la meta-informacion de nuestros mapeos:
 BD = declarative_base()
-#Este objeto session va a ser nuestro contrato con el ORM, va a ser el objeto por el cual nos vamos a comunicar:
-Session = sessionmaker(bind=engine)
-session = Session()
+
+class MySQLConfiguration():
+    
+    def __init__(self, context='standar'):
+        if context=='test':
+            #Es nuestra abstraccion de la base de datos:
+            self.engine = create_engine("mysql+pymysql://root:4236@localhost:3306/BDTweetMaster?charset=utf8",echo=True)
+            if not database_exists(self.engine.url):
+                create_database(self.engine.url)
+        
+        else:
+            #Es nuestra abstraccion de la base de datos:
+            self.engine = create_engine("mysql+pymysql://root:4236@mysqlTweetMaster:3306/BDTweetMaster?charset=utf8",echo=True)
+            if not database_exists(self.engine.url):
+                create_database(self.engine.url)
+        #Este objeto session va a ser nuestro contrato con el ORM, va a ser el objeto por el cual nos vamos a comunicar:
+        self.Session = sessionmaker(bind=self.engine)
+        self.session = self.Session()
+        BD.metadata.create_all(self.engine)
 
 class Campaign(BD):
 	__tablename__ = 'campaign'
