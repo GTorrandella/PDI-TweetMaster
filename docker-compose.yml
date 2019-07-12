@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 
 services:
   fetcher:
@@ -10,9 +10,29 @@ services:
         aliases:
          - fetcher
 
+  mysql:
+    image: mysql:8
+    networks:
+      tweet-master:
+        aliases:
+         - mysqlTweetMaster
+    environment:
+      MYSQL_ROOT_PASSWORD: "4236"
+
+  campaign_api:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Campaign_api.Dockerfile
+    networks:
+      tweet-master:
+        aliases:
+         - campaign_api
+    ports:
+      - 5000:5000
+
   redis:
     image: redis:5-alpine
-    networks:
+    networks:acdc
       tweet-master:
         aliases:
          - redisfetcher

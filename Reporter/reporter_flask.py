@@ -3,6 +3,8 @@ Created on Dec 12, 2018
 
 @author: Gabriel Torrandella
 '''
+
+
 from flask import Flask, jsonify
 from flask.wrappers import Response
 

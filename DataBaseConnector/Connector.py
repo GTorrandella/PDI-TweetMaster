@@ -79,6 +79,7 @@ def retornarCampaignBD(idC):
     # Devuelve esto: 2 donaldTrump@gmail.com #federicio-#federicio2 @hola-@hola2 2018-11-28 2018-12-02 --> con print envés de return se ve.
     if type(campaignespecifica) == None:
         return []
+    print(type(campaignespecifica.startDate))
     return Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags,
                     campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
 
