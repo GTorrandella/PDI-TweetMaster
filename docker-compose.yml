@@ -50,6 +50,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfiles/Campaign_api.Dockerfile
+    image: tweet-master-campaign-api:latest
     networks:
       tweet-master:
         aliases:
