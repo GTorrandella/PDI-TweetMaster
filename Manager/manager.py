@@ -1,14 +1,21 @@
 import json
 from Campaign.Campaign import Campaign
-from DataBaseConnector import configTables 
-from datetime import datetime
-from DataBaseConnector import Connector
+from DataBaseConnector import configTables
+from DataBaseConnector.Connector import Connector
 from Tweet.Tweet import Tweet
 import requests
 
 class Manager():
+	
+	def __init__(self, context='standar'):
+		
+		if context == 'test':
+			self.database = Connector(context='test')
+		
+		else:
+			self.database = Connector()
+	
 	def insertCampaign(self, userInputs):
-		configTables.BD.metadata.create_all(configTables.engine)
 		#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña.
 		#Pero antes de esto como fields["hashtags"] y fields["mentions"] son LISTAS, tenemos que pasarlas a un string para poder añadirlo a la BD como un varchar: 
 		stringHashtag = self.listaAString(userInputs["hashtags"]) # #donaldTrump-#G20
@@ -16,14 +23,14 @@ class Manager():
 	
 		campaign = Campaign(1, userInputs["email"], stringHashtag, stringMention, userInputs["startDate"], userInputs["endDate"])
 		#Llamamos a un metodo de Connector para agregar la campaña a la BD junto con las mentions y los hashtags:
-		return Connector.insertarCampaignBD(campaign)
+		return self.database.insertarCampaignBD(campaign)
 
 	def listaAString(self, lista):
 		string = "-".join(lista)
 		return string
 	
 	def deleteCampaignporuser(self, email_user):
-		campaigns = Connector.retornarCampaignsBDxEmail(email_user)
+		campaigns = self.database.retornarCampaignsBDxEmail(email_user)
 
 		if campaigns == []:	#No hubo campaigns con ese e-mail
 			return 404
@@ -31,8 +38,8 @@ class Manager():
 		haveDeleted = False		#flag
 		for c in campaigns:
 			if not c.isActive():
-				Connector.eliminarTweetsxIDC(c.idC)
-				Connector.eliminarCampaignBDxID(c.idC)
+				self.database.eliminarTweetsxIDC(c.idC)
+				self.database.eliminarCampaignBDxID(c.idC)
 				haveDeleted = True
 
 		if haveDeleted: #Borro una o mas campaigns
@@ -42,31 +49,31 @@ class Manager():
 
 	def deleteCampaignporid(self, idCampaign):
 		#Se puede eliminar la campaña sólo si esta NO está iniciada:
-		campaignRetornada = Connector.retornarCampaignBD(idCampaign)
+		campaignRetornada = self.database.retornarCampaignBD(idCampaign)
 
 		if campaignRetornada == []: 
 			return 404
 		if campaignRetornada.isActive(): 
 			return 412
 		else: 
-			Connector.eliminarTweetsxIDC(idCampaign)
-			Connector.eliminarCampaignBDxID(idCampaign)
+			self.database.eliminarTweetsxIDC(idCampaign)
+			self.database.eliminarCampaignBDxID(idCampaign)
 			return 200
 				
 	def returnCampaign(self, idCampaign):
-		return Connector.retornarCampaignBD(idCampaign)
+		return self.database.retornarCampaignBD(idCampaign)
 
 	def returnCampaignsInProgress(self):
-		return Connector.returnCampaignsInProgress()
+		return self.database.returnCampaignsInProgress()
 
 	def modifyCampaign(self, idCampaign, columna, inputUser):
-		c = Connector.retornarCampaignBD(idCampaign)
+		c = self.database.retornarCampaignBD(idCampaign)
 		if c == []:
 			return 404		# No existe
 		if c.isActive():	
 			return 412		# Campaign activa
 		# Campaign NO esta activa:
-		wasModified = Connector.modificarCampaignBD(idCampaign, columna, inputUser)
+		wasModified = self.database.modificarCampaignBD(idCampaign, columna, inputUser)
 		if wasModified: 
 			return 200	# OK
 		return 400		# Columna inexistente
@@ -83,7 +90,7 @@ class Manager():
 			self.insertTweet(t,idC) #Le pasamos el objeto Tweet instanciado.
 
 	def insertTweet(self, TweetInput, idC):
-		Connector.insertTweet(TweetInput, idC)
+		self.database.insertTweet(TweetInput, idC)
 	
 	#Arregla el desastre de #-# y @-@
 	def _campaignStringToList(self, c):

@@ -25,10 +25,9 @@ class Fetcher():
     def __init__(self, context = "standar"):
         if context == "test":
             self.log = createLogger(context='test_outside', name=__name__)
-            self._db = redis.from_url("redis://localhost:6379", db = 1)
+            self._db = redis.from_url("redis://localhost:6379", db = 0)
         else:
             self.log = createLogger(name=__name__)
-            self.test_log()
             self._db = redis.from_url("redis://redisfetcher:6379", db = 0)
     
     
@@ -70,14 +69,45 @@ class Fetcher():
                 self._db.hset(tweet['id_str'], 'name', tweet['name'])         
                 self._db.hset(tweet['id_str'], 'user_id_str', tweet['user_id_str'])         
                 self._db.hset(tweet['id_str'], 'created_at', tweet['created_at'])
+                self._db.hset(tweet['id_str'], 'text', tweet['text'])
                 
                 for hashtag in tweet['hashtags']:
                     self._db.sadd(tweet['id_str']+":hastags", hashtag)
                 for ment in tweet['user_mentions']:
                     self._db.sadd(tweet['id_str']+":mentions", ment)
-        
         except:
-            self.log.error("Failed save "+idCampain)
-            
-    
+            self.log.error("Failed to save for " + idCampain)
+
+f = Fetcher(context='test')
+t = [
+                        {
+                                "created_at": "Sun Feb 25 18:11:01 +0000 2018",
+                                "id_str": "123824267948773377",
+                                "text":"@mars",
+                                "entities": {
+                                        "hashtags": [],
+                                        "user_mentions": ["mars"],
+                                        },
+                                "user": {
+                                        "id_str": "11348282",
+                                        "name": "NASA"
+                                        }
+                        },
+                        {
+                                "created_at": "Sun Feb 25 18:11:01 +0000 2018",
+                                "id_str": "123824267948773378",
+                                "text":"@mars",
+                                "entities": {
+                                        "hashtags": [],
+                                        "user_mentions": ["mars"],
+                                        },
+                                "user": {
+                                        "id_str": "11348282",
+                                        "name": "NASA"
+                                        }
+                        }
+                    ]
+ts = f.makeTweet(t)
+f.saveTweets('1', ts)
+
     

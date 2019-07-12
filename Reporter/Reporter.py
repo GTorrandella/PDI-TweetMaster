@@ -1,13 +1,21 @@
 import json
-from DataBaseConnector import Connector as Connector
+from DataBaseConnector.Connector import Connector
 from collections import Counter
 from datetime import datetime
 
 class Reporter():
 
+	def __init__(self, context='standar'):
+		
+		if context == 'test':
+			self.database = Connector(context='test')
+		
+		else:
+			self.database = Connector()
+
 	def reportRawData(self, idC): #OK
-		campaign = Connector.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
-		tweets = Connector.returnTweetsByIDC(idC) #Busca tweets de determinada campaña
+		campaign = self.database.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
+		tweets = self.database.returnTweetsByIDC(idC) #Busca tweets de determinada campaña
 		
 		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
 			return 404
@@ -18,8 +26,8 @@ class Reporter():
 		return (rawData)
 
 	def reportSummary(self, idC): #OK
-		campaign = Connector.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
-		tweets = Connector.returnTweetsByIDC(idC) #Lista de diccionarios tweet
+		campaign = self.database.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
+		tweets = self.database.returnTweetsByIDC(idC) #Lista de diccionarios tweet
 		
 		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
 			return 404

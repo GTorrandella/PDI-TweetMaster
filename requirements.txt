@@ -1,6 +1,7 @@
 SQLAlchemy
 redis
 PyMySQL
+PyMySQL[rsa]
 flask
 flask-SQLAlchemy
 flask-restful
@@ -13,4 +14,7 @@ python_dateutil == 2.6.0
 setuptools >= 21.0.0
 requests
 pytest
+pika
 cryptography
+rdbtools
+python-lzf
