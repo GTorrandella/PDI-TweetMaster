@@ -75,9 +75,39 @@ class Fetcher():
                     self._db.sadd(tweet['id_str']+":hastags", hashtag)
                 for ment in tweet['user_mentions']:
                     self._db.sadd(tweet['id_str']+":mentions", ment)
-        
         except:
-            self.log.error("Failed save "+idCampain)
-            
-    
+            self.log.error("Failed to save for " + idCampain)
+
+f = Fetcher(context='test')
+t = [
+                        {
+                                "created_at": "Sun Feb 25 18:11:01 +0000 2018",
+                                "id_str": "123824267948773377",
+                                "text":"@mars",
+                                "entities": {
+                                        "hashtags": [],
+                                        "user_mentions": ["mars"],
+                                        },
+                                "user": {
+                                        "id_str": "11348282",
+                                        "name": "NASA"
+                                        }
+                        },
+                        {
+                                "created_at": "Sun Feb 25 18:11:01 +0000 2018",
+                                "id_str": "123824267948773378",
+                                "text":"@mars",
+                                "entities": {
+                                        "hashtags": [],
+                                        "user_mentions": ["mars"],
+                                        },
+                                "user": {
+                                        "id_str": "11348282",
+                                        "name": "NASA"
+                                        }
+                        }
+                    ]
+ts = f.makeTweet(t)
+f.saveTweets('1', ts)
+
     
