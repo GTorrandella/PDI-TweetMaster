@@ -12,7 +12,7 @@ class Tweet(object):
             self._rawConstrucctor(tweet)
         else:
             self._nonRawConstrucctor(tweet)
-        
+    
     def _rawConstrucctor(self, tweet):
         self.ID = tweet['id_str']
         self.text = tweet['text']
@@ -50,7 +50,7 @@ class Tweet(object):
                     else:
                         self.mentions.append(d)
                         
-        self.date = tweet['created_at']
+        self.date = datetime.strptime(tweet['created_at'], DATE_FORMAT_STR)
         #Sun Mar 20 21:08:01 2018"
         
     def __eq__(self, other):
@@ -65,7 +65,8 @@ class Tweet(object):
             "user_id_str" : self.userID,
             "hashtags" : self.hashtags,
             "user_mentions" : self.mentions,
-            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR)
+            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR),
+            "text": self.text
         }
         tweet_json = json.dumps(dictionary) 
         return tweet_json
@@ -77,6 +78,7 @@ class Tweet(object):
             "user_id_str" : self.userID,
             "hashtags" : self.hashtags,
             "user_mentions" : self.mentions,
-            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR)
+            "created_at" : datetime.strftime(self.date, DATE_FORMAT_STR),
+            "text" : self.text
         }
         return dictionary

@@ -23,7 +23,7 @@ class test_fetcher_base(unittest.TestCase):
                         {
                                 "created_at": "Sun Feb 25 18:11:01 +0000 2018",
                                 "id_str": "967824267948773377",
-                                "text":"",
+                                "text":"#mars",
                                 "entities": {
                                         "hashtags": ["mars"],
                                         "user_mentions": [],
@@ -36,7 +36,7 @@ class test_fetcher_base(unittest.TestCase):
                         {
                                 "created_at": "Sun Feb 25 18:11:01 +0000 2018",
                                 "id_str": "967824267948773378",
-                                "text":"",
+                                "text":"#mars",
                                 "entities": {
                                         "hashtags": ["mars"],
                                         "user_mentions": [],
@@ -54,7 +54,7 @@ class test_fetcher_base(unittest.TestCase):
                         {
                                 "created_at": "Sun Feb 25 18:11:01 +0000 2018",
                                 "id_str": "123824267948773377",
-                                "text":"",
+                                "text":"@mars",
                                 "entities": {
                                         "hashtags": [],
                                         "user_mentions": ["mars"],
@@ -67,7 +67,7 @@ class test_fetcher_base(unittest.TestCase):
                         {
                                 "created_at": "Sun Feb 25 18:11:01 +0000 2018",
                                 "id_str": "123824267948773378",
-                                "text":"",
+                                "text":"@mars",
                                 "entities": {
                                         "hashtags": [],
                                         "user_mentions": ["mars"],

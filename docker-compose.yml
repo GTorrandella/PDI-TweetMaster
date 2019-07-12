@@ -1,14 +1,41 @@
 version: '3.3'
 
 services:
-  fetcher:
+  tasker:
+    image: strm/tasker
+    volumes:
+     - "/var/run/docker.sock:/var/run/docker.sock"
+    networks: 
+     - tweet-master
+    environment:
+      configuration: |
+        schedule:
+         - cron: 00 */5 * * * *
+           task: scheduler
+         - cron: 00 */15 * * * *
+           task: parser
+        tasks:
+           docker:
+            - name: scheduler
+              image: tweet-master-scheduler:latest
+              network: tweet-master
+              script:
+               - python3 -m Scheduler.scheduler_rabbit
+            - name: parser
+              image: tweet-master-redis-parser:latest
+              network: tweet-master
+              script:
+               - python3 -m RedisParser.parser
+
+  rsyslog:
     build:
       context: .
-      dockerfile: Dockerfiles/Fetcher.Dockerfile
+      dockerfile: Dockerfiles/Rsyslog.Dockerfile
+    image: tweet-master-rsyslog:latest
     networks:
       tweet-master:
         aliases:
-         - fetcher
+         - rsyslog
 
   mysql:
     image: mysql:8
@@ -36,16 +63,76 @@ services:
       tweet-master:
         aliases:
          - redisfetcher
-
-  rsyslog:
-    build:
-      context: .
-      dockerfile: Dockerfiles/Rsyslog.Dockerfile
+    volumes:
+      - type: volume
+        source: redis-dump
+        target: /data
+   
+  mysql:
+    image: mysql:8
     networks:
       tweet-master:
         aliases:
-         - rsyslog
+         - mysqlTweetMaster
+    environment:
+      MYSQL_ROOT_PASSWORD: "4236"
+  
+  rabbitmq:
+    image: rabbitmq:3-alpine
+    networks:
+      tweet-master:
+        aliases:
+         - rabbitTweetMaster
+         
+  fetcher:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Fetcher.Dockerfile
+    image: tweet-master-fetcher:latest
+    networks:
+      tweet-master:
+        aliases:
+         - fetcher
+    depends_on:
+     - rsyslog
+     - redis
+     - mysql
+     - rabbitmq
+  
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Scheduler.Dockerfile
+    image: tweet-master-scheduler:latest
+    networks:
+     - tweet-master
+    depends_on:
+     - rsyslog
+     - redis
+     - mysql
+     - rabbitmq
+
+  redis-parser:
+    build:
+      context: .
+      dockerfile: Dockerfiles/RedisParser.Dockerfile
+    image: tweet-master-redis-parser:latest
+    networks:
+     - tweet-master
+    volumes:
+      - type: volume
+        source: redis-dump
+        target: /data
+    depends_on:
+     - rsyslog
+     - redis
+     - mysql
 
 networks:
   tweet-master:
-    external: true
+    name: tweet-master
+    external: false
+    
+volumes:
+  redis-dump:
+    name: redis-dump
