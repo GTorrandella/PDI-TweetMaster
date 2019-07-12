@@ -3,7 +3,7 @@ Created on Jul 6, 2019
 
 @author: Gabriel Torrandella
 '''
-from DataBaseConnector import Connector
+from DataBaseConnector.Connector import Connector
 from Logger.Rsyslog import createLogger
 import pika
 
@@ -13,17 +13,19 @@ def start_connection(context='standar'):
         log = createLogger(context='test_outside', name='Scheduler')
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host='localhost', heartbeat=5))
+        connector = Connector(context='test')
     else:
         log = createLogger(name='Scheduler')
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host='rabbitTweetMaster', heartbeat=5))
+        connector = Connector()
 
     channel = connection.channel()
     channel.exchange_declare(exchange="fetcher", exchange_type="direct", durable=True)
     log.info("Connection to RabbitMQ ready")
     
     try:
-        campaignsOnProgress = Connector.returnCampaignsInProgress()
+        campaignsOnProgress = connector.returnCampaignsInProgress()
         log.info("Recived Campaigns on progress")
         
         for campaign in campaignsOnProgress:
