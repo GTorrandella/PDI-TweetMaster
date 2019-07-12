@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.7'
 
 services:
   tasker:
@@ -56,6 +56,9 @@ services:
          - campaign_api
     ports:
       - 5000:5000
+    depends_on:
+     - rsyslog
+     - mysql
 
   redis:
     image: redis:5-alpine
