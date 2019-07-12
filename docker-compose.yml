@@ -36,6 +36,10 @@ services:
       tweet-master:
         aliases:
          - redisfetcher
+    volumes:
+      - type: volume
+        source: redis-dump
+        target: /data
    
   mysql:
     image: mysql:8
@@ -80,6 +84,22 @@ services:
      - redis
      - mysql
      - rabbitmq
+
+  redis-parser:
+    build:
+      context: .
+      dockerfile: Dockerfiles/RedisParser.Dockerfile
+    image: tweet-master-redis-parser:latest
+    networks:
+     - tweet-master
+    volumes:
+      - type: volume
+        source: redis-dump
+        target: /data
+    depends_on:
+     - rsyslog
+     - redis
+     - mysql
 
 networks:
   tweet-master:
