@@ -25,12 +25,14 @@ class test_manager(unittest.TestCase):
         #Ejemplo de los lista de diccionario de tweets en formato JSON que el Fetcher le manda a Manager (tweetsJson).
         self.tweet1 = {
             "id_str" : "12366",
+            "text": "La tierra es una esfera. Fin del comunicado.",
             "user" : {"name" : "NASAOk", "id_str" : "789456"},
             "entities" : {"hashtags" : ["#mars","#venus","#earth"],"user_mentions" : ["@NASA", "@planets"]},
             "created_at" : "Sun Mar 20 15:11:01 +0000 2018"
         }
         self.tweet2 = {
             "id_str" : "12477",
+            "text" : "este hdp me dejo aca clavado",
             "user" : {"name" : "MiauricioOK", "id_str" : "451325"},
             "entities" : {"hashtags" : ["#DonaldNoMeDejes"], "user_mentions" : ["@donaldTrump", "@G20"]},
             "created_at" : "Sun Mar 20 21:08:01 +0000 2018"
@@ -116,7 +118,7 @@ class test_manager(unittest.TestCase):
     @unittest.expectedFailure
     def test_DeleteCampaignPorUser(self):
         email="test@gmail.com"
-        manager.Manager().deleteCampaignporuser(email)
+        manager.Manager().deleteCampaignsByEmail(email)
 
     def test_ReturnCampaignsInProgress(self):
         manager.Manager().returnCampaignsInProgress()

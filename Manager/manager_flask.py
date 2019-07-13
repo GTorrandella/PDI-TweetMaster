@@ -38,10 +38,10 @@ def api_manager():
         
     elif request.method == 'DELETE':
         if 'idC' in request.json.keys():
-            res = Manager().deleteCampaignporid(request.json['idC'])
+            res = Manager().deleteCampaignByID(request.json['idC'])
             return Response(status = res)
         elif 'email' in request.json.keys():
-            res = Manager().deleteCampaignporuser(request.json['email'])
+            res = Manager().deleteCampaignsByEmail(request.json['email'])
             return Response(status = res)
     else: 
         return Response(status = 400)

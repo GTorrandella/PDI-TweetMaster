@@ -12,45 +12,23 @@ class Connector():
         else:
             self.database = configTables.MySQLConfiguration()
             
-    def insertarCampaignBD(self, CampaignReceived):
-        # Insertamos fecha inicio, fecha fin, email dueño, hashtags y mentions en la tabla Campaign de la BD:
-        # new_campaignBD=configTables.Campaign(startDate=(datetime.strftime((CampaignReceived.startDate),"%d %m %Y %X")), finDate=(datetime.strftime((CampaignReceived.finDate),"%d %m %Y %X")), email=(CampaignReceived.emailDueño), hashtags=(CampaignReceived.hashtags), mentions=(CampaignReceived.mentions))
-        newCampaignBD = configTables.Campaign(startDate=CampaignReceived.startDate, finDate=CampaignReceived.finDate,
-                                              email=(CampaignReceived.emailDueño), hashtags=(CampaignReceived.hashtags),
-                                              mentions=(CampaignReceived.mentions))
-        self.database.session.add(newCampaignBD)
-
-        # Y finalmente las agregamos a la BD con estas 3 lineas:
-        # configTables.session.new
+    def insertCampaign(self, campaignReceived):
+        campaignToInsert = configTables.Campaign(startDate=campaignReceived.startDate, finDate=campaignReceived.finDate,
+                                              email=(campaignReceived.emailDueño), hashtags=(campaignReceived.hashtags),
+                                              mentions=(campaignReceived.mentions))
+        self.database.session.add(campaignToInsert)
         self.database.session.dirty
         self.database.session.commit()  # Para que los cambios se efectivicen en la BD
-        return newCampaignBD.id
-    
-    
-    def eliminarCampaignBDxUser(self, email_user):
-        # Pueden ser 1 o mas campañas asociadas a un usuario, para eliminar TODAS sin importar la fecha hacemos:
-        # ####configTables.session.query(configTables.Campaign).filter_by(email=email_user).delete() y configTables.session.commit()
-        listaCampaigns = self.database.session.query(configTables.Campaign).filter_by(email=email_user).all()
-        # Ahora tenemos que ver que cada una de estas campañas NO hayan iniciado (que fecha_inicio_campaign <
-        # fecha_actual). Para esto hay que recorrer la lista y eliminar las que SI iniciaron.
-        for c in listaCampaigns:
-            # Cada c es un: <Campaign(idC='1', startDate='28 11 2018 18:02:00', finDate='02 12 2018 19:26:22', email='test@gmail.com', hashtags='#test-#mock', mentions='@testCampaign-@mockOK')>
-            # Y accedo a los atributos con c.atributo (el atributo está en la tabla Campaign dentro de configTables), osea asi: print (c.id)
-            idCampaign = c.id
-            campaignRetornada = self.retornarCampaignBD(idCampaign)
-            fecha_inicio_campaign = campaignRetornada.startDate
-            fecha_actual = datetime.now()
-            if not (fecha_inicio_campaign < fecha_actual):
-                self.eliminarCampaignBDxID(idCampaign)
-    
-    def returnCampaignsInProgress(self):
+        return campaignToInsert.id
+
+    def selectCampaignsInProgress(self):
         listaCampaignsBD = self.database.session.query(configTables.Campaign).filter(
             configTables.Campaign.startDate < datetime.now(),
             configTables.Campaign.finDate > datetime.now()).all()
         listaCampaigns = self.campaignsBDListToCampaignsList(listaCampaignsBD)
         return listaCampaigns
-    
-    def returnCampaignsByEmail(self, user_email):
+
+    def selectCampaignsByEmail(self, user_email):
         campaignsBD = self.database.session.query(configTables.Campaign).filter_by(email=user_email).all()
         campaigns = self.campaignsBDListToCampaignsList(campaignsBD)
         return campaigns
@@ -63,70 +41,57 @@ class Connector():
             campaigns.append(c)
         return campaigns
     
-    def eliminarTweetsxIDC(self, idC):
+    def deleteTweetsByIDC(self, idC):
         tweets = self.database.session.query(configTables.Tweet).filter_by(idCampaign=idC).all()
         for t in tweets:
             self.database.session.delete(t)
         self.database.session.commit()
     
-    
-    def eliminarCampaignBDxID(self, idC):
-        campaignespecifica = self.database.session.query(configTables.Campaign).get(
-            idC)  # Obtengo al campaña con id especifico idC.
-        self.database.session.delete(campaignespecifica)
+    #OK 200, 412
+    def deleteCampaignByID(self, idC):
+        campaignABorrar = self.database.session.query(configTables.Campaign).get(idC)
+        self.database.session.delete(campaignABorrar)
         self.database.session.commit()
     
-    
-    def retornarCampaignBD(self, idC):
-        campaignespecifica = self.database.query(configTables.Campaign).get(idC)
-        # Con la campaignespecifica de arriba accedemos a los atributos así: (ya que es el objeto Campaign de configTables.py)
-        # print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
-        # Devuelve esto: 2 donaldTrump@gmail.com #federicio-#federicio2 @hola-@hola2 2018-11-28 2018-12-02 --> con print envés de return se ve.
-        if type(campaignespecifica) == None:
+    # OK
+    def selectCampaign(self, idC):
+        campaignEspecifica = self.database.session.query(configTables.Campaign).get(idC)
+        if campaignEspecifica is None:
             return []
-        return Campaign(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags,
-                        campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
+        return Campaign(campaignEspecifica.id, campaignEspecifica.email, campaignEspecifica.hashtags,
+                        campaignEspecifica.mentions, campaignEspecifica.startDate, campaignEspecifica.finDate)
     
-    
-    # Con el objetoCampaign de arriba accedemos a los atributos así: (ya que es el objeto Campaign de Campaign.py)
-    # print(campaignespecifica.idC, campaignespecifica.emailDueño, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
-    
-    
-    # Desde la Interfaz (en ModifCampaign) le llegaría al manager la columna a modificar, el campo para esa columna (inputUser) y el id de campaña.
-    def modificarCampaignBD(self, idC, inputColumn, inputUser):
-        # Lenguaje MYSQL: UPDATE Campaign SET columna = "inputuser" WHERE id = "idC".
-        campaignespecifica = self.database.session.query(configTables.Campaign).get(idC)
-        # Hice esto de abajo porque no podía poner campaignespecifica.inputColumn = inputUser, no me toma inputColumn.
+    # OK: 200 (falla con inputUser muy largo)
+    def updateCampaign(self, idC, inputColumn, inputUser):
+        campaignEspecifica = self.database.session.query(configTables.Campaign).get(idC)
         wasModified = False  # Flag que indica si fue modificado
-        if (inputColumn == "email"):
-            campaignespecifica.email = inputUser
+        if inputColumn == "email":
+            campaignEspecifica.email = inputUser
             self.database.session.commit()
             wasModified = True
     
-        if (inputColumn == "startDate"):
-            campaignespecifica.startDate = inputUser
+        elif inputColumn == "startDate":
+            campaignEspecifica.startDate = inputUser
             self.database.session.commit()
             wasModified = True
     
-        if (inputColumn == "finDate"):
-            campaignespecifica.finDate = inputUser
+        elif inputColumn == "finDate":
+            campaignEspecifica.finDate = inputUser
             self.database.session.commit()
             wasModified = True
     
-        if (inputColumn == "hashtags"):
-            campaignespecifica.hashtags = self.listaAString(inputUser)
+        elif inputColumn == "hashtags":
+            campaignEspecifica.hashtags = self.listaAString(inputUser)
             self.database.session.commit()
             wasModified = True
     
-        if (inputColumn == "mentions"):
-            campaignespecifica.mentions = self.listaAString(inputUser)
+        elif inputColumn == "mentions":
+            campaignEspecifica.mentions = self.listaAString(inputUser)
             self.database.session.commit()
             wasModified = True
     
         return wasModified
-    
-    
-    # print(campaignespecifica.id, campaignespecifica.email, campaignespecifica.hashtags, campaignespecifica.mentions, campaignespecifica.startDate, campaignespecifica.finDate)
+
     
     def insertTweet(self, TweetInput, idC):
         print(TweetInput.hashtags)
@@ -136,7 +101,7 @@ class Connector():
         stringMention = self.listaAString(TweetInput.mentions)  # @donaldTrump-@miauricioOK
         # print(TweetInput.ID, TweetInput.userName, TweetInput.userID, TweetInput.hashtags ,TweetInput.mentions, TweetInput.date)
         IDTweet = (TweetInput.ID)
-        if self.returnTweetByIDT(IDTweet):
+        if self.selectTweetByIDT(IDTweet):
             print("Tweet ya ingresado")
         else:
             UserName = (TweetInput.userName).encode('ascii',
@@ -151,12 +116,12 @@ class Connector():
             self.database.session.commit()
     
     
-    def returnTweetByIDT(self, idT):
+    def selectTweetByIDT(self, idT):
         tweetEspecifico = self.database.session.query(configTables.Tweet).get(idT)
         return tweetEspecifico
     
     
-    def returnTweetsByIDC(self, IDC):
+    def selectTweetsByIDC(self, IDC):
         tweetsBD = self.database.session.query(configTables.Tweet).filter_by(idCampaign=IDC).all()
         # tweetsBD es una lista de Tweets en el formato de Tweet de ConfigTables:
         # [<Tweets(ID='112112', userName='MiauricioOK',userid='451325',hashtags='#DonaldNoMeDejes',mentions='@donaldTrump-@G20',date='2018-03-20 21:08:01',idCampaign='3')>,

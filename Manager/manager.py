@@ -16,21 +16,18 @@ class Manager():
 			self.database = Connector()
 	
 	def insertCampaign(self, userInputs):
-		#Con los nombres de los campos correspondientes a los del json que nos llegan armamos un objeto campaña.
-		#Pero antes de esto como fields["hashtags"] y fields["mentions"] son LISTAS, tenemos que pasarlas a un string para poder añadirlo a la BD como un varchar: 
 		stringHashtag = self.listaAString(userInputs["hashtags"]) # #donaldTrump-#G20
 		stringMention = self.listaAString(userInputs["mentions"]) # @donaldTrump-@miauricioOK
-	
 		campaign = Campaign(1, userInputs["email"], stringHashtag, stringMention, userInputs["startDate"], userInputs["endDate"])
-		#Llamamos a un metodo de Connector para agregar la campaña a la BD junto con las mentions y los hashtags:
-		return self.database.insertarCampaignBD(campaign)
+		return self.database.insertCampaign(campaign)
 
 	def listaAString(self, lista):
 		string = "-".join(lista)
 		return string
-	
-	def deleteCampaignporuser(self, email_user):
-		campaigns = self.database.retornarCampaignsBDxEmail(email_user)
+
+	# Postman OK: 200 (1, multiples, mezclado, con y sin tweets), 404, 412 (1 y multiples)
+	def deleteCampaignsByEmail(self, email_user):
+		campaigns = self.database.selectCampaignsByEmail(email_user)
 
 		if campaigns == []:	#No hubo campaigns con ese e-mail
 			return 404
@@ -38,8 +35,8 @@ class Manager():
 		haveDeleted = False		#flag
 		for c in campaigns:
 			if not c.isActive():
-				self.database.eliminarTweetsxIDC(c.idC)
-				self.database.eliminarCampaignBDxID(c.idC)
+				self.database.deleteTweetsByIDC(c.idC)
+				self.database.deleteCampaignByID(c.idC)
 				haveDeleted = True
 
 		if haveDeleted: #Borro una o mas campaigns
@@ -47,33 +44,36 @@ class Manager():
 		else:
 			return 412	#No borro nada porque todas estaban activas
 
-	def deleteCampaignporid(self, idCampaign):
+	# Postman OK: 200(con y sin tweets), 412, 404
+	def deleteCampaignByID(self, idCampaign):
 		#Se puede eliminar la campaña sólo si esta NO está iniciada:
-		campaignRetornada = self.database.retornarCampaignBD(idCampaign)
+		campaignRetornada = self.database.selectCampaign(idCampaign)
 
 		if campaignRetornada == []: 
 			return 404
 		if campaignRetornada.isActive(): 
 			return 412
 		else: 
-			self.database.eliminarTweetsxIDC(idCampaign)
-			self.database.eliminarCampaignBDxID(idCampaign)
+			self.database.deleteTweetsByIDC(idCampaign)
+			self.database.deleteCampaignByID(idCampaign)
 			return 200
-				
+
+	# Postman OK
 	def returnCampaign(self, idCampaign):
-		return self.database.retornarCampaignBD(idCampaign)
+		return self.database.selectCampaign(idCampaign)
 
 	def returnCampaignsInProgress(self):
-		return self.database.returnCampaignsInProgress()
+		return self.database.selectCampaignsInProgress()
 
+	# Postman OK: 200,400,404,412
 	def modifyCampaign(self, idCampaign, columna, inputUser):
-		c = self.database.retornarCampaignBD(idCampaign)
+		c = self.database.selectCampaign(idCampaign)
 		if c == []:
 			return 404		# No existe
 		if c.isActive():	
 			return 412		# Campaign activa
-		# Campaign NO esta activa:
-		wasModified = self.database.modificarCampaignBD(idCampaign, columna, inputUser)
+		# Existe y NO esta activa:
+		wasModified = self.database.updateCampaign(idCampaign, columna, inputUser)
 		if wasModified: 
 			return 200	# OK
 		return 400		# Columna inexistente

@@ -25,7 +25,7 @@ def start_connection(context='standar'):
     log.info("Connection to RabbitMQ ready")
     
     try:
-        campaignsOnProgress = connector.returnCampaignsInProgress()
+        campaignsOnProgress = connector.selectCampaignsInProgress()
         log.info("Recived Campaigns on progress")
         
         for campaign in campaignsOnProgress:

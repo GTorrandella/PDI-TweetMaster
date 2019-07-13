@@ -14,8 +14,8 @@ class Reporter():
 			self.database = Connector()
 
 	def reportRawData(self, idC): #OK
-		campaign = self.database.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
-		tweets = self.database.returnTweetsByIDC(idC) #Busca tweets de determinada campaña
+		campaign = self.database.selectCampaign(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask.
+		tweets = self.database.selectTweetsByIDC(idC) #Busca tweets de determinada campaña
 		
 		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
 			return 404
@@ -26,8 +26,8 @@ class Reporter():
 		return (rawData)
 
 	def reportSummary(self, idC): #OK
-		campaign = self.database.retornarCampaignBD(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask. 
-		tweets = self.database.returnTweetsByIDC(idC) #Lista de diccionarios tweet
+		campaign = self.database.selectCampaign(idC) #Objeto campaign, NO desempaquetamos el JSON, esto lo hace directamente flask.
+		tweets = self.database.selectTweetsByIDC(idC) #Lista de diccionarios tweet
 		
 		if (campaign == [] or tweets == []):			#Revisa que exista campaña con esa ID
 			return 404

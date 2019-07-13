@@ -24,7 +24,7 @@ class Tweet(object):
 
     def _nonRawConstrucctor(self, tweet):
         self.ID = tweet['id_str']
-        user = tweet['user'];
+        user = tweet['user']
         entities = tweet['entities'] #diccionario con 2 listas (hashtags y mentions)
         self.userName = user['name']
         self.userID = user['id_str']
