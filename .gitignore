@@ -110,3 +110,6 @@ venv.bak/
 # Travis configuration
 .travis.yml
 ~travis/
+
+# Visual Studio settings
+.vscode/
