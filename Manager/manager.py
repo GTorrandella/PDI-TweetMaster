@@ -16,12 +16,12 @@ class Manager():
 			self.database = Connector()
 	
 	def insertCampaign(self, userInputs):
-		stringHashtag = self.listaAString(userInputs["hashtags"]) # #donaldTrump-#G20
-		stringMention = self.listaAString(userInputs["mentions"]) # @donaldTrump-@miauricioOK
+		stringHashtag = self._listaAString(userInputs["hashtags"]) # #donaldTrump-#G20
+		stringMention = self._listaAString(userInputs["mentions"]) # @donaldTrump-@miauricioOK
 		campaign = Campaign(1, userInputs["email"], stringHashtag, stringMention, userInputs["startDate"], userInputs["endDate"])
 		return self.database.insertCampaign(campaign)
 
-	def listaAString(self, lista):
+	def _listaAString(self, lista):
 		string = "-".join(lista)
 		return string
 
