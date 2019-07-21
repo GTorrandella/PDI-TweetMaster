@@ -94,8 +94,6 @@ class Connector():
 
     
     def insertTweet(self, TweetInput, idC):
-        print(TweetInput.hashtags)
-        print(TweetInput.mentions)
         # Insertamos fecha publicacion, autor, mensaje y macheo en la tabla Tweet de la BD:
         stringHashtag = self.listaAString(TweetInput.hashtags)  # #donaldTrump-#G20
         stringMention = self.listaAString(TweetInput.mentions)  # @donaldTrump-@miauricioOK
@@ -104,7 +102,7 @@ class Connector():
         if self.selectTweetByIDT(IDTweet):
             print("Tweet ya ingresado")
         else:
-            UserName = (TweetInput.userName).encode('ascii',
+            UserName = (TweetInput.userName).encode('utf8mb4',
                                                     errors='ignore')  # Hacemos esto por si hay caracteres especiales o emoticonos en el nombre de usuario.
             new_TweetBD = configTables.Tweet(idCampaign=(idC), ID=(IDTweet), userName=(UserName),
                                              userid=(TweetInput.userID), hashtags=(stringHashtag), mentions=(stringMention),
