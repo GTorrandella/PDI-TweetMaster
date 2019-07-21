@@ -38,12 +38,15 @@ class test_manager(unittest.TestCase):
     #la fecha de inicio de campaign start_date debe ser MENOR a la fecha actual) 
     #y que la columna a modificar se haya sobreescrito satisfactoriamente.
     def test_ModifyCampaign(self):
-        #Precondicion: tener 2 campaigns en la BD.
+        #Precondicion: tener 1 campaign en la BD.
         userInputs= '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"2018-12-18 18:02:00", "endDate":"2018-12-02 19:26:22"}'
         fields = json.loads(userInputs) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
-        #Creamos e insertamos 2 campaign:
         idCampaign = self.manager.insertCampaign(fields)
         
+        #Comfirmamos el email antes de la modificación
+        campaignOriginal = self.connector.selectCampaign(idCampaign)
+        self.assertEqual(campaignOriginal.emailDueño, "test@gmail.com")
+
         #Datos que ingresara el usuario (además de la id2daCampaign):
         columna="email"
         inputUser="pepito@gmail.com"
