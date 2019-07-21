@@ -15,8 +15,9 @@ class test_manager(unittest.TestCase):
         self.connector = Connector(context='test')
 
     def tearDown(self):
-        self.manager.database.database.session.delete(configTables.Tweet)
-        self.manager.database.database.session.delete(configTables.Campaign)
+        self.manager.database.database.session.query(configTables.Tweet).delete()
+        self.manager.database.database.session.query(configTables.Campaign).delete()
+        self.manager.database.database.session.commit()
 
 
     #Testeamos que los tweets que llegan se agregen correctamente a la BD.
