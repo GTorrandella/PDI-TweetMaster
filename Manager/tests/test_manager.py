@@ -25,7 +25,7 @@ class test_manager(unittest.TestCase):
         userInputs = '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"2018-11-28 18:02:00", "endDate":"2018-12-25 19:26:22"}'
         fields = json.loads(userInputs) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
         idCampaign = self.manager.insertCampaign(fields)
-        campaignRetornada = self.connector.retornarCampaignBD(idCampaign)
+        campaignRetornada = self.connector.selectCampaign(idCampaign)
 
         #Asserto todos los atributos del objeto Campaign:
         self.assertEqual(campaignRetornada.emailDueño, "test@gmail.com")
@@ -42,23 +42,23 @@ class test_manager(unittest.TestCase):
         userInputs= '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"2018-12-18 18:02:00", "endDate":"2018-12-02 19:26:22"}'
         fields = json.loads(userInputs) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
         #Creamos e insertamos 2 campaign:
-        id1raCampaign = self.manager.insertCampaign(fields)
-        id2daCampaign = self.manager.insertCampaign(fields)
+        idCampaign = self.manager.insertCampaign(fields)
         
         #Datos que ingresara el usuario (además de la id2daCampaign):
         columna="email"
         inputUser="pepito@gmail.com"
         
-        resultado = self.manager.modifyCampaign(id2daCampaign, columna, inputUser)
-        campaignRetornada = Connector.retornarCampaignBD(id2daCampaign)
+        resultado = self.manager.modifyCampaign(idCampaign, columna, inputUser)
+        campaignRetornada = self.connector.selectCampaign(idCampaign)
         #Si imprimo (campaignRetornada.startDate) me imprime: 2018-11-28 18:02:00.
         #Pero si lo retorno es este tipo de dato--> datetime.datetime(2018, 11, 28, 18, 2)
         self.assertEqual(campaignRetornada.emailDueño, "pepito@gmail.com")
+        self.assertEqual(resultado, 200)
  
     #Pruebas en los metodos de manager:
     def test_ReturnCampaignBD(self):
         #Le pasamos la ID de Campaign 2
-        objetoCampaign = self.connector.retornarCampaignBD(2)
+        objetoCampaign = self.connector.selectCampaign(2)
         print (objetoCampaign)
         #Imprime esto:
         # <idC:2 emailDueño:test@gmail.com hashtags:#test-#mock mentions:@testCampaign-@mockOK startDate:2018-11-28 18:02:00 finDate:2018-12-02 19:26:22> 
@@ -66,7 +66,7 @@ class test_manager(unittest.TestCase):
     @unittest.expectedFailure
     def test_ReturnTweetsByIDC(self):
         #Retornamos los tuits con IDC 3 (de la 3ra campaña)
-        tweets = self.connector.returnTweetsByIDC(3)
+        tweets = self.connector.selectTweetsByIDC(3)
         print(tweets)
         #Esto me devuelve, una lista de tweets en formato diccionario con sus atributos.
         #[{'id_str': 112112, 'user': {'name': 'MauricioOK', 'id_str': '451325'}, 'entities': {'hashtags': '#DonaldNoMeDejes', 'user_mentions': '@donaldTrump-@G20'}, 'created_at': '2018-03-20 21:08:01'},
