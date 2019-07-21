@@ -77,17 +77,6 @@ class Manager():
 		if wasModified: 
 			return 200	# OK
 		return 400		# Columna inexistente
-
-	# Fijarse en test_manager que sería este tweetsJson que recibe.
-	def insertTweets(self, tweetsJson, idC):
-		configTables.BD.metadata.create_all(configTables.engine)
-		#Los separamos en tweets separados y llamamos a insertTweet para agregarlo uno por uno:
-		for tweet in tweetsJson:
-			t = Tweet(json.loads(tweet))
-			print ("Tweet en manager")
-			print (tweet)
-			print (t)
-			self.insertTweet(t,idC) #Le pasamos el objeto Tweet instanciado.
 	
 	#Arregla el desastre de #-# y @-@
 	def _campaignStringToList(self, c):
