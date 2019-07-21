@@ -2,15 +2,23 @@ import unittest
 from Tweet.Tweet import Tweet 
 from Campaign.Campaign import Campaign
 from datetime import datetime
-from DataBaseConnector import Connector
-from DataBaseConnector import configTables
-from Manager import manager
+from DataBaseConnector.Connector import Connector
+from Manager.manager import Manager
 from datetime import datetime
 import json
 
 class test_manager(unittest.TestCase):
+
+    def setUp(self):
+        self.manager = Manager(context='test')
+        self.connector = Connector(context='test')
+
+    def tearDown(self):
+        self.manager.database.database.engine.tweets.delete()
+        self.manager.database.database.engine.campaign.delete()
+
+
     #Testeamos que los tweets que llegan se agregen correctamente a la BD.
-    @unittest.expectedFailure
     def test_InsertTweets(self):
         #Precondición: deben haber 3 campañas creadas e insertadas en la BD.
         configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (en caso que ya está creada no hace nada)
@@ -53,13 +61,11 @@ class test_manager(unittest.TestCase):
 
     #Testeamos que se cree la campaña correctamente en la BD y que sea retornada sin modificaciones.
     def test_InsertCampaign(self):
-        configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (en caso que ya está creada no hace nada)
-        
         #Entrada de ejemplo, lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):
-        userInputs= '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"2018-11-28 18:02:00", "endDate":"2018-12-25 19:26:22"}'
+        userInputs = '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"2018-11-28 18:02:00", "endDate":"2018-12-25 19:26:22"}'
         fields = json.loads(userInputs) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
-        idCampaign=manager.Manager().insertCampaign(fields)
-        campaignRetornada = Connector.retornarCampaignBD(idCampaign)
+        idCampaign = self.manager.insertCampaign(fields)
+        campaignRetornada = self.connector.retornarCampaignBD(idCampaign)
 
         #Asserto todos los atributos del objeto Campaign:
         self.assertEqual(campaignRetornada.emailDueño, "test@gmail.com")
@@ -76,14 +82,14 @@ class test_manager(unittest.TestCase):
         userInputs= '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"2018-12-18 18:02:00", "endDate":"2018-12-02 19:26:22"}'
         fields = json.loads(userInputs) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
         #Creamos e insertamos 2 campaign:
-        manager.Manager().insertCampaign(fields)
-        id2daCampaign=manager.Manager().insertCampaign(fields)
+        id1raCampaign = self.manager.insertCampaign(fields)
+        id2daCampaign = self.manager.insertCampaign(fields)
         
         #Datos que ingresara el usuario (además de la id2daCampaign):
         columna="email"
         inputUser="pepito@gmail.com"
         
-        manager.Manager().modifyCampaign(id2daCampaign, columna, inputUser)
+        resultado = self.manager.modifyCampaign(id2daCampaign, columna, inputUser)
         campaignRetornada = Connector.retornarCampaignBD(id2daCampaign)
         #Si imprimo (campaignRetornada.startDate) me imprime: 2018-11-28 18:02:00.
         #Pero si lo retorno es este tipo de dato--> datetime.datetime(2018, 11, 28, 18, 2)
@@ -92,7 +98,7 @@ class test_manager(unittest.TestCase):
     #Pruebas en los metodos de manager:
     def test_ReturnCampaignBD(self):
         #Le pasamos la ID de Campaign 2
-        objetoCampaign = Connector.retornarCampaignBD(2)
+        objetoCampaign = self.connector.retornarCampaignBD(2)
         print (objetoCampaign)
         #Imprime esto:
         # <idC:2 emailDueño:test@gmail.com hashtags:#test-#mock mentions:@testCampaign-@mockOK startDate:2018-11-28 18:02:00 finDate:2018-12-02 19:26:22> 
@@ -100,7 +106,7 @@ class test_manager(unittest.TestCase):
     @unittest.expectedFailure
     def test_ReturnTweetsByIDC(self):
         #Retornamos los tuits con IDC 3 (de la 3ra campaña)
-        tweets = Connector.returnTweetsByIDC(3)
+        tweets = self.connector.returnTweetsByIDC(3)
         print(tweets)
         #Esto me devuelve, una lista de tweets en formato diccionario con sus atributos.
         #[{'id_str': 112112, 'user': {'name': 'MauricioOK', 'id_str': '451325'}, 'entities': {'hashtags': '#DonaldNoMeDejes', 'user_mentions': '@donaldTrump-@G20'}, 'created_at': '2018-03-20 21:08:01'},
@@ -118,9 +124,9 @@ class test_manager(unittest.TestCase):
     @unittest.expectedFailure
     def test_DeleteCampaignPorUser(self):
         email="test@gmail.com"
-        manager.Manager().deleteCampaignsByEmail(email)
+        self.manager.deleteCampaignsByEmail(email)
 
     def test_ReturnCampaignsInProgress(self):
-        manager.Manager().returnCampaignsInProgress()
+        self.manager.returnCampaignsInProgress()
 
   
