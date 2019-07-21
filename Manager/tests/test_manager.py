@@ -63,24 +63,6 @@ class test_manager(unittest.TestCase):
         #Imprime esto:
         # <idC:2 emailDueño:test@gmail.com hashtags:#test-#mock mentions:@testCampaign-@mockOK startDate:2018-11-28 18:02:00 finDate:2018-12-02 19:26:22> 
 
-    @unittest.expectedFailure
-    def test_ReturnTweetsByIDC(self):
-        #Retornamos los tuits con IDC 3 (de la 3ra campaña)
-        tweets = self.connector.selectTweetsByIDC(3)
-        print(tweets)
-        #Esto me devuelve, una lista de tweets en formato diccionario con sus atributos.
-        #[{'id_str': 112112, 'user': {'name': 'MauricioOK', 'id_str': '451325'}, 'entities': {'hashtags': '#DonaldNoMeDejes', 'user_mentions': '@donaldTrump-@G20'}, 'created_at': '2018-03-20 21:08:01'},
-        # {'id_str': 123456, 'user': {'name': 'NASAOk', 'id_str': '789456'}, 'entities': {'hashtags': '#mars-#venus-#earth', 'user_mentions': '@NASA-@planets'}, 'created_at': '2018-03-20 15:11:01'}]
-
-    def test_FechaMayor(self):
-        fecha1 = datetime(2018, 12, 19, 19, 49)
-        print (fecha1)
-        fecha_actual = datetime.now()
-        if (fecha_actual > fecha1):
-            print ("Mayor")
-        else:
-            print("Menor")
-
     def test_DeleteCampaignPorUser(self):
         email="test@gmail.com"
         self.manager.deleteCampaignsByEmail(email)
