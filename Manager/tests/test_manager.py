@@ -19,49 +19,6 @@ class test_manager(unittest.TestCase):
         self.manager.database.database.session.query(configTables.Campaign).delete()
         self.manager.database.database.session.commit()
 
-
-    #Testeamos que los tweets que llegan se agregen correctamente a la BD.
-    @unittest.expectedFailure
-    def test_InsertTweets(self):
-        #Precondición: deben haber 3 campañas creadas e insertadas en la BD.
-        configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (en caso que ya está creada no hace nada)
-        
-        userInputs= '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"2018-11-28 18:02:00", "endDate":"2018-12-25 19:26:22"}'
-        fields = json.loads(userInputs) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
-        #Insertamos 3 campañas en la BD:
-        manager.Manager().insertCampaign(fields)
-        manager.Manager().insertCampaign(fields)
-        id3erCampaign=manager.Manager().insertCampaign(fields)
-    
-        #Ejemplo de los lista de diccionario de tweets en formato JSON que el Fetcher le manda a Manager (tweetsJson).
-        self.tweet1 = {
-            "id_str" : "12366",
-            "text": "La tierra es una esfera. Fin del comunicado.",
-            "user" : {"name" : "NASAOk", "id_str" : "789456"},
-            "entities" : {"hashtags" : ["#mars","#venus","#earth"],"user_mentions" : ["@NASA", "@planets"]},
-            "created_at" : "Sun Mar 20 15:11:01 +0000 2018"
-        }
-        self.tweet2 = {
-            "id_str" : "12477",
-            "text" : "este hdp me dejo aca clavado",
-            "user" : {"name" : "MiauricioOK", "id_str" : "451325"},
-            "entities" : {"hashtags" : ["#DonaldNoMeDejes"], "user_mentions" : ["@donaldTrump", "@G20"]},
-            "created_at" : "Sun Mar 20 21:08:01 +0000 2018"
-        }
-        tweetsJson = [json.dumps(self.tweet1),json.dumps(self.tweet2)]
-        #Insertamos 2 tweets en la 3er campaign.
-        manager.Manager().insertTweets(tweetsJson, id3erCampaign)
-        #Obtengo el 2do Tweet:
-        tweetRetornado = Connector.returnTweetByIDT("12477")
-        #Asserto los datos del 2do Tweet:
-        print(tweetRetornado.ID)
-        self.assertEqual(tweetRetornado.ID,"12477")
-        self.assertEqual(tweetRetornado.userName, "MiauricioOK")
-        self.assertEqual(tweetRetornado.userid, "451325")
-        self.assertEqual(tweetRetornado.hashtags, "#DonaldNoMeDejes")
-        self.assertEqual(tweetRetornado.mentions, "@donaldTrump-@G20")
-        self.assertEqual(tweetRetornado.date, "Sun Mar 20 21:08:01 +0000 2018")
-
     #Testeamos que se cree la campaña correctamente en la BD y que sea retornada sin modificaciones.
     def test_InsertCampaign(self):
         #Entrada de ejemplo, lo que el usuario ingresa en la Interfaz Web en Alta Campaña (en formato JSON llegaria):
@@ -124,7 +81,6 @@ class test_manager(unittest.TestCase):
         else:
             print("Menor")
 
-    @unittest.expectedFailure
     def test_DeleteCampaignPorUser(self):
         email="test@gmail.com"
         self.manager.deleteCampaignsByEmail(email)

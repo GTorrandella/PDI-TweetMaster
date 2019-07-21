@@ -88,9 +88,6 @@ class Manager():
 			print (tweet)
 			print (t)
 			self.insertTweet(t,idC) #Le pasamos el objeto Tweet instanciado.
-
-	def insertTweet(self, TweetInput, idC):
-		self.database.insertTweet(TweetInput, idC)
 	
 	#Arregla el desastre de #-# y @-@
 	def _campaignStringToList(self, c):
