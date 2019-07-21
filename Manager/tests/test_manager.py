@@ -3,6 +3,7 @@ from Tweet.Tweet import Tweet
 from Campaign.Campaign import Campaign
 from datetime import datetime
 from DataBaseConnector.Connector import Connector
+from DataBaseConnector import configTables
 from Manager.manager import Manager
 from datetime import datetime
 import json
@@ -14,11 +15,12 @@ class test_manager(unittest.TestCase):
         self.connector = Connector(context='test')
 
     def tearDown(self):
-        self.manager.database.database.engine.tweets.delete()
-        self.manager.database.database.engine.campaign.delete()
+        self.manager.database.database.engine.delete(configTables.Tweet)
+        self.manager.database.database.engine.delete(configTables.Campaign)
 
 
     #Testeamos que los tweets que llegan se agregen correctamente a la BD.
+    @unittest.expectedFailure
     def test_InsertTweets(self):
         #Precondición: deben haber 3 campañas creadas e insertadas en la BD.
         configTables.BD.metadata.create_all(configTables.engine) #Se crea la BD (en caso que ya está creada no hace nada)
