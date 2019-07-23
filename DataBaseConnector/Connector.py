@@ -102,7 +102,7 @@ class Connector():
         if self.selectTweetByIDT(IDTweet):
             print("Tweet ya ingresado")
         else:
-            UserName = (TweetInput.userName).encode('utf8mb4',
+            UserName = (TweetInput.userName).encode('ascii',
                                                     errors='ignore')  # Hacemos esto por si hay caracteres especiales o emoticonos en el nombre de usuario.
             new_TweetBD = configTables.Tweet(idCampaign=(idC), ID=(IDTweet), userName=(UserName),
                                              userid=(TweetInput.userID), hashtags=(stringHashtag), mentions=(stringMention),
