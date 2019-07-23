@@ -38,25 +38,19 @@ class test_manager(unittest.TestCase):
     #la fecha de inicio de campaign start_date debe ser MENOR a la fecha actual) 
     #y que la columna a modificar se haya sobreescrito satisfactoriamente.
     def test_ModifyCampaign(self):
-        #Precondicion: tener 1 campaign en la BD.
-        userInputs= '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"2018-12-18 18:02:00", "endDate":"2018-12-02 19:26:22"}'
-        fields = json.loads(userInputs) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
+        # Precondicion: tener 1 campaign en la BD.
+        userInputs = '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"2018-12-18 18:02:00", "endDate":"2018-12-02 19:26:22"}'
+        fields = json.loads(userInputs)
         idCampaign = self.manager.insertCampaign(fields)
-        
-        #Comfirmamos el email antes de la modificación
-        campaignOriginal = self.connector.selectCampaign(idCampaign)
-        self.assertEqual(campaignOriginal.emailDueño, "test@gmail.com")
 
-        #Datos que ingresara el usuario (además de la id2daCampaign):
-        columna="email"
-        inputUser="pepito@gmail.com"
-        
-        resultado = self.manager.modifyCampaign(idCampaign, columna, inputUser)
-        campaignRetornada = self.connector.selectCampaign(idCampaign)
-        #Si imprimo (campaignRetornada.startDate) me imprime: 2018-11-28 18:02:00.
-        #Pero si lo retorno es este tipo de dato--> datetime.datetime(2018, 11, 28, 18, 2)
-        self.assertEqual(resultado, 200)
-        self.assertEqual(campaignRetornada.emailDueño, "pepito@gmail.com")
+        columnToModify="email"
+        newValue="pepito@gmail.com"
+
+        result = self.manager.modifyCampaign(idCampaign, columnToModify, newValue)
+        updatedCampaign = self.connector.selectCampaign(idCampaign)
+
+        self.assertEqual(result, 200)
+        self.assertEqual(updatedCampaign.emailDueño, newValue)
  
     #Pruebas en los metodos de manager:
     def test_ReturnCampaignBD(self):
