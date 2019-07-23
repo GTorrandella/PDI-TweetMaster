@@ -41,7 +41,6 @@ class test_manager_flask(test_manager_base):
         
         self.databaseSetUp()
                 
-        manager_flask.def_context('test')
         self.test_app = manager_flask.app.test_client()
         self.test_app.testing = True
 
