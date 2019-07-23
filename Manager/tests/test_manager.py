@@ -55,8 +55,8 @@ class test_manager(unittest.TestCase):
         campaignRetornada = self.connector.selectCampaign(idCampaign)
         #Si imprimo (campaignRetornada.startDate) me imprime: 2018-11-28 18:02:00.
         #Pero si lo retorno es este tipo de dato--> datetime.datetime(2018, 11, 28, 18, 2)
-        self.assertEqual(campaignRetornada.emailDueño, "pepito@gmail.com")
         self.assertEqual(resultado, 200)
+        self.assertEqual(campaignRetornada.emailDueño, "pepito@gmail.com")
  
     #Pruebas en los metodos de manager:
     def test_ReturnCampaignBD(self):
