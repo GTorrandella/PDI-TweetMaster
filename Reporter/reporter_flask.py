@@ -12,6 +12,13 @@ from Reporter.Reporter import Reporter
 
 app = Flask(__name__)
 
+def defineContext(context='standar'):
+    global reporter
+    if context == 'test':
+        reporter = Reporter(context='test')
+    else:
+        reporter = Reporter()
+
 @app.route('/Reporter/ReporterJSON/<int:idC>', methods = ['GET'])
 def api_report_json(idC):
     
@@ -33,4 +40,5 @@ def api_report_raw(idC):
     return jsonify(data)
     
 if __name__ == "__main__":
+    defineContext()
     app.run()

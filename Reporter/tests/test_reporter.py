@@ -1,22 +1,30 @@
 import unittest
-from Reporter import Reporter
-from collections import Counter
 from Tweet.Tweet import Tweet 
 from Campaign.Campaign import Campaign
 from datetime import date
-from DataBaseConnector import Connector
-from Manager import manager
+from DataBaseConnector import Connector, configTables
+from Manager.manager import Manager
+from Reporter.Reporter import Reporter
 import json
 
 class test_reporter(unittest.TestCase):
 	
+	def setUp(self):
+		self.manager = Manager('test')
+		self.reporter = Reporter('test')
+
+	def tearDown(self):
+		self.manager.database.database.session.query(configTables.Tweet).delete()
+		self.manager.database.database.session.query(configTables.Campaign).delete()
+		self.manager.database.database.session.commit()
+
 	#Dada la campaña y tweets testeamos si los datos summary son retornados correctamente:
 	def test_reportSummary(self):  #OK
 		#Precondicion: necesitamos una campaña con tweets asociados:
 		campaign= '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"28 11 2018 18:02:00", "endDate":"25 12 2018 19:26:22"}'
 		fields = json.loads(campaign)
-		manager.Manager().insertCampaign(fields)
-		manager.Manager().insertCampaign(fields)
+		self.manager.insertCampaign(fields)
+		self.manager.insertCampaign(fields)
 		#Inicializamos los Tweets diccionarios:
 		tweet1 = { "id_str" : "345", "user" : {"name" : "NASAOk", "id_str" : "789456"}, "entities" : {"hashtags" : ["#mars","#venus","#earth"],"user_mentions" : ["@NASA", "@planets"]}, "created_at" : "Sun Mar 20 15:11:01 +0000 2018", }
 		tweet2 = { "id_str" : "564", "user" : {"name" : "MauricioOK", "id_str" : "451325"}, "entities" : {"hashtags" : ["#DonaldNoMeDejes"], "user_mentions" : ["@donaldTrump", "@G20"]}, "created_at" : "Sun Mar 20 21:08:01 +0000 2018",}
@@ -24,8 +32,8 @@ class test_reporter(unittest.TestCase):
 		#Para pasar estos objetos Tweet a Json usando el metodo to_json del objeto Tweet: t1=T1.to_json()
 		tweetsJson = json.dumps([tweet1,tweet2])
 		#Insertamos los tweets en la Campaign 3
-		manager.Manager().insertTweets(tweetsJson, 2)
-		summary = Reporter.Reporter().reportSummary(2)
+		self.manager.insertTweets(tweetsJson, 2)
+		summary = self.reporter.reportSummary(2)
 		print(summary)
 		#Devuelve esto: 
 		#
@@ -35,9 +43,9 @@ class test_reporter(unittest.TestCase):
 		#Precondicion: necesitamos una campaña con tweets asociados:
 		campaign= '{"email":"test@gmail.com","hashtags": ["#test", "#mock"], "mentions": ["@testCampaign", "@mockOK"], "startDate":"28 11 2018 18:02:00", "endDate":"25 12 2018 19:26:22"}'
 		fields = json.loads(campaign)
-		manager.Manager().insertCampaign(fields)
-		manager.Manager().insertCampaign(fields)
-		manager.Manager().insertCampaign(fields)
+		self.manager.insertCampaign(fields)
+		self.manager.insertCampaign(fields)
+		self.manager.insertCampaign(fields)
 		#Inicializamos los Tweets diccionarios:
 		tweet1 = { "id_str" : "123456", "user" : {"name" : "NASAOk", "id_str" : "789456"}, "entities" : {"hashtags" : ["#mars","#venus","#earth"],"user_mentions" : ["@NASA", "@planets"]}, "created_at" : "Sun Mar 20 15:11:01 +0000 2018", }
 		tweet2 = { "id_str" : "112112", "user" : {"name" : "MauricioOK", "id_str" : "451325"}, "entities" : {"hashtags" : ["#DonaldNoMeDejes"], "user_mentions" : ["@donaldTrump", "@G20"]}, "created_at" : "Sun Mar 20 21:08:01 +0000 2018",}
@@ -45,9 +53,9 @@ class test_reporter(unittest.TestCase):
 		#Para pasar estos objetos Tweet a Json usando el metodo to_json del objeto Tweet: t1=T1.to_json()
 		tweetsJson = json.dumps([tweet1,tweet2])
 		#Insertamos los tweets en la Campaign 3
-		manager.Manager().insertTweets(tweetsJson, 3)
+		self.manager.insertTweets(tweetsJson, 3)
 
-		raw_data = Reporter.Reporter().reportRawData(3)
+		raw_data = self.reporter.reportRawData(3)
 		print(raw_data)
 		#Devuelve esto: 
 		#{'campaign': {'id': 3, 'email': 'test@gmail.com', 'hashtags': '#test-#mock', 'mentions': '@testCampaign-@mockOK', 'startDate': '28 11 2018 18:02:00', 'finDate': '25 12 2018 19:26:22'}, 'tweets': {'tweet0': [{'id_str': 112112, 'user': {'name': 'MauricioOK', 'id_str': '451325'}, 'entities': {'hashtags': '#DonaldNoMeDejes', 'user_mentions': '@donaldTrump-@G20'}, 'created_at': '2018-03-20 21:08:01'}], 'tweet1': [{'id_str': 123456, 'user': {'name': 'NASAOk', 'id_str': '789456'}, 'entities': {'hashtags': '#mars-#venus-#earth', 'user_mentions': '@NASA-@planets'}, 'created_at': '2018-03-20 15:11:01'}]}}
@@ -64,20 +72,20 @@ class test_reporter(unittest.TestCase):
 		
 		#Lo que me llegaría de Connector().returnTweetsbyIDC(idC):
 		tweets = [tweet1,tweet2,tweet3]
-		mostTwUser = Reporter.Reporter().getUserWithMoreTw(tweets)
+		mostTwUser = self.reporter.getUserWithMoreTw(tweets)
 		return mostTwUser
 		#asserts....
 
 	#Testeamos retornar el usuario con mayor cantidad de menciones:
 	def test_getUserQuantity(self): #OK
 		#VEr--> dictTweets=
-		userQuantity = (Reporter.Reporter().getUserQuantity(self, dictTweets))
+		userQuantity = (self.reporter.getUserQuantity(dictTweets))
 		return userQuantity
 		#assert userQuantity == NUMERO
 	
 	#Testeamos retornamos todos los usuarios:
 	def test_getUsersList(self): #OK
 		#VEr--> dictTweets=
-		usersList = (Reporter.Reporter().getUsersList(self, dictTweets))
+		usersList = (self.reporter.getUsersList(dictTweets))
 		return usersList
 		#asserts....

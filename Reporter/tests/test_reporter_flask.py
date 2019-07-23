@@ -44,6 +44,8 @@ class test_reporter_flask(test_reporter_base):
         
         self.databaseSetUp()
         
+        reporter_flask.defineContext('test')
+
         self.test_app = reporter_flask.app.test_client()
 
     def tearDown(self):
