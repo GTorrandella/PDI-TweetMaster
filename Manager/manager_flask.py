@@ -23,13 +23,14 @@ def fixCampaing(c):
     c.mentions = c.mentions.split("-")
     return c
 
+manager = Manager(context='test')
 
 @app.route('/Campaing', methods = ['POST', 'DELETE'])
 def api_manager():
     
     if request.method == 'POST' and 'application/json' == request.headers['Content-Type']:
         if checkForm(request.json):
-            idCampaing = Manager().insertCampaign(request.get_json())
+            idCampaing = manager.insertCampaign(request.get_json())
             res = Response(status = 201)
             res.set_etag(str(idCampaing), weak = False)    
             return res
@@ -38,10 +39,10 @@ def api_manager():
         
     elif request.method == 'DELETE':
         if 'idC' in request.json.keys():
-            res = Manager().deleteCampaignByID(request.json['idC'])
+            res = manager.deleteCampaignByID(request.json['idC'])
             return Response(status = res)
         elif 'email' in request.json.keys():
-            res = Manager().deleteCampaignsByEmail(request.json['email'])
+            res = manager.deleteCampaignsByEmail(request.json['email'])
             return Response(status = res)
     else: 
         return Response(status = 400)
@@ -50,12 +51,12 @@ def api_manager():
 def api_manager_id(idC):
     
     if request.method == 'GET':
-        campaign = Manager().returnCampaign(idC)
+        campaign = manager.returnCampaign(idC)
         return (Response(status = 404) if campaign == [] else jsonify(fixCampaing(campaign).to_json()))
 
     elif request.method == 'PATCH':
         if ('columnaAModif' in request.json.keys()) and ('campoColumna' in request.json.keys()):
-            res = Manager().modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])
+            res = manager.modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])
             return Response(status = res)  
         else: return Response(status = 400)   
     else:
