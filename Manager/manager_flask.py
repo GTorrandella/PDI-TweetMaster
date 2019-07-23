@@ -1,17 +1,11 @@
 from flask import Flask, jsonify
 from flask.globals import request
-from flask.wrappers import Response
+from flask.wrappers import Response, Request
 from werkzeug.wrappers import ETagRequestMixin, ETagResponseMixin, BaseRequest, BaseResponse
 from Manager.manager import Manager
 from Campaign.Campaign import Campaign
 
 app = Flask(__name__)
-
-class Response(BaseResponse, ETagResponseMixin):
-    pass
-
-class Resquest(BaseRequest, ETagRequestMixin):
-    pass
 
 def checkForm(json):
     keys = json.keys()
@@ -23,7 +17,12 @@ def fixCampaing(c):
     c.mentions = c.mentions.split("-")
     return c
 
-manager = Manager(context='test')
+def defineContext(context='standar'):
+    global manager
+    if context == 'test':
+        manager = Manager(context='test')
+    else:
+        manager = Manager()
 
 @app.route('/Campaing', methods = ['POST', 'DELETE'])
 def api_manager():
@@ -63,4 +62,5 @@ def api_manager_id(idC):
         return Response(status = 404)
 
 if __name__ == "__main__":
+    defineContext()
     app.run(debug=True)
