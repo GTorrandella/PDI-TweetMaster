@@ -22,7 +22,7 @@ def defineContext(context='standar'):
 @app.route('/Reporter/ReporterJSON/<int:idC>', methods = ['GET'])
 def api_report_json(idC):
     
-    summary = Reporter().reportSummary(idC)
+    summary = reporter.reportSummary(idC)
     if summary == 404:
         return Response(status = 404)
     elif summary == 412:
@@ -32,7 +32,7 @@ def api_report_json(idC):
 @app.route('/Reporter/ReporterRAW/<int:idC>', methods = ['GET'])
 def api_report_raw(idC):
     
-    data = Reporter().reportRawData(idC)
+    data = reporter.reportRawData(idC)
     if data == 404:
         return Response(status = 404)
     elif data == 412:
