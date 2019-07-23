@@ -53,7 +53,7 @@ class Manager():
 			return 404
 		if campaignRetornada.isActive(): 
 			return 412
-		else: 
+		else:
 			self.database.deleteTweetsByIDC(idCampaign)
 			self.database.deleteCampaignByID(idCampaign)
 			return 200
