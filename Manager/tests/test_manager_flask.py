@@ -58,22 +58,23 @@ class test_manager_flask(test_manager_base):
         
         response = self.test_app.post('/Campaing', json = self.campaignCreationData, content_type='application/json')
         
+
         self.assertEqual(response.status, '201 CREATED')
-        
+           
         afterCampaigns = configTables.session.query(configTables.Campaign).all()
-        newCampaign = afterCampaigns[3]
-        
+
         self.assertEqual(len(afterCampaigns), 4)
-        
-        self.assertEqual(newCampaign.id, 4)
+
+        newCampaign = afterCampaigns[3]
+        self.assertEqual(newCampaign.id, response.get_etag()[0])
         self.assertEqual(newCampaign.email, 'hype@example.com')
         self.assertEqual(newCampaign.hashtags, '#JOKER-#SMASH')
         self.assertEqual(newCampaign.mentions, '@Sora_Sakurai')
-        self.assertEqual(newCampaign.startDate, "2018-12-31 23:20:00")
-        self.assertEqual(newCampaign.finDate, "01 01 2051 00:30:00")
-                                 
-    
+        self.assertEqual(newCampaign.startDate, "31 12 2018 23:20:00")
+        self.assertEqual(newCampaign.finDate, "01 01 2019 00:30:00")
+
     def test_POST_412(self):
+
         initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
         

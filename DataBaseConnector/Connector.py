@@ -14,8 +14,8 @@ class Connector():
             
     def insertCampaign(self, campaignReceived):
         campaignToInsert = configTables.Campaign(startDate=campaignReceived.startDate, finDate=campaignReceived.finDate,
-                                              email=(campaignReceived.emailDueño), hashtags=(campaignReceived.hashtags),
-                                              mentions=(campaignReceived.mentions))
+                                              email=campaignReceived.emailDueño, hashtags=campaignReceived.hashtags,
+                                              mentions=campaignReceived.mentions)
         self.database.session.add(campaignToInsert)
         self.database.session.dirty
         self.database.session.commit()  # Para que los cambios se efectivicen en la BD
