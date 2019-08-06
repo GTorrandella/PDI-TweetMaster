@@ -2,7 +2,7 @@ from datetime import datetime
 from _datetime import datetime
 import json
 
-DATE_FORMAT_STR = "%Y-%m-%d %X"  # yyyy-mm-dd hh:mm:ss
+DATE_FORMAT_STR = "%d %m %Y %X"  # yyyy-mm-dd hh:mm:ss
 
 
 class Campaign(object):
