@@ -8,62 +8,32 @@
 >
 >Professor: Juan Lagostena
 
+## Description
+
+TweetMaster is a little tweet feching service. The users can create "campaigns" based around any hashtag or Twitter user, and define a look-up period for each campaign. During the look-up period for each campaign, TweetMaster will collect all the tweets that have any of the campaign's hashtags, mention or originate from any of the campaign's user.
+
+TweetMaster consist of 2 parts: the client facing API, which manages the client request and creates the reports; and the Twitter facing backend, which manage the tweet's recolection and storage.
+
 ## Setting Up TweetMaster
 
 ### Requirements
 
-Python 3.5.2+
+ * Docker, the comunity edition works
+   * https://docs.docker.com/install/
+ * Docker Compose version 1.24.0+
+   * https://docs.docker.com/compose/install/
 
-Install the packages in here. The easiest way is using **pip3**:
+## Execution
 
+On the project root folder, execute:
 ```
-pip3 install -r requirements.txt
-```
-
-### Setting up the database
-
-TweetMaster uses a MySQL database during operations.  
-Fortunately, the necesary set-up is controlled by the app during it's first execution.  
-Worry no more!
-
-### Setting up the servers
-
-Execute in diferent terminals _start_manager_, _start_fetcher_ and _start_reporter_, from TweetMaster's root directory.  
-The order is indistint.
-
-The servers will live in:  
- * Manger:   127.0.0.1/5000
- * Fetcher:  127.0.0.1/5001
- * Reporter: 127.0.0.1/5002
- 
-### Setting up the scheduler
-
-The Scheduler is a small Python module accessed once every 5 minutes.  
-To do that, it is necesary to create a _cron job_ that executes the module every 5 minutes.
-
-To add a _cron job_ first execute **crontab -e**. This will open a text editor.
-Append at the end the following line:
-```
-*/5 * * * * cd {path to TweetMaster root} && PYTHONPATH Scheduler/scheduler.py
+$ docker-compose up
 ```
 
-Where:
- * "path to TweetMaster root" is the path from root to the TweetMaster's root directory
-   * /dir1/dir2/dir3/TweetMaster
- * PYTHONPATH is the Python 3 interpreter's path
-   * If you are _not_ using a virtual enviroment, replace this with _python3_
-   * If you _are_ using a virtual enviroment, get the path executing **which python3** when working on the enviroment.
+## Testing
 
-### Optional: Setting up the Swagger tool
+#### API Request with Postman
+_MISSING_
 
-There is a Swagger documentation for TweetMaster. It's a server bundled with the app.  
-To run the server, please execute the following from the root directory:
-
-```
-python3 -m swagger_server
-```
-
-and open your browser to here:
-
-```
-http://localhost:8080/FedericoCalonge/TweetMaster/1.0.0/ui/
+#### Logger Interface
+_MISSING_
