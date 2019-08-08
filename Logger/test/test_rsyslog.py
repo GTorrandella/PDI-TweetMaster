@@ -19,7 +19,7 @@ class Test(unittest.TestCase):
         log = Logger.Rsyslog.createLogger(context='test')
         log.debug('1st')
         log.info('2nd')
-        log.warn('3rd')
+        log.warning('3rd')
         log.error('4th')
         log.critical('5th')
         
@@ -36,7 +36,7 @@ class Test(unittest.TestCase):
         log = Logger.Rsyslog.createLogger(level='ERROR', context='test')
         log.debug('1st')
         log.info('2nd')
-        log.warn('3rd')
+        log.warning('3rd')
         log.error('4th')
         log.critical('5th')
         
