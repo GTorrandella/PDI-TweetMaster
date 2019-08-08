@@ -43,6 +43,8 @@ def api_manager():
         elif 'email' in request.json.keys():
             res = manager.deleteCampaignsByEmail(request.json['email'])
             return Response(status = res)
+        else:
+            return Response(status = 412)
     else: 
         return Response(status = 400)
 
@@ -57,7 +59,7 @@ def api_manager_id(idC):
         if ('columnaAModif' in request.json.keys()) and ('campoColumna' in request.json.keys()):
             res = manager.modifyCampaign(idC, request.json['columnaAModif'], request.json['campoColumna'])
             return Response(status = res)  
-        else: return Response(status = 400)   
+        else: return Response(status = 412)   
     else:
         return Response(status = 404)
 

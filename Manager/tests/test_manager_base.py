@@ -22,7 +22,6 @@ class test_manager_base(unittest.TestCase):
                                  'startDate':"31 12 2018 23:20:00",
                                  'endDate':"01 01 2019 00:30:00"}
     
-    campaignDeleteByIDCData = {'idC':1}
     campaignDeleteByEmailData = {'email':"b@example.com"}
     campaignDeleteDataError = {'hype':"JOKER_IN_SMASH"}
     

@@ -49,7 +49,7 @@ class test_manager(unittest.TestCase):
         result = self.manager.modifyCampaign(idCampaign, columnToModify, newValue)
         updatedCampaign = self.connector.selectCampaign(idCampaign)
 
-        self.assertEqual(result, 200)
+        self.assertEqual(result, 202)
         self.assertEqual(updatedCampaign.emailDueño, newValue)
  
     #Pruebas en los metodos de manager:

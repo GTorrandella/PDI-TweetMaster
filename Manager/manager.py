@@ -75,7 +75,7 @@ class Manager():
 		# Existe y NO esta activa:
 		wasModified = self.database.updateCampaign(idCampaign, columna, inputUser)
 		if wasModified: 
-			return 200	# OK
+			return 202	# OK
 		return 400		# Columna inexistente
 	
 	#Arregla el desastre de #-# y @-@

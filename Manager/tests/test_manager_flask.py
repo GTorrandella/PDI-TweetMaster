@@ -6,6 +6,7 @@ Created on Dec 12, 2018
 import unittest
 
 from DataBaseConnector import test_database
+from DataBaseConnector.Connector import Connector
 import DataBaseConnector.configTables as configTables
 
 from Manager import manager_flask
@@ -17,43 +18,27 @@ from flask import json
 
 class test_manager_flask(test_manager_base):
 
-    def databaseSetUp(self):
-        configTables.engine = test_database.engine
-        configTables.BD = test_database.BD
-        configTables.session = test_database.session
-        
-        configTables.Campaign = test_database.Campaign
-        configTables.Tweet = test_database.Tweet
-        
-        configTables.Campaign.metadata.create_all(configTables.engine)
-        configTables.Tweet.metadata.create_all(configTables.engine)
-        
-        for c in self.initialCampaigns:
-            configTables.session.add(configTables.Campaign(startDate=(datetime.strftime((c.startDate),"%d %m %Y %X")), finDate=(datetime.strftime((c.finDate),"%d %m %Y %X")), email=(c.emailDueño), hashtags=(c.hashtags), mentions=(c.mentions)))
-        configTables.session.new
-        configTables.session.dirty
-        configTables.session.commit()
-        
-
-
     def setUp(self):
         test_manager_base.setUp(self)
         
-        self.databaseSetUp()
-        
+        self.connector = Connector(context='test')
+        self.idCampaingList = []
+        for campaign in self.initialCampaigns:
+            self.idCampaingList.append(self.connector.insertCampaign(campaign))
+
         manager_flask.defineContext('test')
 
         self.test_app = manager_flask.app.test_client()
         self.test_app.testing = True
 
     def tearDown(self):
-        
-        configTables.BD.metadata.drop_all(configTables.engine)
-
+        manager_flask.manager.database.database.session.query(configTables.Tweet).delete()
+        manager_flask.manager.database.database.session.query(configTables.Campaign).delete()
+        manager_flask.manager.database.database.session.commit()
 
     def test_POST_201(self):
         
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        initialCampaignNumber = len(manager_flask.manager.database.database.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
         
         response = self.test_app.post('/Campaing', json = self.campaignCreationData, content_type='application/json')
@@ -61,142 +46,155 @@ class test_manager_flask(test_manager_base):
 
         self.assertEqual(response.status, '201 CREATED')
            
-        afterCampaigns = configTables.session.query(configTables.Campaign).all()
+        afterCampaigns = manager_flask.manager.database.database.session.query(configTables.Campaign).all()
 
         self.assertEqual(len(afterCampaigns), 4)
 
         newCampaign = afterCampaigns[3]
-        self.assertEqual(newCampaign.id, response.get_etag()[0])
+        self.assertEqual(str(newCampaign.id), response.get_etag()[0])
         self.assertEqual(newCampaign.email, 'hype@example.com')
         self.assertEqual(newCampaign.hashtags, '#JOKER-#SMASH')
         self.assertEqual(newCampaign.mentions, '@Sora_Sakurai')
-        self.assertEqual(newCampaign.startDate, "31 12 2018 23:20:00")
-        self.assertEqual(newCampaign.finDate, "01 01 2019 00:30:00")
+        self.assertEqual(datetime.strftime(newCampaign.startDate, "%d %m %Y %X"), "31 12 2018 23:20:00")
+        self.assertEqual(datetime.strftime(newCampaign.finDate, "%d %m %Y %X"), "01 01 2019 00:30:00")
 
     def test_POST_412(self):
 
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        initialCampaignNumber = len(manager_flask.manager.database.database.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
         
         response = self.test_app.post('/Campaing', json = self.campaignCreationDataError, content_type='application/json')
         
         self.assertEqual(response.status, '412 PRECONDITION FAILED')
         
-        afterCampaigns = configTables.session.query(configTables.Campaign).all()
+        afterCampaigns = manager_flask.manager.database.database.session.query(configTables.Campaign).all()
         self.assertEqual(len(afterCampaigns), 3)
 
     def test_DELETE_by_id_200(self):
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        initialCampaignNumber = len(manager_flask.manager.database.database.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
         
-        response = self.test_app.delete('/Campaing', json = self.campaignDeleteByIDCData, content_type='application/json')
+        campaignDeleteByIDCData = {'idC' : str(self.idCampaingList[0])}
+
+        response = self.test_app.delete('/Campaing', json = campaignDeleteByIDCData, content_type='application/json')
         
         self.assertEqual(response.status, '200 OK')
         
-        afterCampaigns = configTables.session.query(configTables.Campaign).all()
+        afterCampaigns = manager_flask.manager.database.database.session.query(configTables.Campaign).all()
         self.assertEqual(len(afterCampaigns), 2)
         self.assertFalse(1 in [afterCampaigns[0].id,afterCampaigns[1].id])
         
     def test_DELETE_by_email_200(self):
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        initialCampaignNumber = len(manager_flask.manager.database.database.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
         
         response = self.test_app.delete('/Campaing', json = self.campaignDeleteByEmailData, content_type='application/json')
         
         self.assertEqual(response.status, '200 OK')
         
-        afterCampaigns = configTables.session.query(configTables.Campaign).all()
+        afterCampaigns = manager_flask.manager.database.database.session.query(configTables.Campaign).all()
         self.assertEqual(len(afterCampaigns), 2)
         self.assertFalse(2 in [afterCampaigns[0].id,afterCampaigns[1].id])
     
     def test_DELETE_412(self):
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        initialCampaignNumber = len(manager_flask.manager.database.database.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
         
         response = self.test_app.delete('/Campaing', json = self.campaignDeleteDataError, content_type='application/json')
         
         self.assertEqual(response.status, '412 PRECONDITION FAILED')
         
-        afterCampaigns = configTables.session.query(configTables.Campaign).all()
+        afterCampaigns = manager_flask.manager.database.database.session.query(configTables.Campaign).all()
         self.assertEqual(len(afterCampaigns), 3)
     
     def test_GET_200(self):
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        initialCampaignNumber = len(manager_flask.manager.database.database.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
         
-        response = self.test_app.get('/Campaing/3')
+        idCampaingToGet = str(self.idCampaingList[2])
+        url = '/Campaing/' + idCampaingToGet
+
+        response = self.test_app.get(url)
         self.assertEqual(response.status, '200 OK')
         
         responseCampaign = json.loads(response.json)
-        self.assertEqual(responseCampaign['id'], 3)
+        self.assertEqual(str(responseCampaign['id']), idCampaingToGet)
         self.assertEqual(responseCampaign['email'], 'c@example.com')
         self.assertEqual(responseCampaign['hashtags'], ['#nintendo','#SMASH'])
         self.assertEqual(responseCampaign['mentions'], ['@Sora_Sakurai','@nintendo'])
-        self.assertEqual(responseCampaign['startDate'], "2018-12-31 23:20:00")
-        self.assertEqual(responseCampaign['finDate'], "2018-01-01 00:30:00")
+        self.assertEqual(responseCampaign['startDate'], "31 12 2018 23:20:00")
+        self.assertEqual(responseCampaign['finDate'], "01 01 2019 00:30:00")
         
-        afterCampaigns = configTables.session.query(configTables.Campaign).all()
+        afterCampaigns = manager_flask.manager.database.database.session.query(configTables.Campaign).all()
         self.assertEqual(len(afterCampaigns), 3)
     
     def test_GET_404(self):
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        initialCampaignNumber = len(manager_flask.manager.database.database.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
         
         response = self.test_app.get('/Campaing/8')
         self.assertEqual(response.status, '404 NOT FOUND')
     
     def test_PACTH_202(self):
-        initialCampaign = configTables.session.query(configTables.Campaign).all()
+        initialCampaign = manager_flask.manager.database.database.session.query(configTables.Campaign).all()
         self.assertEqual(len(initialCampaign), 3)
         
+        idCampaingToPatch = str(self.idCampaingList[2])
+
         campaignToPatch = initialCampaign[2]
-        self.assertEqual(campaignToPatch.id, 3)
+        url = '/Campaing/' + idCampaingToPatch
+
+        self.assertEqual(str(campaignToPatch.id), idCampaingToPatch)
         self.assertEqual(campaignToPatch.email, 'c@example.com')
         self.assertEqual(campaignToPatch.hashtags, '#nintendo-#SMASH')
         self.assertEqual(campaignToPatch.mentions, '@Sora_Sakurai-@nintendo')
-        self.assertEqual(campaignToPatch.startDate, "31 12 2018 23:20:00")
-        self.assertEqual(campaignToPatch.finDate, "01 01 2018 00:30:00")
-        
-        response = self.test_app.patch('/Campaing/3', json=self.campaignPatchHashtagsData, content_type='application/json')
+        self.assertEqual(datetime.strftime(campaignToPatch.startDate, "%d %m %Y %X"), "31 12 2018 23:20:00")
+        self.assertEqual(datetime.strftime(campaignToPatch.finDate, "%d %m %Y %X"), "01 01 2019 00:30:00")
+
+        response = self.test_app.patch(url, json=self.campaignPatchHashtagsData, content_type='application/json')
         self.assertEqual(response.status, "202 ACCEPTED")
         
-        patchedCampaigns = configTables.session.query(configTables.Campaign).all()
+        patchedCampaigns = manager_flask.manager.database.database.session.query(configTables.Campaign).all()
         self.assertEqual(len(patchedCampaigns), 3)
         
         patchedHashtagsCampaign = patchedCampaigns[2]
-        self.assertEqual(patchedHashtagsCampaign.id, 3)
+        self.assertEqual(str(patchedHashtagsCampaign.id), idCampaingToPatch)
         self.assertEqual(patchedHashtagsCampaign.email, 'c@example.com')
         self.assertEqual(patchedHashtagsCampaign.hashtags, '#qatherine-#katherine-#catherine')
         self.assertEqual(patchedHashtagsCampaign.mentions, '@Sora_Sakurai-@nintendo')
-        self.assertEqual(patchedHashtagsCampaign.startDate, "31 12 2018 23:20:00")
-        self.assertEqual(patchedHashtagsCampaign.finDate, "01 01 2018 00:30:00")
+        self.assertEqual(datetime.strftime(patchedHashtagsCampaign.startDate, "%d %m %Y %X"), "31 12 2018 23:20:00")
+        self.assertEqual(datetime.strftime(patchedHashtagsCampaign.finDate, "%d %m %Y %X"), "01 01 2019 00:30:00")
         
-        response = self.test_app.patch('/Campaing/3', json=self.campaignPatchMentionsData, content_type='application/json')
+        response = self.test_app.patch(url, json=self.campaignPatchMentionsData, content_type='application/json')
         self.assertEqual(response.status, "202 ACCEPTED")
         
-        patchedCampaigns = configTables.session.query(configTables.Campaign).all()
+        patchedCampaigns = manager_flask.manager.database.database.session.query(configTables.Campaign).all()
         self.assertEqual(len(patchedCampaigns), 3)
         
         patchedHashtagsCampaign = patchedCampaigns[2]
-        self.assertEqual(patchedHashtagsCampaign.id, 3)
+        self.assertEqual(str(patchedHashtagsCampaign.id), idCampaingToPatch)
         self.assertEqual(patchedHashtagsCampaign.email, 'c@example.com')
         self.assertEqual(patchedHashtagsCampaign.hashtags, '#qatherine-#katherine-#catherine')
         self.assertEqual(patchedHashtagsCampaign.mentions, '@atlususa-@stud_zero')
-        self.assertEqual(patchedHashtagsCampaign.startDate, "31 12 2018 23:20:00")
-        self.assertEqual(patchedHashtagsCampaign.finDate, "01 01 2018 00:30:00")
+        self.assertEqual(datetime.strftime(patchedHashtagsCampaign.startDate, "%d %m %Y %X"), "31 12 2018 23:20:00")
+        self.assertEqual(datetime.strftime(patchedHashtagsCampaign.finDate, "%d %m %Y %X"), "01 01 2019 00:30:00")
         
     def test_PACTH_404(self):
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        initialCampaignNumber = len(manager_flask.manager.database.database.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
-        
-        response = self.test_app.patch('/Campaing/8', json=self.campaignPatchHashtagsData, content_type='application/json')
+
+        url = '/Campaing/' + str(self.idCampaingList[2] + 1)
+
+        response = self.test_app.patch(url, json=self.campaignPatchHashtagsData, content_type='application/json')
         self.assertEqual(response.status, '404 NOT FOUND')
 
     def test_PACTH_412(self):
-        initialCampaignNumber = len(configTables.session.query(configTables.Campaign).all())
+        initialCampaignNumber = len(manager_flask.manager.database.database.session.query(configTables.Campaign).all())
         self.assertEqual(initialCampaignNumber, 3)
         
-        response = self.test_app.patch('/Campaing/3', json=self.campaignPatchErrorData, content_type='application/json')
+        url = '/Campaing/' + str(self.idCampaingList[2])
+
+        response = self.test_app.patch(url, json=self.campaignPatchErrorData, content_type='application/json')
         self.assertEqual(response.status, '412 PRECONDITION FAILED')
 
 if __name__ == "__main__":
