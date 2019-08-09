@@ -13,4 +13,4 @@ before_script:
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('4236') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 
 script:
- - pytest --ignore=API_DOC/ --ignore="Reporter/tests/test_reporter.py"
+ - pytest --ignore="API_DOC/" --ignore="Reporter/tests/test_reporter.py"
