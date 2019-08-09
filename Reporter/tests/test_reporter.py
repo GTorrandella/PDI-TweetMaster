@@ -12,7 +12,7 @@ class test_reporter(unittest.TestCase):
 	def setUpInitialData(self):
 		self.connector = Connector.Connector(context='test')
 		
-		testCampaign1 = Campaign(1, "test@gmail.com", "#test-#mock", "@testCampaign-@mockOK", "2018-11-28 18:02:00", "2018-12-25 19:26:22")
+		testCampaign1 = Campaign(1, "test@gmail.com", "#test-#mock", "@testCampaign-@mockOK", "28 11 2018 18:02:00", "25 12 2018 19:26:22")
 		
 		testTweet1 = Tweet({ "id_str" : "345",
 		 					"user" : {"name" : "NASAOk", "id_str" : "789456"}, 
