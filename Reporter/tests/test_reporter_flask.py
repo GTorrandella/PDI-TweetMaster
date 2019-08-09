@@ -5,7 +5,6 @@ Created on Dec 20, 2018
 '''
 import unittest
 
-from DataBaseConnector import test_database
 from DataBaseConnector.Connector import Connector
 import DataBaseConnector.configTables as configTables
 
