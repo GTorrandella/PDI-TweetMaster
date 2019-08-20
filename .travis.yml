@@ -7,7 +7,7 @@ services:
  - mysql
 
 before install:
- - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('4236') where User='root';"
+ - sudo mysql -e "USE mysql;\nUPDATE user SET password=PASSWORD('4236') WHERE user='root';\nFLUSH PRIVILEGES;\n"
  - sudo mysql_upgrade
  - sudo service mysql restart
 
