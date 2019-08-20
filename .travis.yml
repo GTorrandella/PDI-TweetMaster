@@ -7,9 +7,9 @@ services:
  - mysql
 
 before_install:
- - sudo mysql -e "USE mysql;\nUPDATE user SET password=PASSWORD('4236') WHERE user='root';\nFLUSH PRIVILEGES;\n"
- - sudo mysql_upgrade
- - sudo service mysql restart
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('4236') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u root -p4236
+  - sudo service mysql restart
  
 install:
  - pip3 install -r requirements.txt
