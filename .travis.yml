@@ -6,13 +6,13 @@ services:
  - redis-server
  - mysql
 
-before install:
+install:
+ - pip3 install -r requirements.txt
+
+before script:
  - sudo mysql -e "USE mysql;\nUPDATE user SET password=PASSWORD('4236') WHERE user='root';\nFLUSH PRIVILEGES;\n"
  - sudo mysql_upgrade
  - sudo service mysql restart
-
-install:
- - pip3 install -r requirements.txt
 
 script:
  - pytest --ignore="API_DOC/" --ignore="Reporter/tests/test_reporter.py"
