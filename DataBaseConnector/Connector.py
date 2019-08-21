@@ -13,7 +13,7 @@ class Connector():
             self.database = configTables.MySQLConfiguration()
             
     def insertCampaign(self, campaignReceived):
-        campaignToInsert = configTables.Campaign(startDate=campaignReceived.startDate, finDate=campaignReceived.finDate,
+        campaignToInsert = configTables.Campaign(id=campaignReceived.idC, startDate=campaignReceived.startDate, finDate=campaignReceived.finDate,
                                               email=campaignReceived.emailDueño, hashtags=campaignReceived.hashtags,
                                               mentions=campaignReceived.mentions)
         self.database.session.add(campaignToInsert)
@@ -133,7 +133,7 @@ class Connector():
                 "id_str": t.ID,
                 "user": {"name": t.userName, "id_str": t.userid},
                 "entities": {"hashtags": t.hashtags, "user_mentions": t.mentions},
-                "created_at": t.date,
+                "created_at": str(t.date),
             }
             tweets.append(dictionary)
         return tweets

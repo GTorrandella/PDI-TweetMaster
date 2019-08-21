@@ -36,7 +36,7 @@ class Campaign(BD):
     email = Column(String(30))
     hashtags = Column(String(50))
     mentions = Column(String(50))
-    tuits = relationship("Tweet")
+    tuits = relationship("Tweet",cascade="all, delete")
     
     def __repr__(self):
         return "<Campaign(idC='%s', startDate='%s', finDate='%s', email='%s', hashtags='%s', mentions='%s')>" % (self.id, self.startDate, self.finDate, self.email, self.hashtags, self.mentions)

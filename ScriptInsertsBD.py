@@ -3,48 +3,72 @@ import json
 from Manager import manager
 from DataBaseConnector import configTables
 
-#Insercion de 10 Campaigns:
-userCampaignInput1= '{"email":"activa@gmail.com","hashtags": ["#noBorrrar", "#412"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"16 12 2018 18:22:00", "endDate":"10 01 2019 18:22:00"}'
-campaignFields1 = json.loads(userCampaignInput1) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
+#Insercion de 8 Campaigns:
+userCampaignInput1= '{"email":"activa@gmail.com",' \
+                    '"hashtags": ["#noBorrrar", "#412"], ' \
+                    '"mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], ' \
+                    '"startDate":"2018-12-20 18:22:00", ' \
+                    '"endDate":"2020-12-20 18:22:00"}'
+campaignFields1 = json.loads(userCampaignInput1)
 manager.Manager().insertCampaign(campaignFields1)
 
-userCampaignInput2= '{"email":"activaConTw@gmail.com","hashtags": ["#tieneTw", "#noBorrarNada", "#412"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"22 12 2018 18:22:00", "endDate":"10 01 2019 18:22:00"}'
-campaignFields2 = json.loads(userCampaignInput2) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
+userCampaignInput2= '{"email":"activaConTw@gmail.com",' \
+                    '"hashtags": ["#tieneTw", "#noBorrarNada", "#412"], ' \
+                    '"mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], ' \
+                    '"startDate":"2018-12-20 18:22:00", ' \
+                    '"endDate":"2020-12-20 18:22:00"}'
+campaignFields2 = json.loads(userCampaignInput2)
 manager.Manager().insertCampaign(campaignFields2)
 
-userCampaignInput3= '{"email":"finalizadaConTw@gmail.com","hashtags": ["#tieneTw", "#borrarTodo", "#200"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"16 12 2018 18:22:00", "endDate":"28 12 2018 18:22:00"}'
-campaignFields3 = json.loads(userCampaignInput3) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
+userCampaignInput3= '{"email":"finalizadaConTw@gmail.com",' \
+                    '"hashtags": ["#tieneTw", "#borrarTodo", "#200"], ' \
+                    '"mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], ' \
+                    '"startDate":"2018-12-20 18:22:00", ' \
+                    '"endDate":"2019-03-20 18:22:00"}'
+campaignFields3 = json.loads(userCampaignInput3)
 manager.Manager().insertCampaign(campaignFields3)
 
-userCampaignInput4= '{"email":"noEmpezada@gmail.com","hashtags": ["#borrar", "#200"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"10 01 2019 18:22:00", "endDate":"20 01 2019 18:22:00"}'
-campaignFields4 = json.loads(userCampaignInput4) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
+userCampaignInput4= '{"email":"noEmpezada@gmail.com",' \
+                    '"hashtags": ["#borrar", "#200"], ' \
+                    '"mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], ' \
+                    '"startDate":"2020-11-20 18:22:00", ' \
+                    '"endDate":"2020-12-20 18:22:00"}'
+campaignFields4 = json.loads(userCampaignInput4)
 manager.Manager().insertCampaign(campaignFields4)
 
-userCampaignInput5= '{"email":"finalizada@gmail.com","hashtags": ["#borrar", "#200"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"24 12 2018 18:22:00", "endDate":"25 12 2018 18:22:00"}'
+userCampaignInput5= '{"email":"finalizada@gmail.com",' \
+                    '"hashtags": ["#borrar", "#200"], ' \
+                    '"mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], ' \
+                    '"startDate":"2018-12-20 18:22:00", ' \
+                    '"endDate":"2019-03-20 18:22:00"}'
 campaignFields5 = json.loads(userCampaignInput5) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
 manager.Manager().insertCampaign(campaignFields5)
 
-userCampaignInput6= '{"email":"noEmpezadaConTw@gmail.com","hashtags": ["#tieneTw", "#borrarTodo", "#200"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"10 01 2019 18:22:00", "endDate":"20 01 2019 18:22:00"}'
+userCampaignInput6= '{"email":"noEmpezadaConTw@gmail.com",' \
+                    '"hashtags": ["#tieneTw", "#borrarTodo", "#200"], ' \
+                    '"mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], ' \
+                    '"startDate":"2020-11-20 18:22:00", ' \
+                    '"endDate":"2020-12-20 18:22:00"}'
 campaignFields6 = json.loads(userCampaignInput6) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
 manager.Manager().insertCampaign(campaignFields6)
 
-userCampaignInput7= '{"email":"activaConTw@gmail.com","hashtags": ["#tieneTw", "#noBorrarNada", "#412"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"22 12 2018 18:22:00", "endDate":"10 01 2019 18:22:00"}'
+userCampaignInput7= '{"email":"activaConTw@gmail.com",' \
+                    '"hashtags": ["#tieneTw", "#noBorrarNada", "#412"], ' \
+                    '"mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], ' \
+                    '"startDate":"2018-12-20 18:22:00", ' \
+                    '"endDate":"2020-12-20 18:22:00"}'
 campaignFields7 = json.loads(userCampaignInput7) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
 manager.Manager().insertCampaign(campaignFields7)
 
-userCampaignInput8= '{"email":"finalizadaConTw@gmail.com","hashtags": ["#tieneTw", "#borrarTodo", "#200"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"16 12 2018 18:22:00", "endDate":"28 12 2018 18:22:00"}'
-campaignFields8 = json.loads(userCampaignInput8) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
+userCampaignInput8= '{"email":"finalizadaConTw@gmail.com",' \
+                    '"hashtags": ["#tieneTw", "#borrarTodo", "#200"], ' \
+                    '"mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], ' \
+                    '"startDate":"2018-12-20 18:22:00", ' \
+                    '"endDate":"2019-03-20 18:22:00"}'
+campaignFields8 = json.loads(userCampaignInput8)
 manager.Manager().insertCampaign(campaignFields8)
 
-userCampaignInput9= '{"email":"mezclada@gmail.com","hashtags": ["#borrar", "#200"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"24 12 2018 18:22:00", "endDate":"25 12 2018 18:22:00"}'
-campaignFields9 = json.loads(userCampaignInput9) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
-manager.Manager().insertCampaign(campaignFields9)
-
-userCampaignInput10= '{"email":"mezclada@gmail.com","hashtags": ["#noBorrrar", "#412"], "mentions": ["@fedecalongeOK", "@mauriciomacriOKkk"], "startDate":"16 12 2018 18:22:00", "endDate":"10 01 2019 18:22:00"}'
-campaignFields10 = json.loads(userCampaignInput10) #Pasa de json a diccionario, esto lo hace flask por eso no hace falta hacerlo en el insertCampaign() del manager.
-manager.Manager().insertCampaign(campaignFields10)
-
-#Insercion de 10 Tweets:
+#Insercion de 6 Tweets:
 
 #Inserción de Tweets en campaña 4:
 tweet1 = {
@@ -100,38 +124,3 @@ tweet6 = {
 tweetsJson = [json.dumps(tweet5),json.dumps(tweet6)]
 manager.Manager().insertTweets(tweetsJson, 8)
 
-#Inserción de Tweets en campaña 9:
-tweet7 = {
-    "id_str" : "724",
-    "user" : {"name" : "MiauricioOK", "id_str" : "451325"},
-    "entities" : {"hashtags" : ["#DonaldNoMeDejes"],"user_mentions" : ["@donaldTrump", "@G20"]},
-    "created_at" : "Sun Mar 20 21:08:01 +0000 2018"
-}
-
-tweet8 = {
-    "id_str" : "732",
-    "user" : {"name" : "MiauricioOK", "id_str" : "451325"},
-    "entities" : {"hashtags" : ["#mars", "#venus", "#earth"],"user_mentions" : ["@NASA", "@planets"]},
-    "created_at" : "Sun Mar 20 21:08:01 +0000 2018"
-}
-
-tweetsJson = [json.dumps(tweet7),json.dumps(tweet8)]
-manager.Manager().insertTweets(tweetsJson, 9)
-
-#INserción de Tweets en campaña 10:
-tweet9 = {
-    "id_str" : "845",
-    "user" : {"name" : "NASAOk", "id_str" : "451325"},
-    "entities" : {"hashtags" : ["#DonaldNoMeDejes"],"user_mentions" : ["@donaldTrump", "@G20"]},
-    "created_at" : "Sun Mar 20 21:08:01 +0000 2018"
-}
-
-tweet10 = {
-    "id_str" : "895",
-    "user" : {"name" : "MiauricioOK", "id_str" : "789456"},
-    "entities" : {"hashtags" : ["#mars", "#venus", "#earth"],"user_mentions" : ["@NASA", "@planets"]},
-    "created_at" : "Sun Mar 20 21:08:01 +0000 2018"
-}
-
-tweetsJson = [json.dumps(tweet9),json.dumps(tweet10)]
-manager.Manager().insertTweets(tweetsJson, 10)
