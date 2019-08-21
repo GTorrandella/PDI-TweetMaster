@@ -13,7 +13,7 @@ class Connector():
             self.database = configTables.MySQLConfiguration()
             
     def insertCampaign(self, campaignReceived):
-        campaignToInsert = configTables.Campaign(id=campaignReceived.idC, startDate=campaignReceived.startDate, finDate=campaignReceived.finDate,
+        campaignToInsert = configTables.Campaign(startDate=campaignReceived.startDate, finDate=campaignReceived.finDate,
                                               email=campaignReceived.emailDueño, hashtags=campaignReceived.hashtags,
                                               mentions=campaignReceived.mentions)
         self.database.session.add(campaignToInsert)
@@ -113,7 +113,10 @@ class Connector():
             self.database.session.dirty
             self.database.session.commit()
     
-    
+    def insertTweetsList(self, tweets, idC):
+        for t in tweets:
+            self.insertTweet(t, idC)
+
     def selectTweetByIDT(self, idT):
         tweetEspecifico = self.database.session.query(configTables.Tweet).get(idT)
         return tweetEspecifico
