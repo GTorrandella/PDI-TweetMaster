@@ -25,7 +25,7 @@ class test_reporter_flask(test_reporter_base):
         for campaign in self.initialCampaigns:
             self.idCampaingList.append(self.connector.insertCampaign(campaign))
 
-        for tweet in self.initialTweets:
+        for tweet in self.initialTweetsRaw:
             idCampaign = self.idCampaingList[tweet['idCampaign'] - 1]
             tweetToInsert = Tweet(tweet, raw=True)
             self.connector.insertTweet(tweetToInsert, idCampaign)
