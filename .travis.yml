@@ -15,4 +15,4 @@ install:
  - pip3 install -r requirements.txt
 
 script:
- - pytest --ignore="API_DOC/" --ignore="Reporter/tests/test_reporter.py"
+ - pytest --ignore="API_DOC/"

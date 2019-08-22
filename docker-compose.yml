@@ -60,6 +60,17 @@ services:
     depends_on:
      - rsyslog
      - mysql
+     - load_balancer
+
+  load_balancer:
+    build:
+      context: .
+      dockerfile: Dockerfiles/LB.Dockerfile
+    image: load-balancer:latest
+    networks:
+      - tweet-master
+    ports:
+      - 80:80
 
   redis:
     image: redis:5-alpine
