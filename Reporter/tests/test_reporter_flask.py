@@ -44,7 +44,7 @@ class test_reporter_flask(test_reporter_base):
 
     def test_GET_json_200(self):
         initialCampaignNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Campaign).all())
-        self.assertEqual(initialCampaignNumber, 3)
+        self.assertEqual(initialCampaignNumber, 5)
         
         initialTweetNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Tweet).all())
         self.assertEqual(initialTweetNumber, 16)
@@ -61,14 +61,14 @@ class test_reporter_flask(test_reporter_base):
         self.assertEqual(summary['cant_tweets'], 4)
         
         afterCampaignNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Campaign).all())
-        self.assertEqual(afterCampaignNumber, 3)
+        self.assertEqual(afterCampaignNumber, 5)
         
         afterTweetNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Tweet).all())
         self.assertEqual(afterTweetNumber, 16)
 
-    def test_GET_json_404(self):
+    def test_GET_json_412(self):
         initialCampaignNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Campaign).all())
-        self.assertEqual(initialCampaignNumber, 3)
+        self.assertEqual(initialCampaignNumber, 5)
         
         initialTweetNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Tweet).all())
         self.assertEqual(initialTweetNumber, 16)
@@ -77,17 +77,17 @@ class test_reporter_flask(test_reporter_base):
         url = '/Reporter/ReporterJSON/' + idCampaingToGet
 
         response = self.test_app.get(url)
-        self.assertEqual(response.status, '404 NOT FOUND')
+        self.assertEqual(response.status, '412 PRECONDITION FAILED')
         
         afterCampaignNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Campaign).all())
-        self.assertEqual(afterCampaignNumber, 3)
+        self.assertEqual(afterCampaignNumber, 5)
         
         afterTweetNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Tweet).all())
         self.assertEqual(afterTweetNumber, 16) 
     
     def test_GET_raw_200(self):
         initialCampaignNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Campaign).all())
-        self.assertEqual(initialCampaignNumber, 3)
+        self.assertEqual(initialCampaignNumber, 5)
         
         initialTweetNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Tweet).all())
         self.assertEqual(initialTweetNumber, 16)
@@ -113,14 +113,14 @@ class test_reporter_flask(test_reporter_base):
         self.assertEqual(len(raw['tweets']), 9)
         
         afterCampaignNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Campaign).all())
-        self.assertEqual(afterCampaignNumber, 3)
+        self.assertEqual(afterCampaignNumber, 5)
         
         afterTweetNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Tweet).all())
         self.assertEqual(afterTweetNumber, 16) 
     
-    def test_GET_raw_404(self):
+    def test_GET_raw_412(self):
         initialCampaignNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Campaign).all())
-        self.assertEqual(initialCampaignNumber, 3)
+        self.assertEqual(initialCampaignNumber, 5)
         
         initialTweetNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Tweet).all())
         self.assertEqual(initialTweetNumber, 16)
@@ -129,10 +129,10 @@ class test_reporter_flask(test_reporter_base):
         url = '/Reporter/ReporterRAW/' + idCampaingToGet
 
         response = self.test_app.get(url)
-        self.assertEqual(response.status, '404 NOT FOUND')
+        self.assertEqual(response.status, '412 PRECONDITION FAILED')
         
         afterCampaignNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Campaign).all())
-        self.assertEqual(afterCampaignNumber, 3)
+        self.assertEqual(afterCampaignNumber, 5)
         
         afterTweetNumber = len(reporter_flask.reporter.database.database.session.query(configTables.Tweet).all())
         self.assertEqual(afterTweetNumber, 16)
