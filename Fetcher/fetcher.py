@@ -46,7 +46,7 @@ class Fetcher():
         return tweets
             
     def fetchTweets(self, campaign):
-        self.log.info("Fetching for "+campaign.idC)
+        self.log.info("Fetching for "+str(campaign.idC))
         rawTweets = []
         
         for hashtag in campaign.hashtags:
@@ -55,13 +55,13 @@ class Fetcher():
         for mention in campaign.mentions:
             rawTweets = rawTweets + self.fetchByMention(mention)
             
-        self.log.info("Finished fetching "+campaign.idC)
+        self.log.info("Finished fetching "+str(campaign.idC))
         tweets = self.makeTweet(rawTweets)
         
         self.saveTweets(campaign.idC, tweets)
     
     def saveTweets(self, idCampain, tweets):
-        self.log.info("Saving to DB "+idCampain)
+        self.log.info("Saving to DB "+str(idCampain))
         try:
             for tweet in tweets:
                 tweet = tweet.to_dict()
@@ -76,38 +76,4 @@ class Fetcher():
                 for ment in tweet['user_mentions']:
                     self._db.sadd(tweet['id_str']+":mentions", ment)
         except:
-            self.log.error("Failed to save for " + idCampain)
-
-f = Fetcher(context='test')
-t = [
-                        {
-                                "created_at": "Sun Feb 25 18:11:01 +0000 2018",
-                                "id_str": "123824267948773377",
-                                "text":"@mars",
-                                "entities": {
-                                        "hashtags": [],
-                                        "user_mentions": ["mars"],
-                                        },
-                                "user": {
-                                        "id_str": "11348282",
-                                        "name": "NASA"
-                                        }
-                        },
-                        {
-                                "created_at": "Sun Feb 25 18:11:01 +0000 2018",
-                                "id_str": "123824267948773378",
-                                "text":"@mars",
-                                "entities": {
-                                        "hashtags": [],
-                                        "user_mentions": ["mars"],
-                                        },
-                                "user": {
-                                        "id_str": "11348282",
-                                        "name": "NASA"
-                                        }
-                        }
-                    ]
-ts = f.makeTweet(t)
-f.saveTweets('1', ts)
-
-    
+            self.log.error("Failed to save for " + str(idCampain))

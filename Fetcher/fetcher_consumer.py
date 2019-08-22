@@ -49,11 +49,16 @@ class fetcherConsumer():
         self.log.info('Message recived')
         
         campaignData = json.loads(body.decode())
-        campaign = Campaign(dict=campaignData)
+        campaign = Campaign(campaignData['id'],
+                            campaignData['email'],
+                            campaignData['hashtags'],
+                            campaignData['mentions'],
+                            campaignData['startDate'],
+                            campaignData['finDate'])
         try:
             self.fetcher.fetchTweets(campaign)
         except:
-            self.log.info('Falied fetch for '+campaign.idC)
+            self.log.info('Falied fetch for '+str(campaign.idC))
         self.channel.basic_ack(delivery_tag = method.delivery_tag)
     
     
